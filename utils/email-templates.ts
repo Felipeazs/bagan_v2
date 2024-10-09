@@ -145,9 +145,7 @@ export const getResumenCompraTemplate = (details: PaymentInfo) => {
                             </tr>
                             <tr>
                                 <td style="max-width: 200px; text-align: end; padding: 0px 5px;">teléfono:</td>
-                                <td style="max-width: 200px; text-align: end; padding: 0px 5px;">${
-									details.payer.phone.number
-								}</td>
+                                <td style="max-width: 200px; text-align: end; padding: 0px 5px;">+56 ${details.payer.phone.number?.substring(0, 1)} ${details.payer.phone.number?.substring(1, 5)} ${details.payer.phone.number?.substring(5, 9)}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -206,7 +204,7 @@ export const getWebMessageTemplate = (data: Email) => {
                 <div class="contacto" style="font-size: 13px; padding: 5px; text-align: center; width: 100%; display: flex; flex-direction: column;">
                     <strong>contacto</strong>
                     <span>${data.email}</span>
-                    <span>${data.telefono}</span>
+                    <span>+56 ${data.telefono.substring(0, 1)} ${data.telefono.substring(1, 5)} ${data.telefono.substring(5, 9)}</span>
                 </div>
             </div>
         </div>
