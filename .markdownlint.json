@@ -1,0 +1,12 @@
+{
+	"line-length": {
+		"line_length": 100
+	},
+	"ul-indent": {
+		"indent": 4
+	},
+	"blanks-around-lists": false,
+	"blanks-around-fences": {
+		"list_items": false
+	}
+}
