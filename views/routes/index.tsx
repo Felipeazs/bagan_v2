@@ -1,9 +1,10 @@
 import { useForm } from '@tanstack/react-form'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { zodValidator } from '@tanstack/zod-form-adapter'
 import Autoplay from 'embla-carousel-autoplay'
-import { sendEmailContacto } from '../../api/index'
+import { toast } from 'sonner'
+import { homeContent, sendEmailContacto } from '../../api/index'
 import { emailSchema } from '../../db/schema/email'
 import { Producto } from '../../db/schema/productos'
 import Carrito from '../components/Carrito'
@@ -19,16 +20,24 @@ import {
 } from '../components/ui/carousel'
 import { Input } from '../components/ui/input'
 import { Textarea } from '../components/ui/textarea'
+import { hero, packs, productos } from '../productos'
 import { useCompradorStore } from '../store'
-
-import { productos, packs, hero } from '../productos'
-import { toast } from 'sonner'
+import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer'
 
 export const Route = createFileRoute('/')({
 	component: Index,
 })
 
 function Index() {
+	const { data: home_data } = useQuery({
+		queryKey: ['home-content'],
+		queryFn: () => homeContent('home'),
+		staleTime: Infinity,
+	})
+
+	const about: BlocksContent = home_data?.section_about ?? []
+	const circula: BlocksContent = home_data?.section_circula ?? []
+
 	const comprador = useCompradorStore()
 
 	const mutation = useMutation({
@@ -91,11 +100,9 @@ function Index() {
 						</CarouselContent>
 					</Carousel>
 					<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
-						<p className="text-3xl lg:text-5xl font-title">
-							Somos un producto triple S: Saludable, Sabroso y Sustentable
-						</p>
+						<p className="text-3xl lg:text-5xl font-title">{home_data?.hero_title}</p>
 						<p className="text-xl lg:text-2xl font-subtitle">
-							El primer paté vegetal impulsado por la Economía Circular
+							{home_data?.hero_subtitle}
 						</p>
 						<Button className="hidden md:inline mt-5 md:mt-20 bg-bagan_dark">
 							<a href="#nosotras">
@@ -114,12 +121,9 @@ function Index() {
 					<div className="flex flex-col justify-center align-center md:h-[500px] text-center">
 						<p className="text-bagan font-black uppercase">Sobre</p>
 						<p className="uppercase font-black">Nosotras</p>
-						<p className="px-20 pt-5 text-[15px]">
-							Somos una empresa de alimentos y nuestro primer producto es un paté
-							vegetal «Bagán», hecho a base de bagazo de cerveza. Aprovechamos todas
-							las características nutricionales de este subproducto para ofrecerte un
-							alimento rico en fibra, proteínas y otros nutrientes esenciales.
-						</p>
+						<div className="px-20 pt-5 text-[15px]">
+							{<BlocksRenderer content={about} />}
+						</div>
 					</div>
 					<div className="flex flex-col justify-center align-center h-[500px] text-center">
 						<img
@@ -137,17 +141,9 @@ function Index() {
 					</div>
 					<div className="flex flex-col justify-center align-center md:h-[500px] text-center">
 						<p className="text-bagan font-black uppercase">Circular</p>
-						<p className="px-5 md:px-20 pt-5 text-[15px]">
-							Utilizamos materiales reciclados y/o biodegradables siempre que es
-							posible, minimizando el uso de recursos vírgenes y reduciendo el impacto
-							ambiental de nuestros productos.
-						</p>
-						<p className="px-5 md:px-20 pt-5 text-[15px]">
-							Implementamos procesos de fabricación que minimizan el desperdicio de
-							materiales y energía. Por ejemplo, optimizamos el corte de materiales
-							para reducir los desechos y reutilizamos los residuos de producción en
-							nuevos procesos.
-						</p>
+						<div className="px-20 pt-5 text-[15px]">
+							{<BlocksRenderer content={circula} />}
+						</div>
 					</div>
 				</div>
 				<Button className="hidden lg:inline absolute left-1/2 -translate-x-1/2 bottom-10 lg:mt-40 bg-bagan_dark">

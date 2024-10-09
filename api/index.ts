@@ -10,6 +10,26 @@ const client = hc<ApiRoutes>('/', {
 	},
 })
 
+const STRIPE_URL = import.meta.env.VITE_URL
+const AUTHORIZATION = `Bearer ${import.meta.env.VITE_STRAPI_API_KEY!}`
+
+export const homeContent = async (page: string) => {
+	const url = `${STRIPE_URL}/api/${page}`
+	return await fetch(url, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: AUTHORIZATION,
+		},
+	})
+		.then((res) => res.json())
+		.then((res) => {
+			const { hero_title, hero_subtitle, section_about, section_circula } = res.data
+			return { hero_title, hero_subtitle, section_about, section_circula }
+		})
+		.catch(console.error)
+}
+
 export const sendEmailContacto = async ({ value }: { value: Email }) => {
 	return await api.contacto
 		.$post({ json: value })
