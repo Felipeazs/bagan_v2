@@ -13,7 +13,7 @@ const client = hc<ApiRoutes>("/", {
 export const api = client.api
 
 const URL = `${import.meta.env["VITE_STRAPI_URL"]}/api`
-const STRAPI_API_KEY = import.meta.env["VITE_STRAPI_API"]
+const STRAPI_API_KEY = import.meta.env["VITE_STRAPI_API_KEY"]
 
 export const strapiContent = async ({ page, query }: { page: string; query?: string }) => {
 	return await fetch(`${URL}/${page}${query}`, {
