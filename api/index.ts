@@ -12,14 +12,15 @@ const client = hc<ApiRoutes>("/", {
 
 export const api = client.api
 
-const url = `${import.meta.env["VITE_STRAPI_URL"]}/api`
+const URL = `${import.meta.env["VITE_STRAPI_URL"]}/api`
+const STRAPI_API_KEY = import.meta.env["VITE_STRAPI_API"]
 
 export const strapiContent = async ({ page, query }: { page: string; query?: string }) => {
-	return await fetch(`${url}/${page}${query}`, {
+	return await fetch(`${URL}/${page}${query}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${import.meta.env["VITE_STRAPI_API_KEY"]}`,
+			Authorization: `Bearer ${STRAPI_API_KEY}`,
 		},
 	})
 		.then((res) => res.json())
