@@ -65,6 +65,7 @@ const Carrito = () => {
 			comprador,
 		},
 		onSubmit: async ({ value }) => {
+			console.log(value)
 			mutation.mutate({ value: value.comprador })
 		},
 		onSubmitInvalid: () => {

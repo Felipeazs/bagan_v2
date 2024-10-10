@@ -76,7 +76,6 @@ function Index() {
 	})
 
 	const agregarCarritoHandler = (item: Producto) => {
-		console.log(item)
 		toast(`${item.title} agregado al carrito`)
 		comprador.guardarItems(item)
 	}
@@ -204,7 +203,7 @@ function Index() {
 				<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-16">
 					{strapi_home?.packs?.map(
 						(pack: {
-							id: string
+							pid: string
 							title: string
 							price: number
 							unit_price: number
@@ -213,7 +212,7 @@ function Index() {
 							images: { id: string; url: string }[]
 						}) => (
 							<Card
-								key={pack.id}
+								key={pack.pid}
 								className="max-w-[400px] overflow-hidden flex flex-col gap-4">
 								<Carousel className="relative" opts={{ loop: true }}>
 									<CarouselContent>
@@ -250,10 +249,12 @@ function Index() {
 										type="button"
 										onClick={() =>
 											agregarCarritoHandler({
-												...pack,
-												unit_price: pack.price,
+												id: pack.pid,
+												title: pack.title,
 												picture_url: pack.images[0].url,
+												description: pack.description,
 												quantity: 1,
+												unit_price: Number(pack.price),
 												weight: pack.weight,
 												details:
 													pack.title === "Tripack"

@@ -18,6 +18,12 @@ export const mercadoPagoRoute = new Hono()
 
 		const prefDetails = setPreferenceDetails(comprador)
 
+		if (!prefDetails.items.length) {
+			throw new Error(
+				"Existe un problema con los productos agregados, por favor inténtelo más tarde",
+			)
+		}
+
 		const preference = new Preference(mercadoPagoClient)
 
 		try {
