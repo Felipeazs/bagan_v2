@@ -406,7 +406,7 @@ function Index() {
 				<div className="text-center">
 					<p>Instituciones que nos han apoyado</p>
 					<div className="grid grid-rows-1 grid-flow-col gap-2 w-max-[400px]">
-						{strapi_home?.instituciones.images
+						{strapi_home?.instituciones?.images
 							.slice(0, 4)
 							.map((institucion: { id: string; url: string }) => (
 								<img src={institucion.url} key={institucion.id} />
@@ -416,7 +416,7 @@ function Index() {
 				<div className="text-center">
 					<p>Instituciones que nos han financiado</p>
 					<div className="grid grid-rows-1 grid-flow-col gap-2 w-max-[400px]">
-						{strapi_home?.instituciones.images
+						{strapi_home?.instituciones?.images
 							.slice(4, 8)
 							.map((institucion: { id: string; url: string }) => (
 								<img src={institucion.url} key={institucion.id} />
