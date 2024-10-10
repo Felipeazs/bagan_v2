@@ -10,14 +10,17 @@ const client = hc<ApiRoutes>("/", {
 	},
 })
 
-export const homeContent = async (page: string) => {
-	return await api.stripe[":page"]
-		.$get({ param: { page: page } })
+const url = `${import.meta.env.VITE_STRAPI_URL}/api`
+
+export const strapiContent = async (page: string) => {
+	return await fetch(`${url}/${page}`, {
+		method: "GET",
+		headers: {
+			Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_KEY}`,
+		},
+	})
 		.then((res) => res.json())
-		.then((res) => {
-			const { hero_title, hero_subtitle, section_about, section_circula } = res.data
-			return { hero_title, hero_subtitle, section_about, section_circula }
-		})
+		.then((res) => res.data)
 		.catch(console.error)
 }
 

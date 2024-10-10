@@ -1,10 +1,11 @@
+import { BlocksRenderer, type BlocksContent } from "@strapi/blocks-react-renderer"
 import { useForm } from "@tanstack/react-form"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import { zodValidator } from "@tanstack/zod-form-adapter"
 import Autoplay from "embla-carousel-autoplay"
 import { toast } from "sonner"
-import { homeContent, sendEmailContacto } from "../../api/index"
+import { sendEmailContacto, strapiContent } from "../../api/index"
 import { emailSchema } from "../../db/schema/email"
 import { Producto } from "../../db/schema/productos"
 import Carrito from "../components/Carrito"
@@ -22,16 +23,15 @@ import { Input } from "../components/ui/input"
 import { Textarea } from "../components/ui/textarea"
 import { hero, packs, productos } from "../productos"
 import { useCompradorStore } from "../store"
-import { BlocksRenderer, type BlocksContent } from "@strapi/blocks-react-renderer"
 
 export const Route = createFileRoute("/")({
 	component: Index,
 })
 
 function Index() {
-	const { data: home_data } = useQuery({
+	const { data: home_data, isSuccess } = useQuery({
 		queryKey: ["home-content"],
-		queryFn: () => homeContent("home"),
+		queryFn: () => strapiContent("home"),
 		staleTime: Infinity,
 	})
 
@@ -122,7 +122,7 @@ function Index() {
 						<p className="text-bagan font-black uppercase">Sobre</p>
 						<p className="uppercase font-black">Nosotras</p>
 						<div className="px-20 pt-5 text-[15px]">
-							{<BlocksRenderer content={about} />}
+							{isSuccess && <BlocksRenderer content={about} />}
 						</div>
 					</div>
 					<div className="flex flex-col justify-center align-center h-[500px] text-center">
@@ -142,7 +142,7 @@ function Index() {
 					<div className="flex flex-col justify-center align-center md:h-[500px] text-center">
 						<p className="text-bagan font-black uppercase">Circular</p>
 						<div className="px-20 pt-5 text-[15px]">
-							{<BlocksRenderer content={circula} />}
+							{isSuccess && <BlocksRenderer content={circula} />}
 						</div>
 					</div>
 				</div>

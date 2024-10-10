@@ -1,10 +1,9 @@
 import { Hono } from "hono"
-import { cors } from "hono/cors"
 import { serveStatic } from "hono/bun"
+import { cors } from "hono/cors"
 import { readFile } from "node:fs/promises"
-import { mercadoPagoRoute } from "./controller/mercadopago"
 import { emailRoute } from "./controller/contacto"
-import { stripeRoute } from "./controller/stripe"
+import { mercadoPagoRoute } from "./controller/mercadopago"
 
 const isProd = process.env["NODE_ENV"] === "production"
 let html = await readFile(isProd ? "build/index.html" : "index.html", "utf8")
@@ -39,7 +38,6 @@ const apiRoutes = app
 	.basePath("/api")
 	.route("/contacto", emailRoute)
 	.route("/mercado-pago", mercadoPagoRoute)
-	.route("/stripe", stripeRoute)
 
 app.get("/health", async (c) => {
 	c.status(200)
