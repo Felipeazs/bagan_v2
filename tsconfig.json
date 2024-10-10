@@ -1,46 +1,30 @@
 // tsconfig.json
 {
-    "compilerOptions": {
-        "target": "ES2021",
-        "useDefineForClassFields": true,
-        "lib": [
-            "ES2021",
-            "DOM",
-            "DOM.Iterable"
-        ],
-        "module": "ESNext",
-        "skipLibCheck": true,
-        /* Bundler mode */
-        "moduleResolution": "bundler",
-        "allowImportingTsExtensions": true,
-        "resolveJsonModule": true,
-        "isolatedModules": true,
-        "noEmit": true,
-        "jsx": "react-jsx",
-        /* Linting */
-        "strict": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "noFallthroughCasesInSwitch": true,
-        "baseUrl": ".",
-        "paths": {
-            "@/*": [
-                "./*"
-            ],
-            "@/components/*": [
-                "./views/components/*"
-            ],
-            "@/lib/*": [
-                "./views/lib/*"
-            ]
-        }
-    },
-    "include": [
-        "**/*.ts",
-        "**/*.tsx",
-        "views/productos.json"
-    ],
-    "exclude": [
-        "node_modules/**"
-    ]
+	"compilerOptions": {
+		"target": "ES2021",
+		"useDefineForClassFields": true,
+		"lib": ["ES2021", "DOM", "DOM.Iterable"],
+		"module": "ESNext",
+		"skipLibCheck": true,
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react-jsx",
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./*"],
+			"@/components/*": ["./views/components/*"],
+			"@/lib/*": ["./views/lib/*"]
+		}
+	},
+	"include": ["**/*.ts", "**/*.tsx", "views/productos.json"],
+	"exclude": ["node_modules/**"]
 }

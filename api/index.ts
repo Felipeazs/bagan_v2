@@ -14,13 +14,15 @@ export const api = client.api
 
 const url = `${import.meta.env.VITE_STRAPI_URL}/api`
 
+const headers = new Headers({
+	"Content-Type": "application/json",
+})
+headers.append("Authorization", `Bearer ${import.meta.env["VITE_STRAPI_API_KEY"]}`)
+
 export const strapiContent = async ({ page, query }: { page: string; query?: string }) => {
 	return await fetch(`${url}/${page}${query}`, {
 		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_KEY}`,
-		},
+		headers,
 	})
 		.then((res) => res.json())
 		.then((res) => res.data)
