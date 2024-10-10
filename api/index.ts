@@ -12,17 +12,14 @@ const client = hc<ApiRoutes>("/", {
 
 const url = `${import.meta.env.VITE_STRAPI_URL}/api`
 
-export const strapiContent = async (page: string) => {
-	return await fetch(
-		`${url}/${page}?populate=hero_images&populate=productos.images&populate=packs.images&populate=contacto&populate=instituciones.images`,
-		{
-			method: "GET",
-			headers: {
-				"Content-Type": "application/josn",
-				Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_KEY}`,
-			},
+export const strapiContent = async ({ page, query }: { page: string; query?: string }) => {
+	return await fetch(`${url}/${page}${query}`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/josn",
+			Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_KEY}`,
 		},
-	)
+	})
 		.then((res) => res.json())
 		.then((res) => res.data)
 		.catch(console.error)

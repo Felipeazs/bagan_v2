@@ -30,7 +30,11 @@ export const Route = createFileRoute("/")({
 function Index() {
 	const { data: strapi_home, isSuccess } = useQuery({
 		queryKey: ["home-content"],
-		queryFn: () => strapiContent("home"),
+		queryFn: () =>
+			strapiContent({
+				page: "home",
+				query: "?populate=hero_images&populate=productos.images&populate=packs.images&populate=contacto&populate=instituciones.images",
+			}),
 		staleTime: Infinity,
 	})
 
