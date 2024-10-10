@@ -28,6 +28,8 @@ export const Route = createFileRoute("/")({
 })
 
 function Index() {
+	const comprador = useCompradorStore()
+
 	const { data: strapi_home, isSuccess } = useQuery({
 		queryKey: ["home-content"],
 		queryFn: () =>
@@ -40,8 +42,6 @@ function Index() {
 
 	const about: BlocksContent = strapi_home?.section_about ?? []
 	const circula: BlocksContent = strapi_home?.section_circula ?? []
-
-	const comprador = useCompradorStore()
 
 	const mutation = useMutation({
 		mutationFn: sendEmailContacto,

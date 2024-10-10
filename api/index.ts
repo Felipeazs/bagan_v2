@@ -10,6 +10,8 @@ const client = hc<ApiRoutes>("/", {
 	},
 })
 
+export const api = client.api
+
 const url = `${import.meta.env.VITE_STRAPI_URL}/api`
 
 export const strapiContent = async ({ page, query }: { page: string; query?: string }) => {
@@ -40,5 +42,3 @@ export async function createMPPreferences({ value }: { value: Comprador }) {
 		.then((data) => data as PrefRespons)
 		.catch(console.error)
 }
-
-export const api = client.api
