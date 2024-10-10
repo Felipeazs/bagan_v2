@@ -53,7 +53,7 @@ function Index() {
 				})
 			} else
 				toast("Error Servidor", {
-					description: "Por favor, inténtelo más tarde",
+					description: "Por favor inténtelo más tarde",
 				})
 		},
 	})
@@ -71,7 +71,7 @@ function Index() {
 			form.reset()
 		},
 		onSubmitInvalid: () => {
-			toast("Por favor, ingrese todos los datos")
+			toast("Por favor ingrese todos los datos")
 		},
 	})
 

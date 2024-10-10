@@ -69,7 +69,7 @@ const Carrito = () => {
 			mutation.mutate({ value: value.comprador })
 		},
 		onSubmitInvalid: () => {
-			toast("Por favor, rellena todos los campos")
+			toast("Por favor rellena todos los campos")
 		},
 	})
 
