@@ -35,6 +35,8 @@ function Index() {
 		staleTime: Infinity,
 	})
 
+	console.log(home_data)
+
 	const about: BlocksContent = home_data?.section_about ?? []
 	const circula: BlocksContent = home_data?.section_circula ?? []
 

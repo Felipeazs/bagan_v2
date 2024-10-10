@@ -1,6 +1,7 @@
 import { Hono } from "hono"
 import { serveStatic } from "hono/bun"
 import { cors } from "hono/cors"
+import { logger } from "hono/logger"
 import { readFile } from "node:fs/promises"
 import { emailRoute } from "./controller/contacto"
 import { mercadoPagoRoute } from "./controller/mercadopago"
@@ -27,6 +28,7 @@ if (!isProd) {
 
 const app = new Hono()
 app.use(cors())
+app.use(logger())
 
 // UN-COMMENT these lines when you supply a db connection string
 app.use("*", async (c, next) => {
