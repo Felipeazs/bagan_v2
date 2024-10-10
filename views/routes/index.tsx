@@ -1,37 +1,37 @@
-import { useForm } from '@tanstack/react-form'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { createFileRoute } from '@tanstack/react-router'
-import { zodValidator } from '@tanstack/zod-form-adapter'
-import Autoplay from 'embla-carousel-autoplay'
-import { toast } from 'sonner'
-import { homeContent, sendEmailContacto } from '../../api/index'
-import { emailSchema } from '../../db/schema/email'
-import { Producto } from '../../db/schema/productos'
-import Carrito from '../components/Carrito'
-import { AspectRatio } from '../components/ui/aspect-ratio'
-import { Button } from '../components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardTitle } from '../components/ui/card'
+import { useForm } from "@tanstack/react-form"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { createFileRoute } from "@tanstack/react-router"
+import { zodValidator } from "@tanstack/zod-form-adapter"
+import Autoplay from "embla-carousel-autoplay"
+import { toast } from "sonner"
+import { homeContent, sendEmailContacto } from "../../api/index"
+import { emailSchema } from "../../db/schema/email"
+import { Producto } from "../../db/schema/productos"
+import Carrito from "../components/Carrito"
+import { AspectRatio } from "../components/ui/aspect-ratio"
+import { Button } from "../components/ui/button"
+import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "../components/ui/card"
 import {
 	Carousel,
 	CarouselContent,
 	CarouselItem,
 	CarouselNext,
 	CarouselPrevious,
-} from '../components/ui/carousel'
-import { Input } from '../components/ui/input'
-import { Textarea } from '../components/ui/textarea'
-import { hero, packs, productos } from '../productos'
-import { useCompradorStore } from '../store'
-import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer'
+} from "../components/ui/carousel"
+import { Input } from "../components/ui/input"
+import { Textarea } from "../components/ui/textarea"
+import { hero, packs, productos } from "../productos"
+import { useCompradorStore } from "../store"
+import { BlocksRenderer, type BlocksContent } from "@strapi/blocks-react-renderer"
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
 	component: Index,
 })
 
 function Index() {
 	const { data: home_data } = useQuery({
-		queryKey: ['home-content'],
-		queryFn: () => homeContent('home'),
+		queryKey: ["home-content"],
+		queryFn: () => homeContent("home"),
 		staleTime: Infinity,
 	})
 
@@ -44,13 +44,13 @@ function Index() {
 		mutationFn: sendEmailContacto,
 		onSuccess: (data) => {
 			if (data) {
-				toast('Mensaje enviado', {
+				toast("Mensaje enviado", {
 					description:
-						'Gracias por contactarte con nostros, te responderemos a la brevedad.',
+						"Gracias por contactarte con nostros, te responderemos a la brevedad.",
 				})
 			} else
-				toast('Error Servidor', {
-					description: 'Por favor, inténtelo más tarde',
+				toast("Error Servidor", {
+					description: "Por favor, inténtelo más tarde",
 				})
 		},
 	})
@@ -58,17 +58,17 @@ function Index() {
 	const form = useForm({
 		validatorAdapter: zodValidator(),
 		defaultValues: {
-			nombre: '',
-			telefono: '',
-			email: '',
-			mensaje: '',
+			nombre: "",
+			telefono: "",
+			email: "",
+			mensaje: "",
 		},
 		onSubmit: async ({ value }) => {
 			mutation.mutate({ value })
 			form.reset()
 		},
 		onSubmitInvalid: () => {
-			toast('Por favor, ingrese todos los datos')
+			toast("Por favor, ingrese todos los datos")
 		},
 	})
 
@@ -218,7 +218,7 @@ function Index() {
 									{p.title}
 								</CardDescription>
 								<CardDescription className="font-bold">
-									precio: ${p.unit_price.toLocaleString('es-Cl')}
+									precio: ${p.unit_price.toLocaleString("es-Cl")}
 								</CardDescription>
 								<CardDescription>{p.description}</CardDescription>
 							</CardContent>
@@ -230,10 +230,10 @@ function Index() {
 											picture_url: p.image[0],
 											quantity: 1,
 											details:
-												p.title === 'Tripack'
-													? Array(3).fill('')
-													: Array(6).fill(''),
-											weight: p.title === 'Tripack' ? 750 : 1500,
+												p.title === "Tripack"
+													? Array(3).fill("")
+													: Array(6).fill(""),
+											weight: p.title === "Tripack" ? 750 : 1500,
 										})
 									}
 									className="bg-bagan_dark text-white font-bold"
@@ -421,7 +421,7 @@ function Index() {
 									disabled={!canSubmit}
 									className="bg-bagan_dark">
 									<span className="leading-5 font-bold lg:text-xl tracking-widest">
-										{isSubmitting ? 'ENVIANDO...' : 'ENVIAR'}
+										{isSubmitting ? "ENVIANDO..." : "ENVIAR"}
 									</span>
 								</Button>
 							)}

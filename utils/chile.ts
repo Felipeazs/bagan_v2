@@ -1,46 +1,46 @@
 export const chile = [
 	{
 		id: 1,
-		name: 'Tarapacá',
-		value: 'extremo',
+		name: "Tarapacá",
+		value: "extremo",
 		provincias: [
 			{
 				id: 11,
-				name: 'Iquique',
+				name: "Iquique",
 				comunas: [
 					{
 						id: 1101,
-						name: 'Iquique',
+						name: "Iquique",
 					},
 					{
 						id: 1107,
-						name: 'Alto Hospicio',
+						name: "Alto Hospicio",
 					},
 				],
 			},
 			{
 				id: 14,
-				name: 'Tamarugal',
+				name: "Tamarugal",
 				comunas: [
 					{
 						id: 1401,
-						name: 'Pozo Almonte',
+						name: "Pozo Almonte",
 					},
 					{
 						id: 1402,
-						name: 'Camiña',
+						name: "Camiña",
 					},
 					{
 						id: 1403,
-						name: 'Colchane',
+						name: "Colchane",
 					},
 					{
 						id: 1404,
-						name: 'Huara',
+						name: "Huara",
 					},
 					{
 						id: 1405,
-						name: 'Pica',
+						name: "Pica",
 					},
 				],
 			},
@@ -48,60 +48,60 @@ export const chile = [
 	},
 	{
 		id: 2,
-		name: 'Antofagasta',
-		value: 'extremo',
+		name: "Antofagasta",
+		value: "extremo",
 		provincias: [
 			{
 				id: 21,
-				name: 'Antofagasta',
+				name: "Antofagasta",
 				comunas: [
 					{
 						id: 2101,
-						name: 'Antofagasta',
+						name: "Antofagasta",
 					},
 					{
 						id: 2102,
-						name: 'Mejillones',
+						name: "Mejillones",
 					},
 					{
 						id: 2103,
-						name: 'Sierra Gorda',
+						name: "Sierra Gorda",
 					},
 					{
 						id: 2104,
-						name: 'Taltal',
+						name: "Taltal",
 					},
 				],
 			},
 			{
 				id: 22,
-				name: 'El Loa',
+				name: "El Loa",
 				comunas: [
 					{
 						id: 2201,
-						name: 'Calama',
+						name: "Calama",
 					},
 					{
 						id: 2202,
-						name: 'Ollagüe',
+						name: "Ollagüe",
 					},
 					{
 						id: 2203,
-						name: 'San Pedro de Atacama',
+						name: "San Pedro de Atacama",
 					},
 				],
 			},
 			{
 				id: 23,
-				name: 'Tocopilla',
+				name: "Tocopilla",
 				comunas: [
 					{
 						id: 2301,
-						name: 'Tocopilla',
+						name: "Tocopilla",
 					},
 					{
 						id: 2302,
-						name: 'María Elena',
+						name: "María Elena",
 					},
 				],
 			},
@@ -109,60 +109,60 @@ export const chile = [
 	},
 	{
 		id: 3,
-		name: 'Atacama',
-		value: 'centro',
+		name: "Atacama",
+		value: "centro",
 		provincias: [
 			{
 				id: 31,
-				name: 'Copiapó',
+				name: "Copiapó",
 				comunas: [
 					{
 						id: 3101,
-						name: 'Copiapó',
+						name: "Copiapó",
 					},
 					{
 						id: 3102,
-						name: 'Caldera',
+						name: "Caldera",
 					},
 					{
 						id: 3103,
-						name: 'Tierra Amarilla',
+						name: "Tierra Amarilla",
 					},
 				],
 			},
 			{
 				id: 32,
-				name: 'Chañaral',
+				name: "Chañaral",
 				comunas: [
 					{
 						id: 3201,
-						name: 'Chañaral',
+						name: "Chañaral",
 					},
 					{
 						id: 3202,
-						name: 'Diego de Almagro',
+						name: "Diego de Almagro",
 					},
 				],
 			},
 			{
 				id: 33,
-				name: 'Huasco',
+				name: "Huasco",
 				comunas: [
 					{
 						id: 3301,
-						name: 'Vallenar',
+						name: "Vallenar",
 					},
 					{
 						id: 3302,
-						name: 'Alto del Carmen',
+						name: "Alto del Carmen",
 					},
 					{
 						id: 3303,
-						name: 'Freirina',
+						name: "Freirina",
 					},
 					{
 						id: 3304,
-						name: 'Huasco',
+						name: "Huasco",
 					},
 				],
 			},
@@ -170,84 +170,84 @@ export const chile = [
 	},
 	{
 		id: 4,
-		name: 'Coquimbo',
-		value: 'centro',
+		name: "Coquimbo",
+		value: "centro",
 		provincias: [
 			{
 				id: 41,
-				name: 'Elqui',
+				name: "Elqui",
 				comunas: [
 					{
 						id: 4101,
-						name: 'La Serena',
+						name: "La Serena",
 					},
 					{
 						id: 4102,
-						name: 'Coquimbo',
+						name: "Coquimbo",
 					},
 					{
 						id: 4103,
-						name: 'Andacollo',
+						name: "Andacollo",
 					},
 					{
 						id: 4104,
-						name: 'La Higuera',
+						name: "La Higuera",
 					},
 					{
 						id: 4105,
-						name: 'Paihuano',
+						name: "Paihuano",
 					},
 					{
 						id: 4106,
-						name: 'Vicuña',
+						name: "Vicuña",
 					},
 				],
 			},
 			{
 				id: 42,
-				name: 'Choapa',
+				name: "Choapa",
 				comunas: [
 					{
 						id: 4201,
-						name: 'Illapel',
+						name: "Illapel",
 					},
 					{
 						id: 4202,
-						name: 'Canela',
+						name: "Canela",
 					},
 					{
 						id: 4203,
-						name: 'Los Vilos',
+						name: "Los Vilos",
 					},
 					{
 						id: 4204,
-						name: 'Salamanca',
+						name: "Salamanca",
 					},
 				],
 			},
 			{
 				id: 43,
-				name: 'Limarí',
+				name: "Limarí",
 				comunas: [
 					{
 						id: 4301,
-						name: 'Ovalle',
+						name: "Ovalle",
 					},
 					{
 						id: 4302,
-						name: 'Combarbalá',
+						name: "Combarbalá",
 					},
 					{
 						id: 4303,
-						name: 'Monte Patria',
+						name: "Monte Patria",
 					},
 					{
 						id: 4304,
-						name: 'Punitaqui',
+						name: "Punitaqui",
 					},
 					{
 						id: 4305,
-						name: 'Río Hurtado',
+						name: "Río Hurtado",
 					},
 				],
 			},
@@ -255,206 +255,206 @@ export const chile = [
 	},
 	{
 		id: 5,
-		name: 'Valparaíso',
-		value: 'origen',
+		name: "Valparaíso",
+		value: "origen",
 		provincias: [
 			{
 				id: 51,
-				name: 'Valparaíso',
+				name: "Valparaíso",
 				comunas: [
 					{
 						id: 5101,
-						name: 'Valparaíso',
+						name: "Valparaíso",
 					},
 					{
 						id: 5102,
-						name: 'Casablanca',
+						name: "Casablanca",
 					},
 					{
 						id: 5103,
-						name: 'Concón',
+						name: "Concón",
 					},
 					{
 						id: 5104,
-						name: 'Juan Fernández',
+						name: "Juan Fernández",
 					},
 					{
 						id: 5105,
-						name: 'Puchuncaví',
+						name: "Puchuncaví",
 					},
 					{
 						id: 5107,
-						name: 'Quintero',
+						name: "Quintero",
 					},
 					{
 						id: 5109,
-						name: 'Viña del Mar',
+						name: "Viña del Mar",
 					},
 				],
 			},
 			{
 				id: 52,
-				name: 'Isla de Pascua',
+				name: "Isla de Pascua",
 				comunas: [
 					{
 						id: 5201,
-						name: 'Isla de Pascua',
+						name: "Isla de Pascua",
 					},
 				],
 			},
 			{
 				id: 53,
-				name: 'Los Andes',
+				name: "Los Andes",
 				comunas: [
 					{
 						id: 5301,
-						name: 'Los Andes',
+						name: "Los Andes",
 					},
 					{
 						id: 5302,
-						name: 'Calle Larga',
+						name: "Calle Larga",
 					},
 					{
 						id: 5303,
-						name: 'Rinconada',
+						name: "Rinconada",
 					},
 					{
 						id: 5304,
-						name: 'San Esteban',
+						name: "San Esteban",
 					},
 				],
 			},
 			{
 				id: 54,
-				name: 'Petorca',
+				name: "Petorca",
 				comunas: [
 					{
 						id: 5401,
-						name: 'La Ligua',
+						name: "La Ligua",
 					},
 					{
 						id: 5402,
-						name: 'Cabildo',
+						name: "Cabildo",
 					},
 					{
 						id: 5403,
-						name: 'Papudo',
+						name: "Papudo",
 					},
 					{
 						id: 5404,
-						name: 'Petorca',
+						name: "Petorca",
 					},
 					{
 						id: 5405,
-						name: 'Zapallar',
+						name: "Zapallar",
 					},
 				],
 			},
 			{
 				id: 55,
-				name: 'Quillota',
+				name: "Quillota",
 				comunas: [
 					{
 						id: 5501,
-						name: 'Quillota',
+						name: "Quillota",
 					},
 					{
 						id: 5502,
-						name: 'La Calera',
+						name: "La Calera",
 					},
 					{
 						id: 5503,
-						name: 'Hijuelas',
+						name: "Hijuelas",
 					},
 					{
 						id: 5504,
-						name: 'La Cruz',
+						name: "La Cruz",
 					},
 					{
 						id: 5506,
-						name: 'Nogales',
+						name: "Nogales",
 					},
 				],
 			},
 			{
 				id: 56,
-				name: 'San Antonio',
+				name: "San Antonio",
 				comunas: [
 					{
 						id: 5601,
-						name: 'San Antonio',
+						name: "San Antonio",
 					},
 					{
 						id: 5602,
-						name: 'Algarrobo',
+						name: "Algarrobo",
 					},
 					{
 						id: 5603,
-						name: 'Cartagena',
+						name: "Cartagena",
 					},
 					{
 						id: 5604,
-						name: 'El Quisco',
+						name: "El Quisco",
 					},
 					{
 						id: 5605,
-						name: 'El Tabo',
+						name: "El Tabo",
 					},
 					{
 						id: 5606,
-						name: 'Santo Domingo',
+						name: "Santo Domingo",
 					},
 				],
 			},
 			{
 				id: 57,
-				name: 'San Felipe de Aconcagua',
+				name: "San Felipe de Aconcagua",
 				comunas: [
 					{
 						id: 5701,
-						name: 'San Felipe',
+						name: "San Felipe",
 					},
 					{
 						id: 5702,
-						name: 'Catemu',
+						name: "Catemu",
 					},
 					{
 						id: 5703,
-						name: 'Llay Llay',
+						name: "Llay Llay",
 					},
 					{
 						id: 5704,
-						name: 'Panquehue',
+						name: "Panquehue",
 					},
 					{
 						id: 5705,
-						name: 'Putaendo',
+						name: "Putaendo",
 					},
 					{
 						id: 5706,
-						name: 'Santa María',
+						name: "Santa María",
 					},
 				],
 			},
 			{
 				id: 58,
-				name: 'Marga Marga',
+				name: "Marga Marga",
 				comunas: [
 					{
 						id: 5801,
-						name: 'Quilpué',
+						name: "Quilpué",
 					},
 					{
 						id: 5802,
-						name: 'Limache',
+						name: "Limache",
 					},
 					{
 						id: 5803,
-						name: 'Olmué',
+						name: "Olmué",
 					},
 					{
 						id: 5804,
-						name: 'Villa Alemana',
+						name: "Villa Alemana",
 					},
 				],
 			},
@@ -463,155 +463,155 @@ export const chile = [
 	{
 		id: 6,
 		name: "Región del Libertador Gral. Bernardo O'Higgins",
-		value: 'centro',
+		value: "centro",
 		provincias: [
 			{
 				id: 61,
-				name: 'Cachapoal',
+				name: "Cachapoal",
 				comunas: [
 					{
 						id: 6101,
-						name: 'Rancagua',
+						name: "Rancagua",
 					},
 					{
 						id: 6102,
-						name: 'Codegua',
+						name: "Codegua",
 					},
 					{
 						id: 6103,
-						name: 'Coinco',
+						name: "Coinco",
 					},
 					{
 						id: 6104,
-						name: 'Coltauco',
+						name: "Coltauco",
 					},
 					{
 						id: 6105,
-						name: 'Doñihue',
+						name: "Doñihue",
 					},
 					{
 						id: 6106,
-						name: 'Graneros',
+						name: "Graneros",
 					},
 					{
 						id: 6107,
-						name: 'Las Cabras',
+						name: "Las Cabras",
 					},
 					{
 						id: 6108,
-						name: 'Machalí',
+						name: "Machalí",
 					},
 					{
 						id: 6109,
-						name: 'Malloa',
+						name: "Malloa",
 					},
 					{
 						id: 6110,
-						name: 'Mostazal',
+						name: "Mostazal",
 					},
 					{
 						id: 6111,
-						name: 'Olivar',
+						name: "Olivar",
 					},
 					{
 						id: 6112,
-						name: 'Peumo',
+						name: "Peumo",
 					},
 					{
 						id: 6113,
-						name: 'Pichidegua',
+						name: "Pichidegua",
 					},
 					{
 						id: 6114,
-						name: 'Quinta de Tilcoco',
+						name: "Quinta de Tilcoco",
 					},
 					{
 						id: 6115,
-						name: 'Rengo',
+						name: "Rengo",
 					},
 					{
 						id: 6116,
-						name: 'Requínoa',
+						name: "Requínoa",
 					},
 					{
 						id: 6117,
-						name: 'San Vicente',
+						name: "San Vicente",
 					},
 				],
 			},
 			{
 				id: 62,
-				name: 'Cardenal Caro',
+				name: "Cardenal Caro",
 				comunas: [
 					{
 						id: 6201,
-						name: 'Pichilemu',
+						name: "Pichilemu",
 					},
 					{
 						id: 6202,
-						name: 'La Estrella',
+						name: "La Estrella",
 					},
 					{
 						id: 6203,
-						name: 'Litueche',
+						name: "Litueche",
 					},
 					{
 						id: 6204,
-						name: 'Marchihue',
+						name: "Marchihue",
 					},
 					{
 						id: 6205,
-						name: 'Navidad',
+						name: "Navidad",
 					},
 					{
 						id: 6206,
-						name: 'Paredones',
+						name: "Paredones",
 					},
 				],
 			},
 			{
 				id: 63,
-				name: 'Colchagua',
+				name: "Colchagua",
 				comunas: [
 					{
 						id: 6301,
-						name: 'San Fernando',
+						name: "San Fernando",
 					},
 					{
 						id: 6302,
-						name: 'Chépica',
+						name: "Chépica",
 					},
 					{
 						id: 6303,
-						name: 'Chimbarongo',
+						name: "Chimbarongo",
 					},
 					{
 						id: 6304,
-						name: 'Lolol',
+						name: "Lolol",
 					},
 					{
 						id: 6305,
-						name: 'Nancagua',
+						name: "Nancagua",
 					},
 					{
 						id: 6306,
-						name: 'Palmilla',
+						name: "Palmilla",
 					},
 					{
 						id: 6307,
-						name: 'Peralillo',
+						name: "Peralillo",
 					},
 					{
 						id: 6308,
-						name: 'Placilla',
+						name: "Placilla",
 					},
 					{
 						id: 6309,
-						name: 'Pumanque',
+						name: "Pumanque",
 					},
 					{
 						id: 6310,
-						name: 'Santa Cruz',
+						name: "Santa Cruz",
 					},
 				],
 			},
@@ -619,150 +619,150 @@ export const chile = [
 	},
 	{
 		id: 7,
-		name: 'Región del Maule',
-		value: 'centro',
+		name: "Región del Maule",
+		value: "centro",
 		provincias: [
 			{
 				id: 71,
-				name: 'Talca',
+				name: "Talca",
 				comunas: [
 					{
 						id: 7101,
-						name: 'Talca',
+						name: "Talca",
 					},
 					{
 						id: 7102,
-						name: 'Constitución',
+						name: "Constitución",
 					},
 					{
 						id: 7103,
-						name: 'Curepto',
+						name: "Curepto",
 					},
 					{
 						id: 7104,
-						name: 'Empedrado',
+						name: "Empedrado",
 					},
 					{
 						id: 7105,
-						name: 'Maule',
+						name: "Maule",
 					},
 					{
 						id: 7106,
-						name: 'Pelarco',
+						name: "Pelarco",
 					},
 					{
 						id: 7107,
-						name: 'Pencahue',
+						name: "Pencahue",
 					},
 					{
 						id: 7108,
-						name: 'Río Claro',
+						name: "Río Claro",
 					},
 					{
 						id: 7109,
-						name: 'San Clemente',
+						name: "San Clemente",
 					},
 					{
 						id: 7110,
-						name: 'San Rafael',
+						name: "San Rafael",
 					},
 				],
 			},
 			{
 				id: 72,
-				name: 'Cauquenes',
+				name: "Cauquenes",
 				comunas: [
 					{
 						id: 7201,
-						name: 'Cauquenes',
+						name: "Cauquenes",
 					},
 					{
 						id: 7202,
-						name: 'Chanco',
+						name: "Chanco",
 					},
 					{
 						id: 7203,
-						name: 'Pelluhue',
+						name: "Pelluhue",
 					},
 				],
 			},
 			{
 				id: 73,
-				name: 'Curicó',
+				name: "Curicó",
 				comunas: [
 					{
 						id: 7301,
-						name: 'Curicó',
+						name: "Curicó",
 					},
 					{
 						id: 7302,
-						name: 'Hualañé',
+						name: "Hualañé",
 					},
 					{
 						id: 7303,
-						name: 'Licantén',
+						name: "Licantén",
 					},
 					{
 						id: 7304,
-						name: 'Molina',
+						name: "Molina",
 					},
 					{
 						id: 7305,
-						name: 'Rauco',
+						name: "Rauco",
 					},
 					{
 						id: 7306,
-						name: 'Romeral',
+						name: "Romeral",
 					},
 					{
 						id: 7307,
-						name: 'Sagrada Familia',
+						name: "Sagrada Familia",
 					},
 					{
 						id: 7308,
-						name: 'Teno',
+						name: "Teno",
 					},
 					{
 						id: 7309,
-						name: 'Vichuquén',
+						name: "Vichuquén",
 					},
 				],
 			},
 			{
 				id: 74,
-				name: 'Linares',
+				name: "Linares",
 				comunas: [
 					{
 						id: 7401,
-						name: 'Linares',
+						name: "Linares",
 					},
 					{
 						id: 7402,
-						name: 'Colbún',
+						name: "Colbún",
 					},
 					{
 						id: 7403,
-						name: 'Longaví',
+						name: "Longaví",
 					},
 					{
 						id: 7404,
-						name: 'Parral',
+						name: "Parral",
 					},
 					{
 						id: 7405,
-						name: 'Retiro',
+						name: "Retiro",
 					},
 					{
 						id: 7406,
-						name: 'San Javier',
+						name: "San Javier",
 					},
 					{
 						id: 7407,
-						name: 'Villa Alegre',
+						name: "Villa Alegre",
 					},
 					{
 						id: 7408,
-						name: 'Yerbas Buenas',
+						name: "Yerbas Buenas",
 					},
 				],
 			},
@@ -770,156 +770,156 @@ export const chile = [
 	},
 	{
 		id: 8,
-		name: 'Región del Biobío',
-		value: 'centro',
+		name: "Región del Biobío",
+		value: "centro",
 		provincias: [
 			{
 				id: 81,
-				name: 'Concepción',
+				name: "Concepción",
 				comunas: [
 					{
 						id: 8101,
-						name: 'Concepción',
+						name: "Concepción",
 					},
 					{
 						id: 8102,
-						name: 'Coronel',
+						name: "Coronel",
 					},
 					{
 						id: 8103,
-						name: 'Chiguayante',
+						name: "Chiguayante",
 					},
 					{
 						id: 8104,
-						name: 'Florida',
+						name: "Florida",
 					},
 					{
 						id: 8105,
-						name: 'Hualqui',
+						name: "Hualqui",
 					},
 					{
 						id: 8106,
-						name: 'Lota',
+						name: "Lota",
 					},
 					{
 						id: 8107,
-						name: 'Penco',
+						name: "Penco",
 					},
 					{
 						id: 8108,
-						name: 'San Pedro de la Paz',
+						name: "San Pedro de la Paz",
 					},
 					{
 						id: 8109,
-						name: 'Santa Juana',
+						name: "Santa Juana",
 					},
 					{
 						id: 8110,
-						name: 'Talcahuano',
+						name: "Talcahuano",
 					},
 					{
 						id: 8111,
-						name: 'Tomé',
+						name: "Tomé",
 					},
 					{
 						id: 8112,
-						name: 'Hualpén',
+						name: "Hualpén",
 					},
 				],
 			},
 			{
 				id: 82,
-				name: 'Arauco',
+				name: "Arauco",
 				comunas: [
 					{
 						id: 8201,
-						name: 'Lebu',
+						name: "Lebu",
 					},
 					{
 						id: 8202,
-						name: 'Arauco',
+						name: "Arauco",
 					},
 					{
 						id: 8203,
-						name: 'Cañete',
+						name: "Cañete",
 					},
 					{
 						id: 8204,
-						name: 'Contulmo',
+						name: "Contulmo",
 					},
 					{
 						id: 8205,
-						name: 'Curanilahue',
+						name: "Curanilahue",
 					},
 					{
 						id: 8206,
-						name: 'Los Álamos',
+						name: "Los Álamos",
 					},
 					{
 						id: 8207,
-						name: 'Tirúa',
+						name: "Tirúa",
 					},
 				],
 			},
 			{
 				id: 83,
-				name: 'Biobío',
+				name: "Biobío",
 				comunas: [
 					{
 						id: 8301,
-						name: 'Los Ángeles',
+						name: "Los Ángeles",
 					},
 					{
 						id: 8302,
-						name: 'Antuco',
+						name: "Antuco",
 					},
 					{
 						id: 8303,
-						name: 'Cabrero',
+						name: "Cabrero",
 					},
 					{
 						id: 8304,
-						name: 'Laja',
+						name: "Laja",
 					},
 					{
 						id: 8305,
-						name: 'Mulchén',
+						name: "Mulchén",
 					},
 					{
 						id: 8306,
-						name: 'Nacimiento',
+						name: "Nacimiento",
 					},
 					{
 						id: 8307,
-						name: 'Negrete',
+						name: "Negrete",
 					},
 					{
 						id: 8308,
-						name: 'Quilaco',
+						name: "Quilaco",
 					},
 					{
 						id: 8309,
-						name: 'Quilleco',
+						name: "Quilleco",
 					},
 					{
 						id: 8310,
-						name: 'San Rosendo',
+						name: "San Rosendo",
 					},
 					{
 						id: 8311,
-						name: 'Santa Bárbara',
+						name: "Santa Bárbara",
 					},
 					{
 						id: 8312,
-						name: 'Tucapel',
+						name: "Tucapel",
 					},
 					{
 						id: 8313,
-						name: 'Yumbel',
+						name: "Yumbel",
 					},
 					{
 						id: 8314,
-						name: 'Alto Biobío',
+						name: "Alto Biobío",
 					},
 				],
 			},
@@ -927,146 +927,146 @@ export const chile = [
 	},
 	{
 		id: 9,
-		name: 'Región de la Araucanía',
-		value: 'centro',
+		name: "Región de la Araucanía",
+		value: "centro",
 		provincias: [
 			{
 				id: 91,
-				name: 'Cautín',
+				name: "Cautín",
 				comunas: [
 					{
 						id: 9101,
-						name: 'Temuco',
+						name: "Temuco",
 					},
 					{
 						id: 9102,
-						name: 'Carahue',
+						name: "Carahue",
 					},
 					{
 						id: 9103,
-						name: 'Cunco',
+						name: "Cunco",
 					},
 					{
 						id: 9104,
-						name: 'Curarrehue',
+						name: "Curarrehue",
 					},
 					{
 						id: 9105,
-						name: 'Freire',
+						name: "Freire",
 					},
 					{
 						id: 9106,
-						name: 'Galvarino',
+						name: "Galvarino",
 					},
 					{
 						id: 9107,
-						name: 'Gorbea',
+						name: "Gorbea",
 					},
 					{
 						id: 9108,
-						name: 'Lautaro',
+						name: "Lautaro",
 					},
 					{
 						id: 9109,
-						name: 'Loncoche',
+						name: "Loncoche",
 					},
 					{
 						id: 9110,
-						name: 'Melipeuco',
+						name: "Melipeuco",
 					},
 					{
 						id: 9111,
-						name: 'Nueva Imperial',
+						name: "Nueva Imperial",
 					},
 					{
 						id: 9112,
-						name: 'Padre las Casas',
+						name: "Padre las Casas",
 					},
 					{
 						id: 9113,
-						name: 'Perquenco',
+						name: "Perquenco",
 					},
 					{
 						id: 9114,
-						name: 'Pitrufquén',
+						name: "Pitrufquén",
 					},
 					{
 						id: 9115,
-						name: 'Pucón',
+						name: "Pucón",
 					},
 					{
 						id: 9116,
-						name: 'Saavedra',
+						name: "Saavedra",
 					},
 					{
 						id: 9117,
-						name: 'Teodoro Schmidt',
+						name: "Teodoro Schmidt",
 					},
 					{
 						id: 9118,
-						name: 'Toltén',
+						name: "Toltén",
 					},
 					{
 						id: 9119,
-						name: 'Vilcún',
+						name: "Vilcún",
 					},
 					{
 						id: 9120,
-						name: 'Villarrica',
+						name: "Villarrica",
 					},
 					{
 						id: 9121,
-						name: 'Cholchol',
+						name: "Cholchol",
 					},
 				],
 			},
 			{
 				id: 92,
-				name: 'Malleco',
+				name: "Malleco",
 				comunas: [
 					{
 						id: 9201,
-						name: 'Angol',
+						name: "Angol",
 					},
 					{
 						id: 9202,
-						name: 'Collipulli',
+						name: "Collipulli",
 					},
 					{
 						id: 9203,
-						name: 'Curacautín',
+						name: "Curacautín",
 					},
 					{
 						id: 9204,
-						name: 'Ercilla',
+						name: "Ercilla",
 					},
 					{
 						id: 9205,
-						name: 'Lonquimay',
+						name: "Lonquimay",
 					},
 					{
 						id: 9206,
-						name: 'Los Sauces',
+						name: "Los Sauces",
 					},
 					{
 						id: 9207,
-						name: 'Lumaco',
+						name: "Lumaco",
 					},
 					{
 						id: 9208,
-						name: 'Purén',
+						name: "Purén",
 					},
 					{
 						id: 9209,
-						name: 'Renaico',
+						name: "Renaico",
 					},
 					{
 						id: 9210,
-						name: 'Traiguén',
+						name: "Traiguén",
 					},
 					{
 						id: 9211,
-						name: 'Victoria',
+						name: "Victoria",
 					},
 				],
 			},
@@ -1074,150 +1074,150 @@ export const chile = [
 	},
 	{
 		id: 10,
-		name: 'Región de Los Lagos',
-		value: 'centro',
+		name: "Región de Los Lagos",
+		value: "centro",
 		provincias: [
 			{
 				id: 101,
-				name: 'Llanquihue',
+				name: "Llanquihue",
 				comunas: [
 					{
 						id: 10101,
-						name: 'Puerto Montt',
+						name: "Puerto Montt",
 					},
 					{
 						id: 10102,
-						name: 'Calbuco',
+						name: "Calbuco",
 					},
 					{
 						id: 10103,
-						name: 'Cochamó',
+						name: "Cochamó",
 					},
 					{
 						id: 10104,
-						name: 'Fresia',
+						name: "Fresia",
 					},
 					{
 						id: 10105,
-						name: 'Frutillar',
+						name: "Frutillar",
 					},
 					{
 						id: 10106,
-						name: 'Los Muermos',
+						name: "Los Muermos",
 					},
 					{
 						id: 10107,
-						name: 'Llanquihue',
+						name: "Llanquihue",
 					},
 					{
 						id: 10108,
-						name: 'Maullín',
+						name: "Maullín",
 					},
 					{
 						id: 10109,
-						name: 'Puerto Varas',
+						name: "Puerto Varas",
 					},
 				],
 			},
 			{
 				id: 102,
-				name: 'Chiloé',
+				name: "Chiloé",
 				comunas: [
 					{
 						id: 10201,
-						name: 'Castro',
+						name: "Castro",
 					},
 					{
 						id: 10202,
-						name: 'Ancud',
+						name: "Ancud",
 					},
 					{
 						id: 10203,
-						name: 'Chonchi',
+						name: "Chonchi",
 					},
 					{
 						id: 10204,
-						name: 'Curaco de Vélez',
+						name: "Curaco de Vélez",
 					},
 					{
 						id: 10205,
-						name: 'Dalcahue',
+						name: "Dalcahue",
 					},
 					{
 						id: 10206,
-						name: 'Puqueldón',
+						name: "Puqueldón",
 					},
 					{
 						id: 10207,
-						name: 'Queilén',
+						name: "Queilén",
 					},
 					{
 						id: 10208,
-						name: 'Quellón',
+						name: "Quellón",
 					},
 					{
 						id: 10209,
-						name: 'Quemchi',
+						name: "Quemchi",
 					},
 					{
 						id: 10210,
-						name: 'Quinchao',
+						name: "Quinchao",
 					},
 				],
 			},
 			{
 				id: 103,
-				name: 'Osorno',
+				name: "Osorno",
 				comunas: [
 					{
 						id: 10301,
-						name: 'Osorno',
+						name: "Osorno",
 					},
 					{
 						id: 10302,
-						name: 'Puerto Octay',
+						name: "Puerto Octay",
 					},
 					{
 						id: 10303,
-						name: 'Purranque',
+						name: "Purranque",
 					},
 					{
 						id: 10304,
-						name: 'Puyehue',
+						name: "Puyehue",
 					},
 					{
 						id: 10305,
-						name: 'Río Negro',
+						name: "Río Negro",
 					},
 					{
 						id: 10306,
-						name: 'San Juan de la Costa',
+						name: "San Juan de la Costa",
 					},
 					{
 						id: 10307,
-						name: 'San Pablo',
+						name: "San Pablo",
 					},
 				],
 			},
 			{
 				id: 104,
-				name: 'Palena',
+				name: "Palena",
 				comunas: [
 					{
 						id: 10401,
-						name: 'Chaitén',
+						name: "Chaitén",
 					},
 					{
 						id: 10402,
-						name: 'Futaleufú',
+						name: "Futaleufú",
 					},
 					{
 						id: 10403,
-						name: 'Hualaihué',
+						name: "Hualaihué",
 					},
 					{
 						id: 10404,
-						name: 'Palena',
+						name: "Palena",
 					},
 				],
 			},
@@ -1225,48 +1225,48 @@ export const chile = [
 	},
 	{
 		id: 11,
-		name: 'Región Aisén del Gral. Carlos Ibáñez del Campo',
-		value: 'extremo',
+		name: "Región Aisén del Gral. Carlos Ibáñez del Campo",
+		value: "extremo",
 		provincias: [
 			{
 				id: 111,
-				name: 'Coihaique',
+				name: "Coihaique",
 				comunas: [
 					{
 						id: 11101,
-						name: 'Coyhaique',
+						name: "Coyhaique",
 					},
 					{
 						id: 11102,
-						name: 'Lago Verde',
+						name: "Lago Verde",
 					},
 				],
 			},
 			{
 				id: 112,
-				name: 'Aisén',
+				name: "Aisén",
 				comunas: [
 					{
 						id: 11201,
-						name: 'Aysén',
+						name: "Aysén",
 					},
 					{
 						id: 11202,
-						name: 'Cisnes',
+						name: "Cisnes",
 					},
 					{
 						id: 11203,
-						name: 'Guaitecas',
+						name: "Guaitecas",
 					},
 				],
 			},
 			{
 				id: 113,
-				name: 'Capitán Prat',
+				name: "Capitán Prat",
 				comunas: [
 					{
 						id: 11301,
-						name: 'Cochrane',
+						name: "Cochrane",
 					},
 					{
 						id: 11302,
@@ -1274,21 +1274,21 @@ export const chile = [
 					},
 					{
 						id: 11303,
-						name: 'Tortel',
+						name: "Tortel",
 					},
 				],
 			},
 			{
 				id: 114,
-				name: 'General Carrera',
+				name: "General Carrera",
 				comunas: [
 					{
 						id: 11401,
-						name: 'Chile Chico',
+						name: "Chile Chico",
 					},
 					{
 						id: 11402,
-						name: 'Río Ibáñez',
+						name: "Río Ibáñez",
 					},
 				],
 			},
@@ -1296,16 +1296,16 @@ export const chile = [
 	},
 	{
 		id: 12,
-		name: 'Región de Magallanes y de la Antártica Chilena',
-		value: 'extremo',
+		name: "Región de Magallanes y de la Antártica Chilena",
+		value: "extremo",
 		provincias: [
 			{
 				id: 121,
-				name: 'Magallanes',
+				name: "Magallanes",
 				comunas: [
 					{
 						id: 12101,
-						name: 'Punta Arenas',
+						name: "Punta Arenas",
 					},
 				],
 			},
@@ -1313,250 +1313,250 @@ export const chile = [
 	},
 	{
 		id: 13,
-		name: 'Región Metropolitana de Santiago',
-		value: 'centro',
+		name: "Región Metropolitana de Santiago",
+		value: "centro",
 		provincias: [
 			{
 				id: 131,
-				name: 'Santiago',
+				name: "Santiago",
 				comunas: [
 					{
 						id: 13101,
-						name: 'Santiago',
+						name: "Santiago",
 					},
 					{
 						id: 13102,
-						name: 'Cerrillos',
+						name: "Cerrillos",
 					},
 					{
 						id: 13103,
-						name: 'Cerro Navia',
+						name: "Cerro Navia",
 					},
 					{
 						id: 13104,
-						name: 'Conchalí',
+						name: "Conchalí",
 					},
 					{
 						id: 13105,
-						name: 'El Bosque',
+						name: "El Bosque",
 					},
 					{
 						id: 13106,
-						name: 'Estación Central',
+						name: "Estación Central",
 					},
 					{
 						id: 13107,
-						name: 'Huechuraba',
+						name: "Huechuraba",
 					},
 					{
 						id: 13108,
-						name: 'Independencia',
+						name: "Independencia",
 					},
 					{
 						id: 13109,
-						name: 'La Cisterna',
+						name: "La Cisterna",
 					},
 					{
 						id: 13110,
-						name: 'La Florida',
+						name: "La Florida",
 					},
 					{
 						id: 13111,
-						name: 'La Granja',
+						name: "La Granja",
 					},
 					{
 						id: 13112,
-						name: 'La Pintana',
+						name: "La Pintana",
 					},
 					{
 						id: 13113,
-						name: 'La Reina',
+						name: "La Reina",
 					},
 					{
 						id: 13114,
-						name: 'Las Condes',
+						name: "Las Condes",
 					},
 					{
 						id: 13115,
-						name: 'Lo Barnechea',
+						name: "Lo Barnechea",
 					},
 					{
 						id: 13116,
-						name: 'Lo Espejo',
+						name: "Lo Espejo",
 					},
 					{
 						id: 13117,
-						name: 'Lo Prado',
+						name: "Lo Prado",
 					},
 					{
 						id: 13118,
-						name: 'Macul',
+						name: "Macul",
 					},
 					{
 						id: 13119,
-						name: 'Maipú',
+						name: "Maipú",
 					},
 					{
 						id: 13120,
-						name: 'Ñuñoa',
+						name: "Ñuñoa",
 					},
 					{
 						id: 13121,
-						name: 'Pedro Aguirre Cerda',
+						name: "Pedro Aguirre Cerda",
 					},
 					{
 						id: 13122,
-						name: 'Peñalolén',
+						name: "Peñalolén",
 					},
 					{
 						id: 13123,
-						name: 'Providencia',
+						name: "Providencia",
 					},
 					{
 						id: 13124,
-						name: 'Pudahuel',
+						name: "Pudahuel",
 					},
 					{
 						id: 13125,
-						name: 'Quilicura',
+						name: "Quilicura",
 					},
 					{
 						id: 13126,
-						name: 'Quinta Normal',
+						name: "Quinta Normal",
 					},
 					{
 						id: 13127,
-						name: 'Recoleta',
+						name: "Recoleta",
 					},
 					{
 						id: 13128,
-						name: 'Renca',
+						name: "Renca",
 					},
 					{
 						id: 13129,
-						name: 'San Joaquín',
+						name: "San Joaquín",
 					},
 					{
 						id: 13130,
-						name: 'San Miguel',
+						name: "San Miguel",
 					},
 					{
 						id: 13131,
-						name: 'San Ramón',
+						name: "San Ramón",
 					},
 					{
 						id: 13132,
-						name: 'Vitacura',
+						name: "Vitacura",
 					},
 				],
 			},
 			{
 				id: 132,
-				name: 'Cordillera',
+				name: "Cordillera",
 				comunas: [
 					{
 						id: 13201,
-						name: 'Puente Alto',
+						name: "Puente Alto",
 					},
 					{
 						id: 13202,
-						name: 'Pirque',
+						name: "Pirque",
 					},
 					{
 						id: 13203,
-						name: 'San José de Maipo',
+						name: "San José de Maipo",
 					},
 				],
 			},
 			{
 				id: 133,
-				name: 'Chacabuco',
+				name: "Chacabuco",
 				comunas: [
 					{
 						id: 13301,
-						name: 'Colina',
+						name: "Colina",
 					},
 					{
 						id: 13302,
-						name: 'Lampa',
+						name: "Lampa",
 					},
 					{
 						id: 13303,
-						name: 'Tiltil',
+						name: "Tiltil",
 					},
 				],
 			},
 			{
 				id: 134,
-				name: 'Maipo',
+				name: "Maipo",
 				comunas: [
 					{
 						id: 13401,
-						name: 'San Bernardo',
+						name: "San Bernardo",
 					},
 					{
 						id: 13402,
-						name: 'Buin',
+						name: "Buin",
 					},
 					{
 						id: 13403,
-						name: 'Calera de Tango',
+						name: "Calera de Tango",
 					},
 					{
 						id: 13404,
-						name: 'Paine',
+						name: "Paine",
 					},
 				],
 			},
 			{
 				id: 135,
-				name: 'Melipilla',
+				name: "Melipilla",
 				comunas: [
 					{
 						id: 13501,
-						name: 'Melipilla',
+						name: "Melipilla",
 					},
 					{
 						id: 13502,
-						name: 'Alhué',
+						name: "Alhué",
 					},
 					{
 						id: 13503,
-						name: 'Curacaví',
+						name: "Curacaví",
 					},
 					{
 						id: 13504,
-						name: 'María Pinto',
+						name: "María Pinto",
 					},
 					{
 						id: 13505,
-						name: 'San Pedro',
+						name: "San Pedro",
 					},
 				],
 			},
 			{
 				id: 136,
-				name: 'Talagante',
+				name: "Talagante",
 				comunas: [
 					{
 						id: 13601,
-						name: 'Talagante',
+						name: "Talagante",
 					},
 					{
 						id: 13602,
-						name: 'El Monte',
+						name: "El Monte",
 					},
 					{
 						id: 13603,
-						name: 'Isla de Maipo',
+						name: "Isla de Maipo",
 					},
 					{
 						id: 13604,
-						name: 'Padre Hurtado',
+						name: "Padre Hurtado",
 					},
 					{
 						id: 13605,
-						name: 'Peñaflor',
+						name: "Peñaflor",
 					},
 				],
 			},
@@ -1564,66 +1564,66 @@ export const chile = [
 	},
 	{
 		id: 14,
-		name: 'Región de Los Ríos',
-		value: 'centro',
+		name: "Región de Los Ríos",
+		value: "centro",
 		provincias: [
 			{
 				id: 141,
-				name: 'Valdivia',
+				name: "Valdivia",
 				comunas: [
 					{
 						id: 14101,
-						name: 'Valdivia',
+						name: "Valdivia",
 					},
 					{
 						id: 14102,
-						name: 'Corral',
+						name: "Corral",
 					},
 					{
 						id: 14103,
-						name: 'Lanco',
+						name: "Lanco",
 					},
 					{
 						id: 14104,
-						name: 'Los Lagos',
+						name: "Los Lagos",
 					},
 					{
 						id: 14105,
-						name: 'Máfil',
+						name: "Máfil",
 					},
 					{
 						id: 14106,
-						name: 'Mariquina',
+						name: "Mariquina",
 					},
 					{
 						id: 14107,
-						name: 'Paillaco',
+						name: "Paillaco",
 					},
 					{
 						id: 14108,
-						name: 'Panguipulli',
+						name: "Panguipulli",
 					},
 				],
 			},
 			{
 				id: 142,
-				name: 'Ranco',
+				name: "Ranco",
 				comunas: [
 					{
 						id: 14201,
-						name: 'La Unión',
+						name: "La Unión",
 					},
 					{
 						id: 14202,
-						name: 'Futrono',
+						name: "Futrono",
 					},
 					{
 						id: 14203,
-						name: 'Lago Ranco',
+						name: "Lago Ranco",
 					},
 					{
 						id: 14204,
-						name: 'Río Bueno',
+						name: "Río Bueno",
 					},
 				],
 			},
@@ -1631,34 +1631,34 @@ export const chile = [
 	},
 	{
 		id: 15,
-		name: 'Arica y Parinacota',
-		value: 'extremo',
+		name: "Arica y Parinacota",
+		value: "extremo",
 		provincias: [
 			{
 				id: 151,
-				name: 'Arica',
+				name: "Arica",
 				comunas: [
 					{
 						id: 15101,
-						name: 'Arica',
+						name: "Arica",
 					},
 					{
 						id: 15102,
-						name: 'Camarones',
+						name: "Camarones",
 					},
 				],
 			},
 			{
 				id: 152,
-				name: 'Parinacota',
+				name: "Parinacota",
 				comunas: [
 					{
 						id: 15201,
-						name: 'Putre',
+						name: "Putre",
 					},
 					{
 						id: 15202,
-						name: 'General Lagos',
+						name: "General Lagos",
 					},
 				],
 			},
@@ -1666,108 +1666,108 @@ export const chile = [
 	},
 	{
 		id: 16,
-		name: 'Región de Ñuble',
-		value: 'centro',
+		name: "Región de Ñuble",
+		value: "centro",
 		provincias: [
 			{
 				id: 163,
-				name: 'Diguillín',
+				name: "Diguillín",
 				comunas: [
 					{
 						id: 8401,
-						name: 'Chillán',
+						name: "Chillán",
 					},
 					{
 						id: 8402,
-						name: 'Bulnes',
+						name: "Bulnes",
 					},
 					{
 						id: 8406,
-						name: 'Chillán Viejo',
+						name: "Chillán Viejo",
 					},
 					{
 						id: 8407,
-						name: 'El Carmen',
+						name: "El Carmen",
 					},
 					{
 						id: 8410,
-						name: 'Pemuco',
+						name: "Pemuco",
 					},
 					{
 						id: 8411,
-						name: 'Pinto',
+						name: "Pinto",
 					},
 					{
 						id: 8413,
-						name: 'Quillón',
+						name: "Quillón",
 					},
 					{
 						id: 8418,
-						name: 'San Ignacio',
+						name: "San Ignacio",
 					},
 					{
 						id: 8421,
-						name: 'Yungay',
+						name: "Yungay",
 					},
 				],
 			},
 			{
 				id: 162,
-				name: 'Itata',
+				name: "Itata",
 				comunas: [
 					{
 						id: 8403,
-						name: 'Cobquecura',
+						name: "Cobquecura",
 					},
 					{
 						id: 8404,
-						name: 'Coelemu',
+						name: "Coelemu",
 					},
 					{
 						id: 8408,
-						name: 'Ninhue',
+						name: "Ninhue",
 					},
 					{
 						id: 8412,
-						name: 'Portezuelo',
+						name: "Portezuelo",
 					},
 					{
 						id: 8414,
-						name: 'Quirihue',
+						name: "Quirihue",
 					},
 					{
 						id: 8415,
-						name: 'Ránquil',
+						name: "Ránquil",
 					},
 					{
 						id: 8420,
-						name: 'Treguaco',
+						name: "Treguaco",
 					},
 				],
 			},
 			{
 				id: 161,
-				name: 'Punilla',
+				name: "Punilla",
 				comunas: [
 					{
 						id: 8405,
-						name: 'Coihueco',
+						name: "Coihueco",
 					},
 					{
 						id: 8409,
-						name: 'Ñiquén',
+						name: "Ñiquén",
 					},
 					{
 						id: 8416,
-						name: 'San Carlos',
+						name: "San Carlos",
 					},
 					{
 						id: 8417,
-						name: 'San Fabián',
+						name: "San Fabián",
 					},
 					{
 						id: 8419,
-						name: 'San Nicolás',
+						name: "San Nicolás",
 					},
 				],
 			},

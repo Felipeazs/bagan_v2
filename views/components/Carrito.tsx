@@ -1,18 +1,18 @@
-import { Wallet } from '@mercadopago/sdk-react'
-import { FieldApi, useForm } from '@tanstack/react-form'
-import { useMutation } from '@tanstack/react-query'
-import { zodValidator } from '@tanstack/zod-form-adapter'
-import { useEffect, useState } from 'react'
-import { toast } from 'sonner'
-import { createMPPreferences } from '../../api'
-import { compradorSchema } from '../../db/schema/comprador'
-import { calcularTarifa } from '../../utils/tarifa'
-import CarritoLogo from '../assets/carrito.svg'
-import { useCompradorStore } from '../store'
-import { Button } from './ui/button'
-import { Input } from './ui/input'
-import { Label } from './ui/label'
-import { Separator } from './ui/separator'
+import { Wallet } from "@mercadopago/sdk-react"
+import { FieldApi, useForm } from "@tanstack/react-form"
+import { useMutation } from "@tanstack/react-query"
+import { zodValidator } from "@tanstack/zod-form-adapter"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
+import { createMPPreferences } from "../../api"
+import { compradorSchema } from "../../db/schema/comprador"
+import { calcularTarifa } from "../../utils/tarifa"
+import CarritoLogo from "../assets/carrito.svg"
+import { useCompradorStore } from "../store"
+import { Button } from "./ui/button"
+import { Input } from "./ui/input"
+import { Label } from "./ui/label"
+import { Separator } from "./ui/separator"
 import {
 	Sheet,
 	SheetClose,
@@ -22,12 +22,12 @@ import {
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
-} from './ui/sheet'
+} from "./ui/sheet"
 
-import { chile } from '../../utils/chile'
-import InputForm from './ImputForm'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
-import VariedadesForm from './VariedadesForm'
+import { chile } from "../../utils/chile"
+import InputForm from "./ImputForm"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import VariedadesForm from "./VariedadesForm"
 
 const regiones = chile.map((c) => {
 	return {
@@ -42,12 +42,12 @@ const Carrito = () => {
 	const comprador = useCompradorStore()
 
 	const [step, setStep] = useState<{ title: string; page: number }>({
-		title: 'Carrito',
+		title: "Carrito",
 		page: 1,
 	})
 	const [comunas, setComunas] = useState<string[]>([])
 	const [subtotal, setSubtotal] = useState<number>(0)
-	const [preferenceId, setPreferenceId] = useState<string>('')
+	const [preferenceId, setPreferenceId] = useState<string>("")
 	const [disable, setDisable] = useState<boolean>(false)
 
 	const mutation = useMutation({
@@ -55,7 +55,7 @@ const Carrito = () => {
 		onSuccess: (data) => {
 			if (data?.success === false) return toast(data.error.issues[0].message)
 			else if (data) setPreferenceId(data.prefId)
-			else toast('Error del servidor, por favor inténtalo más tarde.')
+			else toast("Error del servidor, por favor inténtalo más tarde.")
 		},
 	})
 
@@ -68,16 +68,16 @@ const Carrito = () => {
 			mutation.mutate({ value: value.comprador })
 		},
 		onSubmitInvalid: () => {
-			toast('Por favor, rellena todos los campos')
+			toast("Por favor, rellena todos los campos")
 		},
 	})
 
 	useEffect(() => {
-		const carrito = form.getFieldValue('comprador.items').length
+		const carrito = form.getFieldValue("comprador.items").length
 		const items = comprador.items.length
 
 		if (items > carrito) {
-			form.pushFieldValue('comprador.items', comprador.items[comprador.items.length - 1])
+			form.pushFieldValue("comprador.items", comprador.items[comprador.items.length - 1])
 		}
 		sumSubtotalDespacho()
 
@@ -85,8 +85,8 @@ const Carrito = () => {
 	}, [comprador.items])
 
 	const sumSubtotalDespacho = () => {
-		const region = form.getFieldValue('comprador.direccion.region')
-		const items = form.getFieldValue('comprador.items')
+		const region = form.getFieldValue("comprador.direccion.region")
+		const items = form.getFieldValue("comprador.items")
 		const tarifa = calcularTarifa(region, items)
 
 		comprador.setEnvio(tarifa.precio_envio)
@@ -100,10 +100,10 @@ const Carrito = () => {
 		setDisable(false)
 
 		if (tarifa.precio_envio > 0) {
-			form.setFieldValue('comprador.envio', tarifa.precio_envio)
+			form.setFieldValue("comprador.envio", tarifa.precio_envio)
 		}
 
-		const existingItems = form.getFieldValue('comprador.items')
+		const existingItems = form.getFieldValue("comprador.items")
 		const itemPrices = existingItems.map((i) => i.quantity * i.unit_price)
 		const sumPrices = itemPrices.reduce((a, b) => a + b, 0)
 
@@ -120,9 +120,9 @@ const Carrito = () => {
 			})
 		})
 
-		form.setFieldValue('comprador.direccion.comuna', '')
+		form.setFieldValue("comprador.direccion.comuna", "")
 
-		form.setFieldMeta('comprador.direccion.comuna', {
+		form.setFieldMeta("comprador.direccion.comuna", {
 			isTouched: false,
 			isPristine: true,
 			isDirty: false,
@@ -180,7 +180,7 @@ const Carrito = () => {
 																<p>
 																	precio: $
 																	{p.unit_price?.toLocaleString(
-																		'es-Cl',
+																		"es-Cl",
 																	)}
 																</p>
 															</div>
@@ -192,7 +192,7 @@ const Carrito = () => {
 																		<Input
 																			type="number"
 																			pattern={
-																				'^(0|[1-9][0-9]*)$'
+																				"^(0|[1-9][0-9]*)$"
 																			}
 																			name={field.name}
 																			id={field.name}
@@ -219,10 +219,10 @@ const Carrito = () => {
 															<SheetFooter className="mt-1">
 																<Button
 																	type="button"
-																	variant={'outline'}
+																	variant={"outline"}
 																	onClick={() => {
 																		form.removeFieldValue(
-																			'comprador.items',
+																			"comprador.items",
 																			i,
 																		)
 																		comprador.quitarItems(i)
@@ -272,7 +272,7 @@ const Carrito = () => {
 											/>
 										</Label>
 										<Label>
-											Rut{' '}
+											Rut{" "}
 											<span className="text-xs">
 												(sin puntos y con guión)*
 											</span>
@@ -455,23 +455,23 @@ const Carrito = () => {
 						</div>
 						<div className="pt-10 md:pt-20">
 							<p className="font-bold">
-								Subtotal: ${subtotal.toLocaleString('es-Cl')}
+								Subtotal: ${subtotal.toLocaleString("es-Cl")}
 							</p>
 							{step.page === 2 && (
 								<>
 									<p className="font-bold">
-										Costo de envío:{' '}
+										Costo de envío:{" "}
 										{comprador?.envio === 0 ? (
 											<span className="font-light italic text-sm text-bagan">
 												ingresa los datos de despacho
 											</span>
 										) : (
-											`${comprador.envio?.toLocaleString('es-Cl') ?? '0'}`
+											`${comprador.envio?.toLocaleString("es-Cl") ?? "0"}`
 										)}
 									</p>
 									<p className="font-bold">
 										Total: $
-										{(subtotal + comprador.envio).toLocaleString('es-Cl')}
+										{(subtotal + comprador.envio).toLocaleString("es-Cl")}
 									</p>
 								</>
 							)}
@@ -483,15 +483,15 @@ const Carrito = () => {
 										onReady={() => true}
 										customization={{
 											texts: {
-												action: 'buy',
-												valueProp: 'payment_methods_logos',
+												action: "buy",
+												valueProp: "payment_methods_logos",
 											},
 										}}
 									/>
 									<Button
 										onClick={() => {
-											setPreferenceId('')
-											setStep({ title: 'Carrito', page: 1 })
+											setPreferenceId("")
+											setStep({ title: "Carrito", page: 1 })
 										}}
 										type="button">
 										MODIFICAR CARRITO
@@ -506,14 +506,14 @@ const Carrito = () => {
 												type="submit"
 												disabled={!canSubmit}
 												className="mt-[16px] bg-bagan font-black">
-												{isSubmitting ? 'PROCESANDO...' : 'CONTINUAR'}
+												{isSubmitting ? "PROCESANDO..." : "CONTINUAR"}
 											</Button>
 										)}
 									/>
 									<Button
 										className="bg-bagan_dark font-bold"
 										onClick={() => {
-											setStep({ title: 'Carrito', page: 1 })
+											setStep({ title: "Carrito", page: 1 })
 										}}>
 										VOLVER
 									</Button>
@@ -521,7 +521,7 @@ const Carrito = () => {
 										<Button
 											type="button"
 											onClick={() => {
-												setStep({ title: 'Carrito', page: 1 })
+												setStep({ title: "Carrito", page: 1 })
 											}}>
 											SEGUIR COMPRANDO
 										</Button>
@@ -534,7 +534,7 @@ const Carrito = () => {
 										className="bg-bagan font-bold"
 										disabled={disable}
 										onClick={() => {
-											setStep({ title: 'Despacho', page: 2 })
+											setStep({ title: "Despacho", page: 2 })
 										}}>
 										CONTINUAR
 									</Button>
@@ -543,7 +543,7 @@ const Carrito = () => {
 										<Button
 											type="button"
 											onClick={() => {
-												setStep({ title: 'Carrito', page: 1 })
+												setStep({ title: "Carrito", page: 1 })
 											}}>
 											SEGUIR COMPRANDO
 										</Button>
@@ -573,7 +573,7 @@ export function FieldInfo({ field }: { field: FieldApi<any, any, any, any> }) {
 	return (
 		<>
 			{field.state.meta.errors.length ? (
-				<span className="text-xs text-bagan_dark">{field.state.meta.errors.join(',')}</span>
+				<span className="text-xs text-bagan_dark">{field.state.meta.errors.join(",")}</span>
 			) : (
 				<span className="text-xs text-white">.</span>
 			)}

@@ -1,5 +1,5 @@
-import { Producto } from '@/db/schema/productos'
-import { chile } from './chile'
+import { Producto } from "@/db/schema/productos"
+import { chile } from "./chile"
 
 const tarifas = {
 	xs: {
@@ -32,7 +32,7 @@ export const calcularTarifa = (
 		return {
 			precio_envio: 0,
 			weight: 0,
-			error: 'ingresa al menos 1 producto',
+			error: "ingresa al menos 1 producto",
 		}
 	}
 
@@ -41,20 +41,20 @@ export const calcularTarifa = (
 		total_weight += i.quantity * i.weight
 	})
 
-	let talla_pedido: keyof typeof tarifas = 'xs'
+	let talla_pedido: keyof typeof tarifas = "xs"
 
 	switch (true) {
 		case total_weight > 0 && total_weight <= 500:
-			talla_pedido = 'xs'
+			talla_pedido = "xs"
 			break
 		case total_weight > 500 && total_weight <= 3000:
-			talla_pedido = 's'
+			talla_pedido = "s"
 			break
 		case total_weight > 3000 && total_weight <= 6000:
-			talla_pedido = 'm'
+			talla_pedido = "m"
 			break
 		case total_weight > 6000 && total_weight <= 20000:
-			talla_pedido = 'l'
+			talla_pedido = "l"
 			break
 	}
 
@@ -62,13 +62,13 @@ export const calcularTarifa = (
 		return {
 			precio_envio: 0,
 			weight: total_weight,
-			error: 'Si quieres comprar al por mayor contáctate con nosotros!',
+			error: "Si quieres comprar al por mayor contáctate con nosotros!",
 		}
 	} else if (total_weight < 750) {
 		return {
 			precio_envio: 0,
 			weight: 0,
-			error: 'ingresa al menos 1 producto',
+			error: "ingresa al menos 1 producto",
 		}
 	}
 

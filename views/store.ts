@@ -1,17 +1,17 @@
-import { Actions, Comprador } from '@/db/schema/comprador'
-import { create } from 'zustand'
+import { Actions, Comprador } from "@/db/schema/comprador"
+import { create } from "zustand"
 
 export const useCompradorStore = create<Comprador & Actions>((set) => ({
-	nombre: '',
-	apellido: '',
-	rut: '',
-	telefono: '',
-	email: '',
+	nombre: "",
+	apellido: "",
+	rut: "",
+	telefono: "",
+	email: "",
 	direccion: {
-		calle: '',
-		numero: '',
-		comuna: '',
-		region: '',
+		calle: "",
+		numero: "",
+		comuna: "",
+		region: "",
 	},
 	items: [],
 	envio: 0,

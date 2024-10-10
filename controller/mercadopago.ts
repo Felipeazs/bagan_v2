@@ -1,20 +1,20 @@
-import { zValidator } from '@hono/zod-validator'
-import { Context, Hono } from 'hono'
-import { MercadoPagoConfig, Payment, Preference } from 'mercadopago'
-import { transporter } from '../api/nodemailer'
-import { compradorSchema } from '../db/schema/comprador'
-import { getResumenCompraTemplate } from '../utils/email-templates'
+import { zValidator } from "@hono/zod-validator"
+import { Context, Hono } from "hono"
+import { MercadoPagoConfig, Payment, Preference } from "mercadopago"
+import { transporter } from "../api/nodemailer"
+import { compradorSchema } from "../db/schema/comprador"
+import { getResumenCompraTemplate } from "../utils/email-templates"
 
-import { PaymentInfo } from '../db/schema/types'
-import { createBody, paymentDetails, setPreferenceDetails } from '../utils/mercadopago'
+import { PaymentInfo } from "../db/schema/types"
+import { createBody, paymentDetails, setPreferenceDetails } from "../utils/mercadopago"
 
 const mercadoPagoClient = new MercadoPagoConfig({
 	accessToken: process.env.MP_ACCESS_TOKEN!,
 })
 
 export const mercadoPagoRoute = new Hono()
-	.post('/', zValidator('json', compradorSchema), async (c) => {
-		const comprador = c.req.valid('json')
+	.post("/", zValidator("json", compradorSchema), async (c) => {
+		const comprador = c.req.valid("json")
 
 		const prefDetails = setPreferenceDetails(comprador)
 
@@ -34,10 +34,10 @@ export const mercadoPagoRoute = new Hono()
 			throw new Error((err as Error).message)
 		}
 	})
-	.post('/feedback', async (c: Context) => {
+	.post("/feedback", async (c: Context) => {
 		const order = c.req.query()
 
-		if (order.topic != 'payment') {
+		if (order.topic != "payment") {
 			c.status(404)
 			return c.json({ message: `no ${order.topic} info` })
 		}
@@ -61,13 +61,13 @@ export const mercadoPagoRoute = new Hono()
 			})
 
 			c.status(200)
-			return c.json({ message: 'feedback email sended to Bagan!' })
+			return c.json({ message: "feedback email sended to Bagan!" })
 		} catch (err) {
 			throw new Error((err as Error).message)
 		}
 	})
-	.get('/payment/:id', async (c: Context) => {
-		const id = c.req.param('id')
+	.get("/payment/:id", async (c: Context) => {
+		const id = c.req.param("id")
 
 		try {
 			const payment = new Payment(mercadoPagoClient)

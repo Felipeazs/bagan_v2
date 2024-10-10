@@ -1,12 +1,12 @@
-import { Actions, Comprador } from '../../db/schema/comprador'
-import { productoSchema } from '../../db/schema/productos'
-import { DeepValue, FieldComponent, Validator } from '@tanstack/react-form'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
+import { Actions, Comprador } from "../../db/schema/comprador"
+import { productoSchema } from "../../db/schema/productos"
+import { DeepValue, FieldComponent, Validator } from "@tanstack/react-form"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 
 enum Detail {
-	Tomate = 'tomate orégano',
-	Pesto = 'pesto albahaca',
-	Pimenton = 'pimentón rojo',
+	Tomate = "tomate orégano",
+	Pesto = "pesto albahaca",
+	Pimenton = "pimentón rojo",
 }
 
 const VariedadesForm = ({

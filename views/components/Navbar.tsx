@@ -1,5 +1,5 @@
-import { Link } from '@tanstack/react-router'
-import Carrito from './Carrito'
+import { Link } from "@tanstack/react-router"
+import Carrito from "./Carrito"
 
 const Navbar = () => {
 	return (

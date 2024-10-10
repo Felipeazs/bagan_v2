@@ -1,13 +1,13 @@
-import { Actions, Comprador, compradorSchema } from '../../db/schema/comprador'
-import { DeepKeys, DeepValue, FieldComponent, Validator } from '@tanstack/react-form'
-import { Input } from './ui/input'
-import { FieldInfo } from './Carrito'
+import { Actions, Comprador, compradorSchema } from "../../db/schema/comprador"
+import { DeepKeys, DeepValue, FieldComponent, Validator } from "@tanstack/react-form"
+import { Input } from "./ui/input"
+import { FieldInfo } from "./Carrito"
 
 const InputForm = ({
 	Field,
 	name_field,
 	validator_field,
-	input_type = 'text',
+	input_type = "text",
 	additional_fx,
 }: {
 	Field: FieldComponent<
@@ -31,10 +31,10 @@ const InputForm = ({
 						type={input_type}
 						name={field.name}
 						id={field.name}
-						value={String(field.state.value ?? '')}
+						value={String(field.state.value ?? "")}
 						onChange={(e) => {
 							field.handleChange(e.target.value)
-							if (e.target.name.includes('quantity') && additional_fx) additional_fx()
+							if (e.target.name.includes("quantity") && additional_fx) additional_fx()
 						}}
 					/>
 					<FieldInfo field={field} />

@@ -1,5 +1,5 @@
 // models/Todo.ts
-import { z } from 'zod'
+import { z } from "zod"
 
 const Todo = z.object({
 	id: z.number().int(),

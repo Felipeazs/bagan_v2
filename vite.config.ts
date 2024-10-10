@@ -1,9 +1,9 @@
 // vite.config.ts
-import path from 'path'
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import devServer from '@hono/vite-dev-server'
-import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
+import path from "path"
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
+import devServer from "@hono/vite-dev-server"
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,15 +11,15 @@ export default defineConfig({
 		port: 4000, // change to a custom port
 	},
 	build: {
-		outDir: 'build', // change to 'build', explain later
+		outDir: "build", // change to 'build', explain later
 		rollupOptions: {
 			output: {
 				manualChunks: {
-					react: ['react'],
-					'react-dom': ['react-dom'],
-					'@tanstack/react-form': ['@tanstack/react-form'],
-					'@tanstack/react-query': ['@tanstack/react-query'],
-					'@tanstack/react-router': ['@tanstack/react-router'],
+					react: ["react"],
+					"react-dom": ["react-dom"],
+					"@tanstack/react-form": ["@tanstack/react-form"],
+					"@tanstack/react-query": ["@tanstack/react-query"],
+					"@tanstack/react-router": ["@tanstack/react-router"],
 				},
 			},
 		},
@@ -27,11 +27,11 @@ export default defineConfig({
 	plugins: [
 		react(),
 		TanStackRouterVite({
-			routesDirectory: './views/routes',
-			generatedRouteTree: './views/routeTree.gen.ts',
+			routesDirectory: "./views/routes",
+			generatedRouteTree: "./views/routeTree.gen.ts",
 		}),
 		devServer({
-			entry: 'server.ts',
+			entry: "server.ts",
 			exclude: [
 				// We need to override this option since the default setting doesn't fit
 				/.*\.tsx?($|\?)/,
@@ -47,7 +47,7 @@ export default defineConfig({
 	],
 	resolve: {
 		alias: {
-			'@': path.resolve(__dirname, './views'),
+			"@": path.resolve(__dirname, "./views"),
 		},
 	},
 })

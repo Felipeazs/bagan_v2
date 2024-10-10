@@ -1,4 +1,4 @@
-import { Items } from 'mercadopago/dist/clients/commonTypes'
+import { Items } from "mercadopago/dist/clients/commonTypes"
 
 export type PrefRespons = {
 	success: boolean

@@ -1,5 +1,5 @@
-import { Email } from '../db/schema/email'
-import { PaymentInfo } from '../db/schema/types'
+import { Email } from "../db/schema/email"
+import { PaymentInfo } from "../db/schema/types"
 
 export const getResumenCompraTemplate = (details: PaymentInfo) => {
 	let table: string[] = []
@@ -11,9 +11,9 @@ export const getResumenCompraTemplate = (details: PaymentInfo) => {
             <td>${i.title}</td>
             <td class="descripcion" style="display:flex; flex-direction:column; justify-items: center; align-items: center; width: 190px;">
                 ${i
-					.description!.split(', ')
+					.description!.split(", ")
 					.map((d) => `<div>${d}</div>`)
-					.join('')}
+					.join("")}
             </td>
             <td style="text-align: center">${i.quantity}</td>
         </tr>
@@ -75,7 +75,7 @@ export const getResumenCompraTemplate = (details: PaymentInfo) => {
                         <tr>
                             <td style="max-width: 200px; text-align: end; padding: 0px 5px;">fecha:</td>
                             <td style="max-width: 200px; text-align: end; padding: 0px 5px;">${
-								details.date_approved?.split('T')[0]
+								details.date_approved?.split("T")[0]
 							}</td>
                         </tr>
                         <tr>
@@ -87,19 +87,19 @@ export const getResumenCompraTemplate = (details: PaymentInfo) => {
                         <tr>
                             <td style="max-width: 200px; text-align: end; padding: 0px 5px;">subtotal:</td>
                             <td style="max-width: 200px; text-align: end; padding: 0px 5px;">$${details.transaction_amount?.toLocaleString(
-								'es-Cl',
+								"es-Cl",
 							)}</td>
                         </tr>
                         <tr>
                             <td style="max-width: 200px; text-align: end; padding: 0px 5px;">envío:</td>
                             <td style="max-width: 200px; text-align: end; padding: 0px 5px;">$${details.shipping_amount?.toLocaleString(
-								'es-Cl',
+								"es-Cl",
 							)}</td>
                         </tr>
                         <tr>
                             <td style="max-width: 200px; text-align: end; padding: 0px 5px;">total:</td>
                             <td style="max-width: 200px; text-align: end; padding: 0px 5px;">$${details.total_paid_amount?.toLocaleString(
-								'es-Cl',
+								"es-Cl",
 							)}</td>
                         </tr>
                         <tr>
@@ -116,7 +116,7 @@ export const getResumenCompraTemplate = (details: PaymentInfo) => {
                         <th>variedades</th>
                         <th>cantidad</th>
                     </tr>
-                    ${table.join('')}
+                    ${table.join("")}
                 </table>
                 <div class="contacto" style="display: flex; flex-direction: column; justify-items: center; align-items: center; font-size: 13px; padding: 20px 10px; text-align: center; width: 100%;">
                     <strong>contacto</strong>
@@ -139,8 +139,8 @@ export const getResumenCompraTemplate = (details: PaymentInfo) => {
                             <tr style="vertical-align: 0q;">
                                 <td style="max-width: 200px; text-align: end; padding: 0px 5px;">email:</td>
                                 <td style="display: flex; flex-direction: column; justify-items: end; align-items: end;">
-                                    <span>${details.payer.email?.split('@')[0]}</span>
-                                    <span>@${details.payer.email?.split('@')[1]}</span>
+                                    <span>${details.payer.email?.split("@")[0]}</span>
+                                    <span>@${details.payer.email?.split("@")[1]}</span>
                                 </td>
                             </tr>
                             <tr>
@@ -153,7 +153,7 @@ export const getResumenCompraTemplate = (details: PaymentInfo) => {
                 <hr style="width: 80%; border-top: 1px solid #ddd" />
                 <div class="contacto" style="display: flex; flex-direction: column; justify-items: center; align-items: center; font-size: 13px; padding: 20px 10px; text-align: center; width: 100%;">
                     <strong>despacho</strong>
-                    <span>${details.shipments.street_name} ${details.shipments.street_number}, ${details.shipments.apartment ? 'depto:' + details.shipments.apartment + ',' : ''} ${details.shipments.city_name}, ${details.shipments.state_name}</span>
+                    <span>${details.shipments.street_name} ${details.shipments.street_number}, ${details.shipments.apartment ? "depto:" + details.shipments.apartment + "," : ""} ${details.shipments.city_name}, ${details.shipments.state_name}</span>
                 </div>
             </div>
         </div>

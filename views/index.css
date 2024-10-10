@@ -3,34 +3,34 @@
 @tailwind utilities;
 
 @font-face {
-	font-family: 'Metropolis';
+	font-family: "Metropolis";
 	font-weight: 300;
 	font-style: light;
-	src: url('/public/fonts/Metropolis-Light.otf') format('truetype');
+	src: url("/public/fonts/Metropolis-Light.otf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Metropolis';
+	font-family: "Metropolis";
 	font-weight: 400;
 	font-style: normal;
-	src: url('/public/fonts/Metropolis-Regular.otf') format('truetype');
+	src: url("/public/fonts/Metropolis-Regular.otf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Metropolis';
+	font-family: "Metropolis";
 	font-weight: 600;
 	font-style: semibold;
-	src: url('/public/fonts/Metropolis-SemiBold.otf') format('truetype');
+	src: url("/public/fonts/Metropolis-SemiBold.otf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Forte';
-	src: url('/public/fonts/forte.ttf') format('truetype');
+	font-family: "Forte";
+	src: url("/public/fonts/forte.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Segoe-Script';
-	src: url('/public/fonts/segoesc.ttf') format('truetype');
+	font-family: "Segoe-Script";
+	src: url("/public/fonts/segoesc.ttf") format("truetype");
 }
 
 @layer base {
@@ -102,7 +102,7 @@ html {
 }
 
 body {
-	font-family: 'Metropolis';
+	font-family: "Metropolis";
 }
 
 img {

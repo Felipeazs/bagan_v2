@@ -1,7 +1,7 @@
 export const verifyRut = (enteredRut: string) => {
 	let returnValue = false
 
-	const sanitizedRut = enteredRut.replaceAll('.', '')
+	const sanitizedRut = enteredRut.replaceAll(".", "")
 
 	const rutLength = sanitizedRut.length
 
@@ -10,7 +10,7 @@ export const verifyRut = (enteredRut: string) => {
 	const dv = sanitizedRut.substring(rutLength - 1).toLowerCase()
 
 	//reverse rut
-	const reverseRut = rut.split('').reverse().join('')
+	const reverseRut = rut.split("").reverse().join("")
 
 	let factor = 2
 	let sum = 0
@@ -33,7 +33,7 @@ export const verifyRut = (enteredRut: string) => {
 	let dv2: number | string = 11 - rest
 
 	if (dv2 === 10) {
-		dv2 = 'k'
+		dv2 = "k"
 	} else if (dv2 === 11) {
 		dv2 = 0
 	}
