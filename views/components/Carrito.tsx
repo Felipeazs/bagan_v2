@@ -9,9 +9,11 @@ import { compradorSchema } from "../../db/schema/comprador"
 import { calcularTarifa } from "../../utils/tarifa"
 import CarritoLogo from "../assets/carrito.svg"
 import { useCompradorStore } from "../store"
+import InputForm from "./ImputForm"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 import { Separator } from "./ui/separator"
 import {
 	Sheet,
@@ -23,11 +25,9 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "./ui/sheet"
+import VariedadesForm from "./VariedadesForm"
 
 import { chile } from "../../utils/chile"
-import InputForm from "./ImputForm"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
-import VariedadesForm from "./VariedadesForm"
 
 const regiones = chile.map((c) => {
 	return {

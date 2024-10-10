@@ -18,7 +18,7 @@ export const strapiContent = async ({ page, query }: { page: string; query?: str
 	return await fetch(`${url}/${page}${query}`, {
 		method: "GET",
 		headers: {
-			"Content-Type": "application/josn",
+			"Content-Type": "application/json",
 			Authorization: `Bearer ${import.meta.env.VITE_STRAPI_API_KEY}`,
 		},
 	})
