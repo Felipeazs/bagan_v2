@@ -14,7 +14,7 @@ const url = `${import.meta.env.VITE_STRAPI_URL}/api`
 
 export const strapiContent = async (page: string) => {
 	return await fetch(
-		`${url}/${page}?populate=hero_images&populate=productos.images&populate=packs.images`,
+		`${url}/${page}?populate=hero_images&populate=productos.images&populate=packs.images&populate=contacto&populate=instituciones.images`,
 		{
 			method: "GET",
 			headers: {
