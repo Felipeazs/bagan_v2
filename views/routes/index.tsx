@@ -235,10 +235,10 @@ function Index() {
 										{pack.title}
 									</CardDescription>
 									<CardDescription className="font-bold">
-										precio: ${pack.price.toLocaleString("es-Cl")}
+										precio: {formatCLP(pack.price)}
 									</CardDescription>
 									<CardDescription>
-										precio unitario: ${pack.unit_price}
+										precio unitario: {formatCLP(pack.unit_price)}
 									</CardDescription>
 								</CardContent>
 								<CardFooter className="flex justify-center">
@@ -482,3 +482,12 @@ function Index() {
 }
 
 export default Index
+
+export const formatCLP = (amount: number) => {
+	const integerAmount = Math.floor(amount)
+	const amountString = integerAmount.toString()
+
+	const formattedAmount = amountString.replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+
+	return `$${formattedAmount}`
+}
