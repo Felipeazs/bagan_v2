@@ -430,7 +430,7 @@ function Index() {
 				</div>
 			</section>
 			{comprador?.items.length > 0 && (
-				<div className="fixed bottom-24 right-14 md:bottom-32 md:right-28 bg-bagan w-[50px] h-[50px] rounded-lg hover:shadow-md flex justify-center items-center align-middle">
+				<div className="fixed bottom-24 right-14 md:bottom-32 md:right-28 bg-bagan w-[50px] h-[50px] rounded-lg hover:shadow-md flex justify-center items-center p-2">
 					<Carrito />
 				</div>
 			)}
