@@ -1,8 +1,8 @@
+import { type Comprador } from "@/models/comprador"
+import { type Email } from "@/models/email"
+import { type PrefRespons } from "@/models/types"
+import { type ApiRoutes } from "@/server"
 import { hc } from "hono/client"
-import { Email } from "../db/schema/email"
-import { ApiRoutes } from "../server"
-import { Comprador } from "@/db/schema/comprador"
-import { PrefRespons } from "../db/schema/types"
 
 const client = hc<ApiRoutes>("/", {
 	headers: {
@@ -12,11 +12,13 @@ const client = hc<ApiRoutes>("/", {
 
 export const api = client.api
 
-const URL = `${import.meta.env["VITE_STRAPI_URL"]}/api`
+const URL = `${import.meta.env["VITE_STRAPI_URL"]}`
 const STRAPI_API_KEY = import.meta.env["VITE_STRAPI_API_KEY"]
 
 export const strapiContent = async ({ page, query }: { page: string; query?: string }) => {
-	return await fetch(`${URL}/${page}${query}`, {
+	const url = `${URL}/api/${page}${query}`
+
+	return await fetch(url, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json",
@@ -37,7 +39,7 @@ export const sendEmailContacto = async ({ value }: { value: Email }) => {
 }
 
 export async function createMPPreferences({ value }: { value: Comprador }) {
-	return await api["mercado-pago"]
+	return await api["mercado-pago"]["create-preference"]
 		.$post({ json: value })
 		.then((res) => res.json())
 		.then((data) => data as PrefRespons)

@@ -1,15 +1,15 @@
+import { createMPPreferences } from "@/api"
+import { compradorSchema } from "@/models/comprador"
+import { calcularTarifa } from "@/utils/tarifa"
 import { Wallet } from "@mercadopago/sdk-react"
 import { FieldApi, useForm } from "@tanstack/react-form"
 import { useMutation } from "@tanstack/react-query"
 import { zodValidator } from "@tanstack/zod-form-adapter"
 import { useEffect, useState } from "react"
 import { toast } from "sonner"
-import { createMPPreferences } from "../../api"
-import { compradorSchema } from "../../db/schema/comprador"
-import { calcularTarifa } from "../../utils/tarifa"
 import CarritoLogo from "../assets/carrito.svg"
 import { useCompradorStore } from "../store"
-import InputForm from "./ImputForm"
+import InputForm from "./InputForm"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { Label } from "./ui/label"
@@ -27,7 +27,7 @@ import {
 } from "./ui/sheet"
 import VariedadesForm from "./VariedadesForm"
 
-import { chile } from "../../utils/chile"
+import { chile } from "@/utils/chile"
 
 const regiones = chile.map((c) => {
 	return {
@@ -137,7 +137,7 @@ const Carrito = () => {
 
 	return (
 		<Sheet>
-			<SheetTrigger>
+			<SheetTrigger className="flex justify-center w-full h-full">
 				<div className="relative h-[20px] w-[50px]">
 					<img src={CarritoLogo} />
 					<span className="absolute z-10 top-1/2 left-3 flex justify-center items-center text-gray-500 text-[14px] font-bold bg-transparent border-2 border-gray-500 w-[22px] h-[22px] rounded-full">
@@ -480,7 +480,7 @@ const Carrito = () => {
 							{preferenceId && step.page === 2 ? (
 								<div className="flex flex-col gap-1">
 									<Wallet
-										initialization={{ preferenceId: preferenceId }}
+										initialization={{ preferenceId }}
 										onReady={() => true}
 										customization={{
 											texts: {

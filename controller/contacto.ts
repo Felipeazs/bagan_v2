@@ -1,5 +1,5 @@
 import { transporter } from "../api/nodemailer"
-import { emailSchema } from "../db/schema/email"
+import { emailSchema } from "../models/email"
 import { getWebMessageTemplate } from "../utils/email-templates"
 import { zValidator } from "@hono/zod-validator"
 import { Hono } from "hono"

@@ -1,4 +1,4 @@
-import { Actions, Comprador } from "@/db/schema/comprador"
+import { Actions, Comprador } from "@/models/comprador"
 import { create } from "zustand"
 
 export const useCompradorStore = create<Comprador & Actions>((set) => ({

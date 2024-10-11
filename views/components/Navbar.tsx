@@ -2,6 +2,20 @@ import { Link } from "@tanstack/react-router"
 import Carrito from "./Carrito"
 
 const Navbar = () => {
+	const links = [
+		{
+			title: "Nosotras",
+			ref: "#nosotras",
+		},
+		{
+			title: "Productos",
+			ref: "#productos",
+		},
+		{
+			title: "Contacto",
+			ref: "#contacto",
+		},
+	]
 	return (
 		<div className="px-10 md:px-28 py-6 text-white flex bg-bagan justify-between align-center items-center">
 			<div className="">
@@ -14,21 +28,14 @@ const Navbar = () => {
 				</Link>
 			</div>
 			<div className="flex gap-4 justify-center items-center">
-				<a
-					href="#nosotras"
-					className="hidden md:inline [&.active]:font-bold hover:text-gray-900">
-					Nosotras
-				</a>
-				<a
-					href="#productos"
-					className="hidden md:inline [&.active]:font-bold hover:text-gray-900">
-					Productos
-				</a>
-				<a
-					href="#contacto"
-					className="hidden md:inline [&.active]:font-bold hover:text-gray-900">
-					Contacto
-				</a>
+				{links.map((l, i) => (
+					<a
+						key={i}
+						href={l.ref}
+						className="hidden md:inline min-w-[79px] max-w-[79px] hover:text-gray-900 hover:font-bold">
+						{l.title}
+					</a>
+				))}
 				<Carrito />
 			</div>
 		</div>

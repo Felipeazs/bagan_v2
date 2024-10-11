@@ -1,4 +1,4 @@
-import { Actions, Comprador, compradorSchema } from "../../db/schema/comprador"
+import { Actions, Comprador, compradorSchema } from "@/models/comprador"
 import { DeepKeys, DeepValue, FieldComponent, Validator } from "@tanstack/react-form"
 import { Input } from "./ui/input"
 import { FieldInfo } from "./Carrito"

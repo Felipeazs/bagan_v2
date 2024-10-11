@@ -1,4 +1,4 @@
-import { verifyRut } from "../../utils/rut"
+import { verifyRut } from "@/utils/rut"
 import { z } from "zod"
 import { Producto, productoSchema } from "./productos"
 

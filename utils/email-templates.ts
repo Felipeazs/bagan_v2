@@ -1,5 +1,5 @@
-import { Email } from "../db/schema/email"
-import { PaymentInfo } from "../db/schema/types"
+import { Email } from "@/models/email"
+import { PaymentInfo } from "@/models/types"
 
 export const getResumenCompraTemplate = (details: PaymentInfo) => {
 	let table: string[] = []

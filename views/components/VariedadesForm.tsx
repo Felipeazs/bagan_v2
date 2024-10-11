@@ -1,5 +1,5 @@
-import { Actions, Comprador } from "../../db/schema/comprador"
-import { productoSchema } from "../../db/schema/productos"
+import { Actions, Comprador } from "@/models/comprador"
+import { productoSchema } from "@/models/productos"
 import { DeepValue, FieldComponent, Validator } from "@tanstack/react-form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 

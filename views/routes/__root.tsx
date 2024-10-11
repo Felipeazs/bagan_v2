@@ -1,4 +1,4 @@
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/views/components/ui/sonner"
 import { QueryClient } from "@tanstack/react-query"
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router"
 import Footer from "../components/Footer"
@@ -9,10 +9,10 @@ interface MyRouterContext {
 	queryClient: QueryClient
 }
 
-const MP = import.meta.env.VITE_MP_PUBLIC_KEY!
+const MP_PUBLIC_KEY = import.meta.env["VITE_MP_PUBLIC_KEY"]
 
 const Root = () => {
-	initMercadoPago(MP, { locale: "es-CL" })
+	initMercadoPago(MP_PUBLIC_KEY, { locale: "es-CL" })
 
 	return (
 		<div className="font-primary text-white">

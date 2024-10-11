@@ -1,6 +1,6 @@
-import { Producto } from "../db/schema/productos"
-import { Comprador } from "../db/schema/comprador"
-import { PaymentInfo } from "../db/schema/types"
+import { Producto } from "../models/productos"
+import { Comprador } from "../models/comprador"
+import { PaymentInfo } from "../models/types"
 import { PaymentResponse } from "mercadopago/dist/clients/payment/commonTypes"
 
 export const setPreferenceDetails = (comprador: Comprador): Comprador => {
@@ -19,7 +19,7 @@ export const setPreferenceDetails = (comprador: Comprador): Comprador => {
 			else pesto++
 		})
 
-		p.unit_price = producto!.unit_price
+		p.unit_price = producto.unit_price
 		p.description = [
 			`Tomate orégano (${tomate})`,
 			`Pimentón rojo (${pimenton})`,

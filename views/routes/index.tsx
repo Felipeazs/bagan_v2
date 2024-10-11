@@ -5,9 +5,9 @@ import { createFileRoute } from "@tanstack/react-router"
 import { zodValidator } from "@tanstack/zod-form-adapter"
 import Autoplay from "embla-carousel-autoplay"
 import { toast } from "sonner"
-import { sendEmailContacto, strapiContent } from "../../api/index"
-import { emailSchema } from "../../db/schema/email"
-import { Producto } from "../../db/schema/productos"
+import { sendEmailContacto, strapiContent } from "@/api/index"
+import { emailSchema } from "@/models/email"
+import { Producto } from "@/models/productos"
 import Carrito from "../components/Carrito"
 import { AspectRatio } from "../components/ui/aspect-ratio"
 import { Button } from "../components/ui/button"
@@ -91,7 +91,7 @@ function Index() {
 							loop: true,
 						}}>
 						<CarouselContent>
-							{strapi_home?.hero_images.map((i: { id: string; url: string }) => (
+							{strapi_home?.hero_images?.map((i: { id: string; url: string }) => (
 								<CarouselItem key={i.id} className="pl-0">
 									<img
 										src={i.url}
@@ -200,7 +200,7 @@ function Index() {
 			<section id="packs" className="text-black text-center py-20 px-5">
 				<p className="text-bagan font-black uppercase">Packs</p>
 				<p className="uppercase font-black">Elige las variedades</p>
-				<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-16">
+				<div className="grid grid-rows-2 lg:grid-rows-1 grid-flow-col justify-center items-center gap-5 mt-16">
 					{strapi_home?.packs?.map(
 						(pack: {
 							pid: string
@@ -279,7 +279,7 @@ function Index() {
 				<div className="w-[300px] md:w-[500px]">
 					<p className="text-bagan font-black uppercase">Contacto</p>
 					<div className="font-light py-3">
-						{strapi_home?.contacto.map(
+						{strapi_home?.contacto?.map(
 							(c: { id: string; image: string; title: string }) => (
 								<div key={c.id} className="flex gap-3 align-center items-center">
 									<img src={c.image} width="24px" height="24px" />
@@ -430,7 +430,7 @@ function Index() {
 				</div>
 			</section>
 			{comprador?.items.length > 0 && (
-				<div className="fixed bottom-24 right-14 md:bottom-32 md:right-28 bg-bagan w-[50px] h-[50px] rounded-lg justify-center items-center py-2 px-2 hover:shadow-md">
+				<div className="fixed bottom-24 right-14 md:bottom-32 md:right-28 bg-bagan w-[50px] h-[50px] rounded-lg hover:shadow-md flex justify-center items-center align-middle">
 					<Carrito />
 				</div>
 			)}

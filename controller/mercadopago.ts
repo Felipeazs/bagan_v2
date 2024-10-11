@@ -1,32 +1,32 @@
 import { zValidator } from "@hono/zod-validator"
 import { Context, Hono } from "hono"
 import { MercadoPagoConfig, Payment, Preference } from "mercadopago"
-import { transporter } from "../api/nodemailer"
-import { compradorSchema } from "../db/schema/comprador"
-import { getResumenCompraTemplate } from "../utils/email-templates"
+import { transporter } from "@/api/nodemailer"
+import { compradorSchema } from "@/models/comprador"
+import { getResumenCompraTemplate } from "@/utils/email-templates"
 
-import { PaymentInfo } from "../db/schema/types"
+import { PaymentInfo } from "@/models/types"
 import { createBody, paymentDetails, setPreferenceDetails } from "../utils/mercadopago"
 
 const mercadoPagoClient = new MercadoPagoConfig({
-	accessToken: process.env.MP_ACCESS_TOKEN!,
+	accessToken: process.env["MP_ACCESS_TOKEN"]!,
 })
 
 export const mercadoPagoRoute = new Hono()
-	.post("/", zValidator("json", compradorSchema), async (c) => {
+	.post("/create-preference", zValidator("json", compradorSchema), async (c) => {
 		const comprador = c.req.valid("json")
 
-		const prefDetails = setPreferenceDetails(comprador)
-
-		if (!prefDetails.items.length) {
-			throw new Error(
-				"Existe un problema con los productos agregados, por favor inténtelo más tarde",
-			)
-		}
-
-		const preference = new Preference(mercadoPagoClient)
-
 		try {
+			const prefDetails = setPreferenceDetails(comprador)
+
+			if (!prefDetails.items.length) {
+				throw new Error(
+					"Existe un problema con los productos agregados, por favor inténtelo más tarde",
+				)
+			}
+
+			const preference = new Preference(mercadoPagoClient)
+
 			const pref_body = createBody(prefDetails)
 			const res = await preference.create({
 				body: pref_body,

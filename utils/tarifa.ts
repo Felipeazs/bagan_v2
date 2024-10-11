@@ -1,4 +1,4 @@
-import { Producto } from "@/db/schema/productos"
+import { Producto } from "@/models/productos"
 import { chile } from "./chile"
 
 const tarifas = {
