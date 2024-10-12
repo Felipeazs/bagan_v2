@@ -6,16 +6,16 @@ lang: en-US
 
 ## Table of Content
 
-- [Frameworks](#frameworks)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Deployment](#deployment)
+-   [Frameworks](#frameworks)
+-   [Installation](#installation)
+-   [Usage](#usage)
+-   [Deployment](#deployment)
 
 ---
 
 ## Package manager
 
-- Bun
+-   Bun
 
 ### Frameworks
 
@@ -47,18 +47,18 @@ lang: en-US
 4. Run these commands:
 
 ```bash
-# Do this every time you make changes in the schemas. 
+# Do this every time you make changes in the schemas.
 bun drizzle-kit generate
 bun migrate.ts
 ```
 
-- Check build:
+-   Check build:
 
 ```bash
 bun run build
 ```
 
-- Run project in development mode:
+-   Run project in development mode:
 
 ```bash
 bun dev
@@ -70,11 +70,11 @@ bun dev
 railway init -n <name_app>
 ```
 
-- Copy and paste env variables in your railway project (change NODE_ENV to production)
+-   Copy and paste env variables in your railway project (change NODE_ENV to production)
 
 ```bash
 railway up --detach
 ```
 
-- Generate a domain
-- Watch your website
+-   Generate a domain
+-   Watch your website

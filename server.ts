@@ -2,6 +2,7 @@ import { Hono } from "hono"
 import { serveStatic } from "hono/bun"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
+import * as Sentry from "@sentry/bun"
 import { readFile } from "node:fs/promises"
 import { emailRoute } from "./controller/contacto"
 import { mercadoPagoRoute } from "./controller/mercadopago"
@@ -27,8 +28,16 @@ if (!isProd) {
 }
 
 const app = new Hono()
-app.use(cors())
+app.use(
+	cors({
+		origin: ["https://bagan.cl", "*.bagan.cl"],
+	}),
+)
 app.use(logger())
+Sentry.init({
+	dsn: process.env["SENTRY_DSN"],
+	tracesSampleRate: isProd ? 0.1 : 1.0,
+})
 
 // UN-COMMENT these lines when you supply a db connection string
 app.use("*", async (c, next) => {
