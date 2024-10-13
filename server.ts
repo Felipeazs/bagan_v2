@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/bun"
 import { Hono } from "hono"
 import { serveStatic } from "hono/bun"
 import { cors } from "hono/cors"
@@ -30,10 +29,10 @@ if (!isProd) {
 const app = new Hono()
 app.use(cors())
 app.use(logger())
-Sentry.init({
-	dsn: process.env["SENTRY_DSN"],
-	tracesSampleRate: isProd ? 0.1 : 1.0,
-})
+// Sentry.init({
+// 	dsn: process.env["SENTRY_DSN"],
+// 	tracesSampleRate: isProd ? 0.1 : 1.0,
+// })
 
 // UN-COMMENT these lines when you supply a db connection string
 app.use("*", async (c, next) => {
