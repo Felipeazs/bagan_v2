@@ -4,7 +4,8 @@ const MAILTRAP_API_KEY = process.env["MT_API_KEY"]!
 export const SENDER_EMAIL = process.env["NM_MAILTRAP_FROM"]!
 export const RECEIVER = process.env["NM_MAILTRAP_RECEIVER"]!
 
-const isProd = process.env["NODE_ENV"] === "production"
+const NODE_ENV = process.env["NODE_ENV"]!
+const isProd = NODE_ENV === "production" || NODE_ENV === "testing"
 
 export const mailtrapClient = new MailtrapClient({
 	token: MAILTRAP_API_KEY,
