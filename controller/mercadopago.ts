@@ -60,13 +60,6 @@ export const mercadoPagoRoute = new Hono()
 
 			const details: PaymentInfo = paymentDetails(payment_data)
 
-			// transporter.sendMail({
-			// 	from: `No responder <${process.env.NM_MAILTRAP_FROM}>`,
-			// 	to: process.env.NM_MAILTRAP_RECEIVER,
-			// 	subject: `Nueva compra: ${details?.id}`,
-			// 	html: getResumenCompraTemplate(details),
-			// })
-
 			const mailtrap_info = {
 				from: { name: "No responder", email: SENDER_EMAIL },
 				to: [{ email: RECEIVER }],
