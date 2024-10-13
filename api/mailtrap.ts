@@ -6,9 +6,10 @@ export const RECEIVER = process.env["NM_MAILTRAP_RECEIVER"]!
 
 const NODE_ENV = process.env["NODE_ENV"]!
 const isProd = NODE_ENV === "production"
+const ACCOUNT_ID = Number(process.env["MT_ACCOUNT_ID"])!
 
 export const mailtrapClient = new MailtrapClient({
 	token: MAILTRAP_API_KEY,
-	accountId: isProd ? 2056185 : undefined,
-	testInboxId: isProd ? undefined : 3142070,
+	accountId: isProd ? ACCOUNT_ID : undefined,
+	testInboxId: isProd ? undefined : ACCOUNT_ID,
 })
