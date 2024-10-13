@@ -10,6 +10,8 @@ import * as Sentry from "@sentry/bun"
 const isProd = process.env["NODE_ENV"] === "production"
 let html = await readFile(isProd ? "build/index.html" : "index.html", "utf8")
 
+console.log("isProd?", isProd)
+
 if (!isProd) {
 	// Inject Vite client code to the HTML
 	html = html.replace(
@@ -28,7 +30,15 @@ if (!isProd) {
 }
 
 const app = new Hono()
-app.use(cors())
+app.use(
+	cors({
+		origin: [
+			"https://bagan-development.up.railway.app",
+			"https://dev.bagan.cl",
+			"https://bagan.cl",
+		],
+	}),
+)
 app.use(logger())
 Sentry.init({
 	dsn: process.env["SENTRY_DSN"],
