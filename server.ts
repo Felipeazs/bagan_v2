@@ -7,7 +7,7 @@ import { emailRoute } from "./controller/contacto"
 import { mercadoPagoRoute } from "./controller/mercadopago"
 import * as Sentry from "@sentry/bun"
 
-const isProd = process.env["NODE_ENV"] === "production"
+export const isProd = process.env["NODE_ENV"] === "production"
 let html = await readFile(isProd ? "build/index.html" : "index.html", "utf8")
 
 console.log("isProd?", isProd)

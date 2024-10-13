@@ -1,11 +1,12 @@
+import { compradorSchema } from "@/models/comprador"
+import { getResumenCompraTemplate } from "@/utils/email-templates"
 import { zValidator } from "@hono/zod-validator"
 import { Context, Hono } from "hono"
 import { MercadoPagoConfig, Payment, Preference } from "mercadopago"
-import { transporter } from "@/api/nodemailer"
-import { compradorSchema } from "@/models/comprador"
-import { getResumenCompraTemplate } from "@/utils/email-templates"
 
+import { mailtrapClient, RECEIVER, SENDER_EMAIL } from "@/api/mailtrap"
 import { PaymentInfo } from "@/models/types"
+import { isProd } from "@/server"
 import { createBody, paymentDetails, setPreferenceDetails } from "../utils/mercadopago"
 
 const mercadoPagoClient = new MercadoPagoConfig({
@@ -60,12 +61,24 @@ export const mercadoPagoRoute = new Hono()
 
 			const details: PaymentInfo = paymentDetails(payment_data)
 
-			transporter.sendMail({
-				from: `No responder <${process.env.NM_MAILTRAP_FROM}>`,
-				to: process.env.NM_MAILTRAP_RECEIVER,
-				subject: `Nueva compra: ${details?.id}`,
+			// transporter.sendMail({
+			// 	from: `No responder <${process.env.NM_MAILTRAP_FROM}>`,
+			// 	to: process.env.NM_MAILTRAP_RECEIVER,
+			// 	subject: `Nueva compra: ${details?.id}`,
+			// 	html: getResumenCompraTemplate(details),
+			// })
+
+			const mailtrap_info = {
+				from: { name: "No responder", email: SENDER_EMAIL },
+				to: [{ email: RECEIVER }],
+				subject: `Nueva compra: ${details.id}`,
+				category: "contacto",
 				html: getResumenCompraTemplate(details),
-			})
+			}
+
+			isProd
+				? mailtrapClient.send(mailtrap_info).then(console.log).catch(console.error)
+				: mailtrapClient.testing.send(mailtrap_info).then(console.log).catch(console.error)
 
 			c.status(200)
 			return c.json({ message: "feedback email sended to Bagan!" })
