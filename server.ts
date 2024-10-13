@@ -1,12 +1,11 @@
+import * as Sentry from "@sentry/bun"
 import { Hono } from "hono"
 import { serveStatic } from "hono/bun"
 import { cors } from "hono/cors"
-import { csrf } from "hono/csrf"
 import { logger } from "hono/logger"
 import { readFile } from "node:fs/promises"
 import { emailRoute } from "./controller/contacto"
 import { mercadoPagoRoute } from "./controller/mercadopago"
-import * as Sentry from "@sentry/bun"
 
 const NODE_ENV = process.env["NODE_ENV"]!
 export const isProd = NODE_ENV === "production" || NODE_ENV === "testing"
@@ -29,23 +28,8 @@ if (!isProd) {
 	)
 }
 
-const origins = [
-	"https://bagan-development.up.railway.app",
-	"https://dev.bagan.cl",
-	"https://bagan.cl",
-]
-
 const app = new Hono()
-app.use(
-	csrf({
-		origin: origins,
-	}),
-)
-app.use(
-	cors({
-		origin: origins,
-	}),
-)
+app.use(cors())
 app.use(logger())
 Sentry.init({
 	dsn: process.env["SENTRY_DSN"],
