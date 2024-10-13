@@ -65,4 +65,8 @@ export default {
 	port: process.env.PORT || 4000,
 	hostname: "0.0.0.0",
 	fetch: app.fetch,
+	tls: {
+		cert: Bun.file("bagan.cl.cert.pem"),
+		key: Bun.file("bagan.cl.key.pem"),
+	},
 }
