@@ -6,6 +6,7 @@ import { FieldApi, useForm } from "@tanstack/react-form"
 import { useMutation } from "@tanstack/react-query"
 import { zodValidator } from "@tanstack/zod-form-adapter"
 import { useEffect, useState } from "react"
+import ReactGA from "react-ga4"
 import { toast } from "sonner"
 import CarritoLogo from "../assets/carrito.svg"
 import { useCompradorStore } from "../store"
@@ -54,8 +55,16 @@ const Carrito = () => {
 		mutationFn: createMPPreferences,
 		onSuccess: (data) => {
 			if (data?.success === false) return toast(data.error.issues[0].message)
-			else if (data) setPreferenceId(data.prefId)
-			else toast("Error del servidor, por favor inténtalo más tarde.")
+			else if (data) {
+				setPreferenceId(data.prefId)
+				if (import.meta.env.PROD) {
+					ReactGA.event({
+						category: "venta",
+						action: "Click",
+						label: "mercadopago",
+					})
+				}
+			} else toast("Error del servidor, por favor inténtalo más tarde.")
 		},
 	})
 
@@ -65,7 +74,6 @@ const Carrito = () => {
 			comprador,
 		},
 		onSubmit: async ({ value }) => {
-			console.log(value)
 			mutation.mutate({ value: value.comprador })
 		},
 		onSubmitInvalid: () => {

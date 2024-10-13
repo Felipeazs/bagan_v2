@@ -1,13 +1,15 @@
+import { sendEmailContacto, strapiContent } from "@/api/index"
+import { emailSchema } from "@/models/email"
+import { Producto } from "@/models/productos"
 import { BlocksRenderer, type BlocksContent } from "@strapi/blocks-react-renderer"
 import { useForm } from "@tanstack/react-form"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import { zodValidator } from "@tanstack/zod-form-adapter"
 import Autoplay from "embla-carousel-autoplay"
+import ReactGA from "react-ga4"
+import { Helmet } from "react-helmet"
 import { toast } from "sonner"
-import { sendEmailContacto, strapiContent } from "@/api/index"
-import { emailSchema } from "@/models/email"
-import { Producto } from "@/models/productos"
 import Carrito from "../components/Carrito"
 import { AspectRatio } from "../components/ui/aspect-ratio"
 import { Button } from "../components/ui/button"
@@ -51,6 +53,14 @@ function Index() {
 					description:
 						"Gracias por contactarte con nostros, te responderemos a la brevedad.",
 				})
+
+				if (import.meta.env.PROD) {
+					ReactGA.event({
+						category: "contacto",
+						action: "Click",
+						label: "mensaje-contacto",
+					})
+				}
 			} else
 				toast("Error Servidor", {
 					description: "Por favor inténtelo más tarde",
@@ -82,6 +92,13 @@ function Index() {
 
 	return (
 		<>
+			<Helmet>
+				<title>
+					{import.meta.env.PROD ? "Bienvenido a Bagán! by Up Foods" : "DEV - Bagán!"}
+				</title>
+				<meta name="description" content="Venta y landing page de bagán" />
+				<meta name="keywords" content="bagán, paté, bagazo, venta, vegan food, vegano" />
+			</Helmet>
 			<section className="w-full h-[500px]">
 				<AspectRatio className="h-[500px] bg-black" ratio={16 / 9}>
 					<Carousel
