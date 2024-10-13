@@ -70,7 +70,7 @@ app.use("/favicon-16x16.png", serveStatic({ root: isProd ? "build/" : "./" }))
 app.use("/site.webmanifest", serveStatic({ root: isProd ? "build/" : "./" }))
 app.get("/*", (c) => c.html(html))
 
-console.log("server up and running")
+console.log(`server up and running\nmode: ${NODE_ENV}`)
 
 export default {
 	port: process.env.PORT || 4000,
