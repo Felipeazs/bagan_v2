@@ -71,7 +71,7 @@ export const mercadoPagoRoute = new Hono()
 				from: { name: "No responder", email: SENDER_EMAIL },
 				to: [{ email: RECEIVER }],
 				subject: `Nueva compra: ${details.id}`,
-				category: "contacto",
+				category: "venta",
 				html: getResumenCompraTemplate(details),
 			}
 
