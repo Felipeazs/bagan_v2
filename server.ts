@@ -36,6 +36,7 @@ app.use(
 			"https://bagan-development.up.railway.app",
 			"https://dev.bagan.cl",
 			"https://bagan.cl",
+			"*.bagan.cl",
 		],
 	}),
 )
