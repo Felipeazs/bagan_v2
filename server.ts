@@ -28,11 +28,7 @@ if (!isProd) {
 }
 
 const app = new Hono()
-app.use(
-	cors({
-		origin: ["https://bagan.cl", "*.bagan.cl"],
-	}),
-)
+app.use(cors())
 app.use(logger())
 Sentry.init({
 	dsn: process.env["SENTRY_DSN"],
