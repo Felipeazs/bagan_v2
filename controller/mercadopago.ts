@@ -6,7 +6,6 @@ import { MercadoPagoConfig, Payment, Preference } from "mercadopago"
 
 import { mailtrapClient, RECEIVER, SENDER_EMAIL } from "@/api/mailtrap"
 import { PaymentInfo } from "@/models/types"
-import { isProd } from "@/server"
 import { createBody, paymentDetails, setPreferenceDetails } from "../utils/mercadopago"
 
 const mercadoPagoClient = new MercadoPagoConfig({
@@ -76,6 +75,7 @@ export const mercadoPagoRoute = new Hono()
 				html: getResumenCompraTemplate(details),
 			}
 
+			const isProd = process.env["NODE_ENV"] === "production"
 			isProd
 				? mailtrapClient.send(mailtrap_info).then(console.log).catch(console.error)
 				: mailtrapClient.testing.send(mailtrap_info).then(console.log).catch(console.error)
