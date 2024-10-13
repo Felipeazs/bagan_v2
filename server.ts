@@ -10,8 +10,6 @@ import * as Sentry from "@sentry/bun"
 export const isProd = process.env["NODE_ENV"] === "production"
 let html = await readFile(isProd ? "build/index.html" : "index.html", "utf8")
 
-console.log("isProd?", isProd)
-
 if (!isProd) {
 	// Inject Vite client code to the HTML
 	html = html.replace(
