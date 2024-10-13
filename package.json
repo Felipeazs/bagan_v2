@@ -4,9 +4,9 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"start": "bun dist/server.js --mode=production",
+		"start": "bun dist/server.js",
 		"dev": "(prettier --check . || prettier --write .) && bunx --bun vite --mode=development",
-		"build": "tsc && vite build --mode=production && rollup -c rollup.config.mjs",
+		"build": "tsc && vite && rollup -c rollup.config.mjs",
 		"lint": "eslint .",
 		"preview": "vite preview"
 	},
