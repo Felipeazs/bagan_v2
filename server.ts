@@ -5,6 +5,7 @@ import { logger } from "hono/logger"
 import { readFile } from "node:fs/promises"
 import { emailRoute } from "./controller/contacto"
 import { mercadoPagoRoute } from "./controller/mercadopago"
+import * as Sentry from "@sentry/bun"
 
 const isProd = process.env["NODE_ENV"] === "production"
 let html = await readFile(isProd ? "build/index.html" : "index.html", "utf8")
@@ -29,10 +30,10 @@ if (!isProd) {
 const app = new Hono()
 app.use(cors())
 app.use(logger())
-// Sentry.init({
-// 	dsn: process.env["SENTRY_DSN"],
-// 	tracesSampleRate: isProd ? 0.1 : 1.0,
-// })
+Sentry.init({
+	dsn: process.env["SENTRY_DSN"],
+	tracesSampleRate: isProd ? 0.1 : 1.0,
+})
 
 // UN-COMMENT these lines when you supply a db connection string
 app.use("*", async (c, next) => {
@@ -65,8 +66,4 @@ export default {
 	port: process.env.PORT || 4000,
 	hostname: "0.0.0.0",
 	fetch: app.fetch,
-	tls: {
-		cert: Bun.file("./bagan.cl.cert.pem"),
-		key: Bun.file("./bagan.cl.key.pem"),
-	},
 }
