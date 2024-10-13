@@ -20,7 +20,7 @@ const Root = () => {
 
 		if (import.meta.env.PROD) {
 			ReactGA.initialize(TRACKING_ID)
-			ReactGA.send({ hitType: "pageview", page: "/", title: "Bagán by Up Foods" })
+			ReactGA.send({ hitType: "pageview", page: "/", title: "Home" })
 		}
 	}, [])
 
