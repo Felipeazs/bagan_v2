@@ -3,7 +3,6 @@ import { zValidator } from "@hono/zod-validator"
 import { Hono } from "hono"
 import { emailSchema } from "../models/email"
 import { getWebMessageTemplate } from "../utils/email-templates"
-import { isProd } from "@/server"
 
 export const emailRoute = new Hono().post("/", zValidator("json", emailSchema), async (c) => {
 	const data = c.req.valid("json")
@@ -17,6 +16,7 @@ export const emailRoute = new Hono().post("/", zValidator("json", emailSchema), 
 	}
 
 	try {
+		const isProd = process.env["NODE_ENV"] === "production"
 		isProd
 			? mailtrapClient.send(mailtrap_info).then(console.log).catch(console.error)
 			: mailtrapClient.testing.send(mailtrap_info).then(console.log).catch(console.error)
