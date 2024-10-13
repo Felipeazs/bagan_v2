@@ -8,7 +8,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { zodValidator } from "@tanstack/zod-form-adapter"
 import Autoplay from "embla-carousel-autoplay"
 import ReactGA from "react-ga4"
-import { Helmet } from "react-helmet"
+import { Helmet } from "react-helmet-async"
 import { toast } from "sonner"
 import Carrito from "../components/Carrito"
 import { AspectRatio } from "../components/ui/aspect-ratio"
@@ -92,13 +92,6 @@ function Index() {
 
 	return (
 		<>
-			<Helmet>
-				<title>
-					{import.meta.env.PROD ? "Bienvenido a Bagán! by Up Foods" : "DEV - Bagán!"}
-				</title>
-				<meta name="description" content="Venta y landing page de bagán" />
-				<meta name="keywords" content="bagán, paté, bagazo, venta, vegan food, vegano" />
-			</Helmet>
 			<section className="w-full h-[500px]">
 				<AspectRatio className="h-[500px] bg-black" ratio={16 / 9}>
 					<Carousel
