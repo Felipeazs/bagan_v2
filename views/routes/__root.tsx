@@ -13,9 +13,9 @@ interface MyRouterContext {
 
 const MP_PUBLIC_KEY = import.meta.env["VITE_MP_PUBLIC_KEY"]
 const TRACKING_ID = "G-9837KWNK9L"
+initMercadoPago(MP_PUBLIC_KEY, { locale: "es-CL" })
 
 const Root = () => {
-	initMercadoPago(MP_PUBLIC_KEY, { locale: "es-CL" })
 	if (import.meta.env.PROD) {
 		ReactGA.initialize(TRACKING_ID)
 		ReactGA.send({ hitType: "pageview", page: "/", title: "Home" })
