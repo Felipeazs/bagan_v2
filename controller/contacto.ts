@@ -17,9 +17,7 @@ export const emailRoute = new Hono().post("/", zValidator("json", emailSchema), 
 
 	try {
 		const isProd = process.env["NODE_ENV"] === "production"
-		isProd
-			? mailtrapClient.send(mailtrap_info).then(console.log).catch(console.error)
-			: mailtrapClient.testing.send(mailtrap_info).then(console.log).catch(console.error)
+		isProd ? mailtrapClient.send(mailtrap_info) : mailtrapClient.testing.send(mailtrap_info)
 
 		c.status(200)
 		return c.json({ status: "ok" })

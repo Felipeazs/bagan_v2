@@ -1,6 +1,7 @@
 import { Hono } from "hono"
 import { serveStatic } from "hono/bun"
 import { cors } from "hono/cors"
+import { csrf } from "hono/csrf"
 import { logger } from "hono/logger"
 import { readFile } from "node:fs/promises"
 import { emailRoute } from "./controller/contacto"
@@ -28,15 +29,21 @@ if (!isProd) {
 	)
 }
 
+const origins = [
+	"https://bagan-development.up.railway.app",
+	"https://dev.bagan.cl",
+	"https://bagan.cl",
+]
+
 const app = new Hono()
 app.use(
+	csrf({
+		origin: origins,
+	}),
+)
+app.use(
 	cors({
-		origin: [
-			"https://bagan-development.up.railway.app",
-			"https://dev.bagan.cl",
-			"https://bagan.cl",
-			"*.bagan.cl",
-		],
+		origin: origins,
 	}),
 )
 app.use(logger())
