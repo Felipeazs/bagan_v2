@@ -22,7 +22,7 @@ export const emailRoute = new Hono().post("/", zValidator("json", emailSchema), 
 		c.status(200)
 		return c.json({ status: "ok" })
 	} catch (err) {
-		console.error("Caught an error: ", (err as Error).message)
+		console.error("Caught an error at /contacto", (err as Error).message)
 		throw new Error("server error")
 	}
 })

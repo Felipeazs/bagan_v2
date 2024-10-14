@@ -36,7 +36,6 @@ Sentry.init({
 	tracesSampleRate: isProd ? 0.1 : 1.0,
 })
 
-// UN-COMMENT these lines when you supply a db connection string
 app.use("*", async (c, next) => {
 	c.res.headers.set("X-Powered-By", "Hono")
 	await next()

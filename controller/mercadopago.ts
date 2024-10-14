@@ -37,7 +37,7 @@ export const mercadoPagoRoute = new Hono()
 				return c.json({ prefId: res.id })
 			}
 		} catch (err) {
-			console.error("Caught an error: ", (err as Error).message)
+			console.error("Caught an error at /create-preference: ", (err as Error).message)
 			throw new Error((err as Error).message)
 		}
 	})
@@ -74,7 +74,7 @@ export const mercadoPagoRoute = new Hono()
 			c.status(200)
 			return c.json({ message: "feedback email sended to Bagan!" })
 		} catch (err) {
-			console.error("Caught an error: ", (err as Error).message)
+			console.error("Caught an error at /feedback: ", (err as Error).message)
 			throw new Error((err as Error).message)
 		}
 	})
@@ -91,7 +91,7 @@ export const mercadoPagoRoute = new Hono()
 			c.status(200)
 			return c.json(details)
 		} catch (err) {
-			console.error("Caught an error: ", (err as Error).message)
+			console.error("Caught an error at /payment: ", (err as Error).message)
 			throw new Error((err as Error).message)
 		}
 	})
