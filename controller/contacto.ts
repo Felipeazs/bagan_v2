@@ -8,7 +8,7 @@ export const emailRoute = new Hono().post("/", zValidator("json", emailSchema), 
 	const data = c.req.valid("json")
 
 	const mailtrap_info = {
-		from: { name: "Mailtrap test", email: SENDER_EMAIL },
+		from: { name: "No responder", email: SENDER_EMAIL },
 		to: [{ email: RECEIVER }],
 		subject: "no responder",
 		category: "contacto",
