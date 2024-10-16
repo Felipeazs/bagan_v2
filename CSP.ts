@@ -2,7 +2,10 @@ export const CSP = {
 	defaultSrc: ["'self'"],
 	baseUri: ["'self'"],
 	childSrc: ["'self'"],
-	connectSrc: ["'self'", "data: *.bagan.cl *.mercadolibre.com *.mercadopago.com  *.mlstatic.com"],
+	connectSrc: [
+		"'self'",
+		"data: *.bagan.cl *.mercadolibre.com *.mercadopago.com *.mlstatic.com *.railway.app/*",
+	],
 	fontSrc: ["'self'", "https:", "data:"],
 	formAction: ["'self'"],
 	frameAncestors: ["'self'", "data: iframe"],
