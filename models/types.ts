@@ -13,8 +13,11 @@ export type PrefRespons = {
 export interface IWebhook {
 	title: string
 	description: string
-	footer?: string
 	content: string
+	fields?: {
+		name: string
+		value: string
+	}[]
 }
 
 export type PaymentInfo = {

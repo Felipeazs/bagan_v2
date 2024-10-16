@@ -29,8 +29,13 @@ export const emailRoute = new Hono().post("/", zValidator("json", emailSchema), 
 		await sendWebhookMessage({
 			title: data.mensaje,
 			description: data.nombre,
-			footer: `${data.email}\n${data.telefono}`,
 			content: "Nuevo mensaje",
+			fields: [
+				{
+					name: "contacto",
+					value: `${data.email}\n+56 ${data.telefono}`,
+				},
+			],
 		})
 
 		const isProd = NODE_ENV === "production"
