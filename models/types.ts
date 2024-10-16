@@ -10,6 +10,13 @@ export type PrefRespons = {
 	}
 }
 
+export interface IWebhook {
+	title: string
+	description: string
+	footer?: string
+	content: string
+}
+
 export type PaymentInfo = {
 	id: number | undefined
 	date_approved: string | undefined

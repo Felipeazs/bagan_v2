@@ -105,7 +105,7 @@ export const paymentDetails = (data: PaymentResponse): PaymentInfo => {
 			items: data.additional_info?.items,
 		},
 		payer: {
-			name: data.additional_info?.payer?.first_name,
+			name: `${data.additional_info?.payer?.first_name}`,
 			email: data.payer?.email,
 			phone: {
 				number: data.additional_info?.payer?.phone?.number,

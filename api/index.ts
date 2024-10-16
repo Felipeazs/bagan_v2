@@ -10,7 +10,7 @@ const client = hc<ApiRoutes>("/", {
 	},
 })
 
-export const api = client.api
+export const { api } = client
 
 const URL = `${import.meta.env["VITE_STRAPI_URL"]}`
 const STRAPI_API_KEY = import.meta.env["VITE_STRAPI_API_KEY"]

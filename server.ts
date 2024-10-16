@@ -3,9 +3,11 @@ import { Hono } from "hono"
 import { serveStatic } from "hono/bun"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
+import { secureHeaders } from "hono/secure-headers"
 import { readFile } from "node:fs/promises"
 import { emailRoute } from "./controller/contacto"
 import { mercadoPagoRoute } from "./controller/mercadopago"
+import { CSP } from "./CSP"
 
 const NODE_ENV = process.env["NODE_ENV"]!
 export const isProd = NODE_ENV === "production" || NODE_ENV === "testing"
@@ -28,14 +30,32 @@ if (!isProd) {
 	)
 }
 
+process.on("uncaughtException", (err) => {
+	console.log("UNCAUGHT EXCEPTION! 💣 Shutting down...")
+	console.log(err.name, err.message)
+	process.exit(1)
+})
+
 const app = new Hono()
-app.use(cors())
+app.use(
+	cors({
+		origin: ["https://*.bagan.cl", "https://strapi_dev.bagan.cl"],
+	}),
+)
 app.use(logger())
 Sentry.init({
 	dsn: process.env["SENTRY_DSN"],
 	tracesSampleRate: isProd ? 0.1 : 1.0,
 })
 
+app.use(
+	secureHeaders({
+		xFrameOptions: false,
+		xXssProtection: false,
+		removePoweredBy: true,
+		contentSecurityPolicy: CSP,
+	}),
+)
 app.use("*", async (c, next) => {
 	c.res.headers.set("X-Powered-By", "Hono")
 	await next()

@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"start": "bun dist/server.js",
-		"dev": "(prettier --check . || prettier --write .) && bunx --bun vite --mode=development",
+		"dev": "(prettier --check . || prettier --write .) && bunx --bun vite",
 		"build": "tsc && vite build && rollup -c rollup.config.mjs",
 		"lint": "eslint .",
 		"preview": "vite preview"
@@ -30,6 +30,7 @@
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"cross-env": "^7.0.3",
+		"discord.js": "^14.16.3",
 		"drizzle-orm": "^0.33.0",
 		"drizzle-zod": "^0.5.1",
 		"embla-carousel-autoplay": "^8.3.0",

@@ -488,7 +488,7 @@ const Carrito = () => {
 							{preferenceId && step.page === 2 ? (
 								<div className="flex flex-col gap-1">
 									<Wallet
-										initialization={{ preferenceId }}
+										initialization={{ preferenceId, redirectMode: "self" }}
 										onReady={() => true}
 										customization={{
 											texts: {
