@@ -9,6 +9,7 @@ export const sendWebhookMessage = async (webhook: IWebhook) => {
 	const embeds = new EmbedBuilder({
 		title: webhook.title,
 		description: webhook.description,
+		url: process.env["MP_REDIRECT"],
 		color: 0xf9b00e,
 		footer: {
 			text: webhook.footer ?? "",

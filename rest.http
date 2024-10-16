@@ -1,0 +1,47 @@
+### Strapi Data
+GET {{VITE_STRAPI_URL}}/api/home?populate=hero_images&populate=productos.images&populate=packs.images&populate=contacto&populate=instituciones.images
+Content-Type: application/json
+Authorization: Bearer {{VITE_STRAPI_API_KEY}}
+
+### Bagan! - Ruta para creación del preference Id para el botón de compra (Wallet)
+POST {{MP_REDIRECT}}/api/mercado-pago/create-preference
+Content-Type: application/json
+
+{
+	"nombre": "Test",
+	"apellido": "Tet",
+	"rut": "22959872-4",
+	"telefono": "945214587",
+	"email": "test@test.cl",
+	"direccion": {
+		"calle": "Test",
+		"numero": "1234",
+		"depto": "",
+		"comuna": "Test",
+		"region": "Test"
+	},
+	"items": [{
+        "id": "2usiygy4ongwpaw3vnh",
+        "title": "Tripack",
+        "picture_url": "",
+        "description": "precio unitario: $4.100",
+        "quantity": 1,
+        "unit_price": 12000,
+        "category_id": "",
+        "external_reference": "",
+        "details":  ["pesto albahaca", "pesto albahaca", "pesto albahaca"],
+        "weight": 750
+    }],
+	"envio": 15200
+}
+
+###
+@id=90458118788
+
+### Bagan! - Ruta para crear el pago y enviar el feedback
+POST {{MP_REDIRECT}}/api/mercado-pago/feedback
+Content-Type: application/json
+
+### Bagan! - Ruta para obtener la información de una compra por su ID
+GET {{MP_REDIRECT}}/api/mercado-pago/payment?id={{id}}
+Content-Type: application/json
