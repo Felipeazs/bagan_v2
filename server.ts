@@ -1,12 +1,13 @@
 import * as Sentry from "@sentry/bun"
-import { Hono } from "hono"
+import { OpenAPIHono } from "@hono/zod-openapi"
 import { serveStatic } from "hono/bun"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
 import { secureHeaders } from "hono/secure-headers"
 import { readFile } from "node:fs/promises"
-import { emailRoute } from "./controller/contacto"
-import { mercadoPagoRoute } from "./controller/mercadopago"
+import { app as EmailRoute } from "./controller/contacto"
+// import { mercadoPagoRoute } from "./controller/mercadopago"
+import { swaggerUI } from "@hono/swagger-ui"
 import { CSP } from "./CSP"
 
 const NODE_ENV = process.env["NODE_ENV"]!
@@ -36,7 +37,8 @@ process.on("uncaughtException", (err) => {
 	process.exit(1)
 })
 
-const app = new Hono()
+const app = new OpenAPIHono()
+
 app.use(
 	cors({
 		origin: [
@@ -64,17 +66,15 @@ app.use("*", async (c, next) => {
 	await next()
 })
 
-const apiRoutes = app
-	.basePath("/api")
-	.route("/contacto", emailRoute)
-	.route("/mercado-pago", mercadoPagoRoute)
-
-app.get("/health", async (c) => {
-	c.status(200)
-	return c.json("ok")
+app.doc("/doc", {
+	openapi: "3.1.0",
+	info: {
+		version: "1.0.0",
+		title: "Bagán! API",
+	},
 })
 
-export type ApiRoutes = typeof apiRoutes
+app.get("/ui", swaggerUI({ url: "/doc" }))
 
 app.use("/assets/*", serveStatic({ root: isProd ? "build/" : "./" }))
 app.use("/apple-touch-icon.png", serveStatic({ root: isProd ? "build/" : "./" }))
@@ -82,6 +82,17 @@ app.use("/favicon-32x32.png", serveStatic({ root: isProd ? "build/" : "./" }))
 app.use("/favicon-16x16.png", serveStatic({ root: isProd ? "build/" : "./" }))
 app.use("/site.webmanifest", serveStatic({ root: isProd ? "build/" : "./" }))
 app.get("/*", (c) => c.html(html))
+
+// app.route("/contacto", emailRoute).route("/mercado-pago", mercadoPagoRoute)
+
+const apiRoutes = app.route("/contacto", EmailRoute)
+
+app.get("/health", async (c) => {
+	c.status(200)
+	return c.json("ok")
+})
+
+export type ApiRoutes = typeof apiRoutes
 
 console.log(`server up and running\nmode: ${NODE_ENV}`)
 

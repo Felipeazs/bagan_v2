@@ -12,6 +12,8 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@hono/swagger-ui": "^0.4.1",
+		"@hono/zod-openapi": "^0.16.4",
 		"@hono/zod-validator": "^0.3.0",
 		"@mercadopago/sdk-react": "^0.0.19",
 		"@neondatabase/serverless": "^0.9.5",

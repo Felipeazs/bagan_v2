@@ -1,13 +1,42 @@
-import { zValidator } from "@hono/zod-validator"
-import { Hono } from "hono"
+import { createRoute, OpenAPIHono } from "@hono/zod-openapi"
 import { env } from "hono/adapter"
+import { z } from "zod"
 
 import { sendWebhookMessage } from "@/api/discord"
 import { mailtrapClient } from "@/api/mailtrap"
 import { emailSchema } from "@/models/email"
 import { getWebMessageTemplate } from "@/utils/email-templates"
 
-export const emailRoute = new Hono().post("/", zValidator("json", emailSchema), async (c) => {
+export const app = new OpenAPIHono()
+
+const contacto = createRoute({
+	method: "post",
+	path: "/",
+	request: {
+		body: {
+			description: "Send message contacto",
+			content: {
+				"application/json": {
+					schema: emailSchema,
+				},
+			},
+		},
+	},
+	responses: {
+		200: {
+			description: "Status",
+			content: {
+				"application/json": {
+					schema: z.object({
+						status: z.string(),
+					}),
+				},
+			},
+		},
+	},
+})
+
+app.openapi(contacto, async (c) => {
 	const data = c.req.valid("json")
 
 	const { NODE_ENV, NM_MAILTRAP_FROM, NM_MAILTRAP_RECEIVER } = env<{
