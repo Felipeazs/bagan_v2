@@ -39,7 +39,7 @@ process.on("uncaughtException", (err) => {
 const app = new Hono()
 app.use(
 	cors({
-		origin: ["https://*.bagan.cl", "https://strapi_dev.bagan.cl"],
+		origin: process.env["MP_REDIRECT"]!,
 	}),
 )
 app.use(logger())
