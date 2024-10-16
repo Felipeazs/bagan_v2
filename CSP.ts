@@ -4,7 +4,7 @@ export const CSP = {
 	childSrc: ["'self'"],
 	connectSrc: [
 		"'self'",
-		"data: *.bagan.cl *.mercadolibre.com *.mercadopago.com *.mlstatic.com *.railway.app/*",
+		"data: *.bagan.cl *.mercadolibre.com *.mercadopago.com *.mlstatic.com *.up.railway.app/*",
 	],
 	fontSrc: ["'self'", "https:", "data:"],
 	formAction: ["'self'"],
