@@ -116,13 +116,6 @@ function Index() {
 						<p className="text-xl lg:text-2xl font-subtitle">
 							{strapi_home?.hero_subtitle}
 						</p>
-						<Button className="hidden md:inline mt-5 md:mt-20 bg-bagan_dark">
-							<a href="#nosotras">
-								<span className="leading-5 font-bold lg:text-xl tracking-widest">
-									NOSOTRAS
-								</span>
-							</a>
-						</Button>
 					</div>
 				</AspectRatio>
 			</section>
