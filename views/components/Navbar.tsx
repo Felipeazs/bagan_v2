@@ -1,21 +1,9 @@
-import { Link } from "@tanstack/react-router"
+import { Link, useLocation } from "@tanstack/react-router"
 import Carrito from "./Carrito"
 
 const Navbar = () => {
-	const links = [
-		{
-			title: "Nosotras",
-			ref: "#nosotras",
-		},
-		{
-			title: "Productos",
-			ref: "#productos",
-		},
-		{
-			title: "Contacto",
-			ref: "#contacto",
-		},
-	]
+	const { pathname } = useLocation()
+
 	return (
 		<div className="px-10 md:px-28 py-6 text-white flex bg-bagan justify-between align-center items-center">
 			<div className="">
@@ -28,14 +16,31 @@ const Navbar = () => {
 				</Link>
 			</div>
 			<div className="flex gap-4 justify-center items-center">
-				{links.map((l, i) => (
-					<a
-						key={i}
-						href={l.ref}
-						className="hidden md:inline min-w-[79px] max-w-[79px] hover:text-gray-900 hover:font-bold">
-						{l.title}
-					</a>
-				))}
+				{pathname === "/mayorista" ? (
+					<>
+						<Link
+							to="/"
+							className="hidden md:inline min-w-[83px] max-w-[79px] hover:text-gray-900 hover:font-bold">
+							Inicio
+						</Link>
+						<Link
+							to="/mayorista"
+							className="hidden md:inline min-w-[83px] max-w-[79px] hover:text-gray-900 hover:font-bold">
+							Mayoristas
+						</Link>
+					</>
+				) : (
+					<>
+						<a href="/#nosotras">Nosotros</a>
+						<a href="/#productos">Productos</a>
+						<a href="/#contacto">Contacto</a>
+						<Link
+							to="/mayorista"
+							className="hidden md:inline min-w-[83px] max-w-[79px] hover:text-gray-900 hover:font-bold">
+							Mayoristas
+						</Link>
+					</>
+				)}
 				<Carrito />
 			</div>
 		</div>

@@ -18,6 +18,7 @@ import NotFound from "./views/components/NotFound"
 const router = createRouter({
 	routeTree,
 	context: { queryClient },
+	defaultStaleTime: Infinity,
 	defaultNotFoundComponent: NotFound,
 })
 

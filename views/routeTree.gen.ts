@@ -11,10 +11,16 @@
 // Import Routes
 
 import { Route as rootRoute } from "./routes/__root"
+import { Route as MayoristaImport } from "./routes/mayorista"
 import { Route as AboutImport } from "./routes/about"
 import { Route as IndexImport } from "./routes/index"
 
 // Create/Update Routes
+
+const MayoristaRoute = MayoristaImport.update({
+	path: "/mayorista",
+	getParentRoute: () => rootRoute,
+} as any)
 
 const AboutRoute = AboutImport.update({
 	path: "/about",
@@ -44,6 +50,13 @@ declare module "@tanstack/react-router" {
 			preLoaderRoute: typeof AboutImport
 			parentRoute: typeof rootRoute
 		}
+		"/mayorista": {
+			id: "/mayorista"
+			path: "/mayorista"
+			fullPath: "/mayorista"
+			preLoaderRoute: typeof MayoristaImport
+			parentRoute: typeof rootRoute
+		}
 	}
 }
 
@@ -52,36 +65,41 @@ declare module "@tanstack/react-router" {
 export interface FileRoutesByFullPath {
 	"/": typeof IndexRoute
 	"/about": typeof AboutRoute
+	"/mayorista": typeof MayoristaRoute
 }
 
 export interface FileRoutesByTo {
 	"/": typeof IndexRoute
 	"/about": typeof AboutRoute
+	"/mayorista": typeof MayoristaRoute
 }
 
 export interface FileRoutesById {
 	__root__: typeof rootRoute
 	"/": typeof IndexRoute
 	"/about": typeof AboutRoute
+	"/mayorista": typeof MayoristaRoute
 }
 
 export interface FileRouteTypes {
 	fileRoutesByFullPath: FileRoutesByFullPath
-	fullPaths: "/" | "/about"
+	fullPaths: "/" | "/about" | "/mayorista"
 	fileRoutesByTo: FileRoutesByTo
-	to: "/" | "/about"
-	id: "__root__" | "/" | "/about"
+	to: "/" | "/about" | "/mayorista"
+	id: "__root__" | "/" | "/about" | "/mayorista"
 	fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
 	IndexRoute: typeof IndexRoute
 	AboutRoute: typeof AboutRoute
+	MayoristaRoute: typeof MayoristaRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
 	IndexRoute: IndexRoute,
 	AboutRoute: AboutRoute,
+	MayoristaRoute: MayoristaRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,7 +115,8 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/about"
+        "/about",
+        "/mayorista"
       ]
     },
     "/": {
@@ -105,6 +124,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/mayorista": {
+      "filePath": "mayorista.tsx"
     }
   }
 }

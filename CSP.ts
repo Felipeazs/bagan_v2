@@ -22,7 +22,7 @@ export const CSP = {
 		"'self'",
 		"data: *.googletagmanager.com *.cloudflareinsights.com *.mercadopago.com *.mlstatic.com 'sha256-SF1N+u0m2YmI5B68GiJ90D2BKDGFZ/75ULGb5/aqUmY='",
 	],
-	styleSrc: ["'self'", "https:", "'unsafe-inline'", "data: "],
+	styleSrc: ["'self'", "https:", "data: "],
 	styleSrcAttr: ["data: "],
 	styleSrcElem: ["'self'", "https:", "'unsafe-inline'"],
 	upgradeInsecureRequests: [],

@@ -4,15 +4,23 @@ import { Producto } from "@/models/productos"
 import { BlocksRenderer, type BlocksContent } from "@strapi/blocks-react-renderer"
 import { useForm } from "@tanstack/react-form"
 import { useMutation, useQuery } from "@tanstack/react-query"
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, ReactNode } from "@tanstack/react-router"
 import { zodValidator } from "@tanstack/zod-form-adapter"
 import Autoplay from "embla-carousel-autoplay"
 import ReactGA from "react-ga4"
 import { toast } from "sonner"
+
 import Carrito from "../components/Carrito"
 import { AspectRatio } from "../components/ui/aspect-ratio"
 import { Button } from "../components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardTitle } from "../components/ui/card"
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "../components/ui/card"
 import {
 	Carousel,
 	CarouselContent,
@@ -36,13 +44,11 @@ function Index() {
 		queryFn: () =>
 			strapiContent({
 				page: "home",
-				query: "?populate=hero_images&populate=productos.images&populate=packs.images&populate=contacto&populate=instituciones.images",
+				query: "?populate=hero_images&populate=productos.images&populate=packs.images&populate=contacto&populate=instituciones.images&populate=caracteristicas",
 			}),
-		staleTime: Infinity,
 	})
 
 	const about: BlocksContent = strapi_home?.section_about ?? []
-	const circula: BlocksContent = strapi_home?.section_circula ?? []
 
 	const mutation = useMutation({
 		mutationFn: sendEmailContacto,
@@ -121,47 +127,49 @@ function Index() {
 			</section>
 			<section className="relative">
 				<div
-					className="grid grid-rows-3 lg:grid-rows-2 grid-flow-col text-black"
+					className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 justify-center items-center text-black"
 					id="nosotras">
-					<div className="flex flex-col justify-center align-center md:h-[500px] text-center">
-						<p className="text-bagan font-black uppercase">Sobre</p>
-						<p className="uppercase font-black">Nosotras</p>
-						<div className="px-20 pt-5 text-[15px]">
+					<div className="relative row-span-2 flex flex-col justify-center items-center gap-5 text-center h-full text-lg p-5">
+						<div className="absolute top-0 bg-repeat-x -z-20 bg-cebada w-full h-1/2"></div>
+						<div className="absolute -bottom-80 bg-repeat-x -z-10 bg-cebada w-full h-1/2"></div>
+						<img src={strapi_home?.about_image} width={300} className="object-cover" />
+						<div className="md:px-20 pt-5 text-lg">
 							{isSuccess && <BlocksRenderer content={about} />}
 						</div>
 					</div>
-					<div className="flex flex-col justify-center align-center h-[500px] text-center">
-						<img
-							src={strapi_home?.about_image}
-							width={100}
-							className="w-full h-full object-cover"
-						/>
-					</div>
-					<div className="hidden lg:flex flex-col justify-center align-center md:h-[500px] text-center">
+					<div className="row-span-2 lg:flex flex-col justify-center align-center text-center">
 						<img
 							src={strapi_home?.circula_image}
 							width={100}
 							className="w-full h-full object-cover"
 						/>
 					</div>
-					<div className="flex flex-col justify-center align-center md:h-[500px] text-center">
-						<p className="text-bagan font-black uppercase">Circular</p>
-						<div className="px-20 pt-5 text-[15px]">
-							{isSuccess && <BlocksRenderer content={circula} />}
-						</div>
-					</div>
 				</div>
-				<Button className="hidden lg:inline absolute left-1/2 -translate-x-1/2 bottom-10 lg:mt-40 bg-bagan_dark">
-					<a href="#productos">
-						<span className="leading-5 font-bold lg:text-xl tracking-widest">
-							PRODUCTOS
-						</span>
-					</a>
-				</Button>
 			</section>
-			<section id="productos" className="text-black text-center pt-40 px-5">
-				<p className="text-black font-black uppercase">Nuestros Productos</p>
-				<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-16">
+			<section id="productos" className="text-black text-center mt-10">
+				<p className="text-white font-black uppercase border-2 border-bagan_dark bg-bagan_dark w-full m-auto p-2 text-2xl font-title">
+					Nuestros Productos
+				</p>
+				<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-10">
+					{isSuccess &&
+						strapi_home?.caracteristicas?.map(
+							(c: { id: string; title: string; description: ReactNode[] }) => (
+								<Card
+									key={c.id}
+									className="relative w-[400px] overflow-hidden bg-bagan text-white">
+									<CardHeader>
+										<CardTitle className="text-center font-subtitle font-bold">
+											{c.title}
+										</CardTitle>
+									</CardHeader>
+									<CardContent className="text-sm">
+										<BlocksRenderer content={c.description} />
+									</CardContent>
+								</Card>
+							),
+						)}
+				</div>
+				<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-10">
 					{strapi_home?.productos?.map(
 						(p: {
 							id: string
@@ -181,11 +189,11 @@ function Index() {
 									}}>
 									<CarouselContent>
 										{p.images.map((i) => (
-											<CarouselItem key={i.id}>
+											<CarouselItem onPlay={(e) => console.log(e)} key={i.id}>
 												<img
 													src={i.url}
-													width={100}
-													className="w-[400px] h-[450px] object-cover"
+													width={400}
+													className="h-[450px] object-cover"
 												/>
 											</CarouselItem>
 										))}

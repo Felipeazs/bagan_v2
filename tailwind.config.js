@@ -57,10 +57,12 @@ export default {
 				},
 				bagan: "#F9B00E",
 				bagan_dark: "#C38805",
+				bagan_light: "#FCF8D9",
 			},
 			backgroundImage: {
 				banner7:
 					'url("https://res.cloudinary.com/dzgcvfgha/image/upload/f_webp,f_auto,q_auto/v1/Bagan/flrbonprdnba6ds0m2sc")',
+				cebada: 'url("https://res.cloudinary.com/dzgcvfgha/image/upload/f_auto,q_auto/v1/Bagan/z9sxddor9unauu4hmidk")',
 			},
 			dropShadow: {
 				white: "0 25px 25px rgba(255, 255, 255, 1)",
