@@ -125,9 +125,9 @@ function Index() {
 					</div>
 				</AspectRatio>
 			</section>
-			<section className="relative">
+			<section className="relative w-full">
 				<div
-					className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 justify-center items-center text-black"
+					className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-2 justify-center items-center text-black w-full h-full"
 					id="nosotras">
 					<div className="relative row-span-2 flex flex-col justify-center items-center gap-5 text-center h-full text-lg p-5">
 						<div className="absolute top-0 bg-repeat-x -z-20 bg-cebada w-full h-1/2"></div>
@@ -137,7 +137,7 @@ function Index() {
 							{isSuccess && <BlocksRenderer content={about} />}
 						</div>
 					</div>
-					<div className="row-span-2 lg:flex flex-col justify-center align-center text-center">
+					<div className="row-span-2 h-full">
 						<img
 							src={strapi_home?.circula_image}
 							width={100}
@@ -150,61 +150,65 @@ function Index() {
 				<p className="text-white font-black uppercase border-2 border-bagan_dark bg-bagan_dark w-full m-auto p-2 text-2xl font-title">
 					Nuestros Productos
 				</p>
-				<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-10">
-					{isSuccess &&
-						strapi_home?.caracteristicas?.map(
-							(c: { id: string; title: string; description: ReactNode[] }) => (
+				<div className="w-[90%] m-auto">
+					<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-10">
+						{isSuccess &&
+							strapi_home?.caracteristicas?.map(
+								(c: { id: string; title: string; description: ReactNode[] }) => (
+									<Card
+										key={c.id}
+										className="relative max-w-[400px] overflow-hidden bg-bagan text-white">
+										<CardHeader>
+											<CardTitle className="text-center font-subtitle font-bold">
+												{c.title}
+											</CardTitle>
+										</CardHeader>
+										<CardContent className="text-sm">
+											<BlocksRenderer content={c.description} />
+										</CardContent>
+									</Card>
+								),
+							)}
+					</div>
+					<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-10">
+						{strapi_home?.productos?.map(
+							(p: {
+								id: string
+								title: string
+								images: { id: string; url: string }[]
+							}) => (
 								<Card
-									key={c.id}
-									className="relative w-[400px] overflow-hidden bg-bagan text-white">
-									<CardHeader>
-										<CardTitle className="text-center font-subtitle font-bold">
-											{c.title}
-										</CardTitle>
-									</CardHeader>
-									<CardContent className="text-sm">
-										<BlocksRenderer content={c.description} />
-									</CardContent>
+									key={p.id}
+									className="relative max-w-[400px] max-h-[450px] overflow-hidden">
+									<CardTitle className="absolute w-max z-20 top-5 left-1/2 -translate-x-1/2 bg-transparent font-title text-3xl text-bagan">
+										{p.title}
+									</CardTitle>
+									<Carousel
+										className="relative"
+										opts={{
+											loop: true,
+										}}>
+										<CarouselContent>
+											{p.images.map((i) => (
+												<CarouselItem
+													onPlay={(e) => console.log(e)}
+													key={i.id}>
+													<img
+														src={i.url}
+														width={400}
+														className="h-[450px] object-cover"
+													/>
+												</CarouselItem>
+											))}
+										</CarouselContent>
+										<CarouselPrevious className="absolute left-[45%] top-[90%] -translate-x-1/2" />
+										<CarouselNext className="absolute left-[55%] top-[90%] -translate-x-1/2" />
+									</Carousel>
+									<CardFooter className="flex justify-center"></CardFooter>
 								</Card>
 							),
 						)}
-				</div>
-				<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-10">
-					{strapi_home?.productos?.map(
-						(p: {
-							id: string
-							title: string
-							images: { id: string; url: string }[]
-						}) => (
-							<Card
-								key={p.id}
-								className="relative max-w-[400px] max-h-[450px] overflow-hidden">
-								<CardTitle className="absolute w-max z-20 top-5 left-1/2 -translate-x-1/2 bg-transparent font-title text-3xl text-bagan">
-									{p.title}
-								</CardTitle>
-								<Carousel
-									className="relative"
-									opts={{
-										loop: true,
-									}}>
-									<CarouselContent>
-										{p.images.map((i) => (
-											<CarouselItem onPlay={(e) => console.log(e)} key={i.id}>
-												<img
-													src={i.url}
-													width={400}
-													className="h-[450px] object-cover"
-												/>
-											</CarouselItem>
-										))}
-									</CarouselContent>
-									<CarouselPrevious className="absolute left-[45%] top-[90%] -translate-x-1/2" />
-									<CarouselNext className="absolute left-[55%] top-[90%] -translate-x-1/2" />
-								</Carousel>
-								<CardFooter className="flex justify-center"></CardFooter>
-							</Card>
-						),
-					)}
+					</div>
 				</div>
 			</section>
 			<section id="packs" className="text-black text-center py-20 px-5">
