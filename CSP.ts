@@ -4,7 +4,7 @@ export const CSP = {
 	childSrc: ["'self'"],
 	connectSrc: [
 		"'self'",
-		"data: *.bagan.cl *.mercadolibre.com *.mercadopago.com *.mlstatic.com https://railwayapp-strapi-klwj-dev.up.railway.app/* *.up.railway.app",
+		"data: *.bagan.cl *.mercadolibre.com *.mercadopago.com *.mlstatic.com *.up.railway.app",
 	],
 	fontSrc: ["'self'", "https:", "data:"],
 	formAction: ["'self'"],
@@ -20,7 +20,7 @@ export const CSP = {
 	scriptSrcAttr: ["'none'"],
 	scriptSrcElem: [
 		"'self'",
-		"data: *.googletagmanager.com/* *.cloudflareinsights.com *.mercadopago.com *.mlstatic.com 'sha256-SF1N+u0m2YmI5B68GiJ90D2BKDGFZ/75ULGb5/aqUmY='",
+		"data: *.googletagmanager.com *.cloudflareinsights.com *.mercadopago.com *.mlstatic.com 'sha256-SF1N+u0m2YmI5B68GiJ90D2BKDGFZ/75ULGb5/aqUmY='",
 	],
 	styleSrc: ["'self'", "https:", "'unsafe-inline'", "data: "],
 	styleSrcAttr: ["data: "],
