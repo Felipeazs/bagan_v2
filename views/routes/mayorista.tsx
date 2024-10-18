@@ -29,7 +29,7 @@ function Mayorista() {
 					</div>
 				}
 				children={(strapi) => (
-					<div className="w-[70%] m-auto my-10 border-2 border-bagan rounded-md p-10">
+					<div className="w-[90%] md:w-[70%] m-auto my-10 border-2 border-bagan rounded-md p-5 md:p-10">
 						<BlocksRenderer
 							content={strapi.description}
 							blocks={{
@@ -44,7 +44,7 @@ function Mayorista() {
 								),
 							}}
 						/>
-						<Button variant={"outline"} className="border-2 border-bagan_dark mt-3">
+						<Button className="bg-bagan_dark mt-3 font-bold">
 							Descaga la ficha técnica
 						</Button>
 					</div>

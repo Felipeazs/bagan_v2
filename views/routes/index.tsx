@@ -164,7 +164,7 @@ function Index() {
 						</p>
 						<div className="w-[90%] m-auto">
 							<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-10">
-								{home.caracteristicas?.map(
+								{home?.caracteristicas?.map(
 									(c: {
 										id: string
 										title: string
