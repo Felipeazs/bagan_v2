@@ -146,7 +146,18 @@ function Index() {
 								<div className="absolute -bottom-80 bg-repeat-x -z-10 bg-cebada w-full h-1/2"></div>
 								<img src={home?.about_image} width={300} className="object-cover" />
 								<div className="md:px-20 pt-5 text-lg">
-									{<BlocksRenderer content={home?.section_about} />}
+									{
+										<BlocksRenderer
+											content={home?.section_about}
+											modifiers={{
+												bold: ({ children }) => (
+													<strong className="text-bagan_dark">
+														{children}
+													</strong>
+												),
+											}}
+										/>
+									}
 								</div>
 							</div>
 							<div className="row-span-2 h-full">

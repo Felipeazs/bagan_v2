@@ -12,7 +12,7 @@ const Navbar = () => {
 				<img
 					src="https://res.cloudinary.com/dzgcvfgha/image/upload/f_webp,q_auto,e_bgremoval:ffffff/v1/Bagan/naomdbo6nhkvhhv85tal"
 					width={50}
-					className="h-[70px] w-[150px] object-cover bg-transparent"
+					className="h-[70px] w-[150px] object-cover bg-transparent transition-all ease-in-out duration-300 hover:scale-110"
 				/>
 			</Link>
 			<div className="flex gap-4 justify-center items-center">
