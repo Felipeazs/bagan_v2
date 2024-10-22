@@ -9,8 +9,8 @@ import Autoplay from "embla-carousel-autoplay"
 import ReactGA from "react-ga4"
 import { toast } from "sonner"
 
-import Logo from "../assets/loading.png"
 import Carrito from "../components/Carrito"
+import Fallback from "../components/Fallback"
 import { AspectRatio } from "../components/ui/aspect-ratio"
 import { Button } from "../components/ui/button"
 import {
@@ -31,7 +31,6 @@ import {
 import { Input } from "../components/ui/input"
 import { Textarea } from "../components/ui/textarea"
 import { useCompradorStore } from "../store"
-import Fallback from "../components/Fallback"
 
 export const Route = createFileRoute("/")({
 	loader: async () => {
