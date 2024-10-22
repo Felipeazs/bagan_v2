@@ -4,22 +4,6 @@
  */
 
 export interface paths {
-	"/cambios-devolucion": {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		get: operations["get/cambios-devolucion"]
-		put: operations["put/cambios-devolucion"]
-		post?: never
-		delete: operations["delete/cambios-devolucion"]
-		options?: never
-		head?: never
-		patch?: never
-		trace?: never
-	}
 	"/home": {
 		parameters: {
 			query?: never
@@ -31,6 +15,22 @@ export interface paths {
 		put: operations["put/home"]
 		post?: never
 		delete: operations["delete/home"]
+		options?: never
+		head?: never
+		patch?: never
+		trace?: never
+	}
+	"/informacion": {
+		parameters: {
+			query?: never
+			header?: never
+			path?: never
+			cookie?: never
+		}
+		get: operations["get/informacion"]
+		put: operations["put/informacion"]
+		post?: never
+		delete: operations["delete/informacion"]
 		options?: never
 		head?: never
 		patch?: never
@@ -52,38 +52,6 @@ export interface paths {
 		patch?: never
 		trace?: never
 	}
-	"/politicas-envio": {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		get: operations["get/politicas-envio"]
-		put: operations["put/politicas-envio"]
-		post?: never
-		delete: operations["delete/politicas-envio"]
-		options?: never
-		head?: never
-		patch?: never
-		trace?: never
-	}
-	"/terminos-condicion": {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		get: operations["get/terminos-condicion"]
-		put: operations["put/terminos-condicion"]
-		post?: never
-		delete: operations["delete/terminos-condicion"]
-		options?: never
-		head?: never
-		patch?: never
-		trace?: never
-	}
 }
 export type webhooks = Record<string, never>
 export interface components {
@@ -96,163 +64,6 @@ export interface components {
 				message?: string
 				details?: Record<string, never>
 			}
-		}
-		CambiosDevolucionRequest: {
-			data: {
-				description?: unknown
-				locale?: string
-				localizations?: (number | string)[]
-			}
-		}
-		CambiosDevolucionListResponse: {
-			data?: components["schemas"]["CambiosDevolucion"][]
-			meta?: {
-				pagination?: {
-					page?: number
-					pageSize?: number
-					pageCount?: number
-					total?: number
-				}
-			}
-		}
-		CambiosDevolucion: {
-			id?: number
-			documentId?: string
-			description?: unknown
-			/** Format: date-time */
-			createdAt?: string
-			/** Format: date-time */
-			updatedAt?: string
-			/** Format: date-time */
-			publishedAt?: string
-			createdBy?: {
-				id?: number
-				documentId?: string
-				firstname?: string
-				lastname?: string
-				username?: string
-				/** Format: email */
-				email?: string
-				resetPasswordToken?: string
-				registrationToken?: string
-				isActive?: boolean
-				roles?: {
-					id?: number
-					documentId?: string
-					name?: string
-					code?: string
-					description?: string
-					users?: {
-						id?: number
-						documentId?: string
-					}[]
-					permissions?: {
-						id?: number
-						documentId?: string
-						action?: string
-						actionParameters?: unknown
-						subject?: string
-						properties?: unknown
-						conditions?: unknown
-						role?: {
-							id?: number
-							documentId?: string
-						}
-						/** Format: date-time */
-						createdAt?: string
-						/** Format: date-time */
-						updatedAt?: string
-						/** Format: date-time */
-						publishedAt?: string
-						createdBy?: {
-							id?: number
-							documentId?: string
-						}
-						updatedBy?: {
-							id?: number
-							documentId?: string
-						}
-						locale?: string
-						localizations?: {
-							id?: number
-							documentId?: string
-						}[]
-					}[]
-					/** Format: date-time */
-					createdAt?: string
-					/** Format: date-time */
-					updatedAt?: string
-					/** Format: date-time */
-					publishedAt?: string
-					createdBy?: {
-						id?: number
-						documentId?: string
-					}
-					updatedBy?: {
-						id?: number
-						documentId?: string
-					}
-					locale?: string
-					localizations?: {
-						id?: number
-						documentId?: string
-					}[]
-				}[]
-				blocked?: boolean
-				preferedLanguage?: string
-				/** Format: date-time */
-				createdAt?: string
-				/** Format: date-time */
-				updatedAt?: string
-				/** Format: date-time */
-				publishedAt?: string
-				createdBy?: {
-					id?: number
-					documentId?: string
-				}
-				updatedBy?: {
-					id?: number
-					documentId?: string
-				}
-				locale?: string
-				localizations?: {
-					id?: number
-					documentId?: string
-				}[]
-			}
-			updatedBy?: {
-				id?: number
-				documentId?: string
-			}
-			locale?: string
-			localizations?: {
-				id?: number
-				documentId?: string
-				description?: unknown
-				/** Format: date-time */
-				createdAt?: string
-				/** Format: date-time */
-				updatedAt?: string
-				/** Format: date-time */
-				publishedAt?: string
-				createdBy?: {
-					id?: number
-					documentId?: string
-				}
-				updatedBy?: {
-					id?: number
-					documentId?: string
-				}
-				locale?: string
-				localizations?: {
-					id?: number
-					documentId?: string
-				}[]
-			}[]
-		}
-		CambiosDevolucionResponse: {
-			data?: components["schemas"]["CambiosDevolucion"]
-			meta?: Record<string, never>
 		}
 		HomeRequest: {
 			data: {
@@ -480,6 +291,172 @@ export interface components {
 			description?: string
 			image?: string
 		}
+		InformacionRequest: {
+			data: {
+				terminos_condiciones: unknown
+				politicas_envio: unknown
+				cambios_devoluciones: unknown
+				privacidad_datos?: unknown
+				locale?: string
+				localizations?: (number | string)[]
+			}
+		}
+		InformacionListResponse: {
+			data?: components["schemas"]["Informacion"][]
+			meta?: {
+				pagination?: {
+					page?: number
+					pageSize?: number
+					pageCount?: number
+					total?: number
+				}
+			}
+		}
+		Informacion: {
+			id?: number
+			documentId?: string
+			terminos_condiciones: unknown
+			politicas_envio: unknown
+			cambios_devoluciones: unknown
+			privacidad_datos?: unknown
+			/** Format: date-time */
+			createdAt?: string
+			/** Format: date-time */
+			updatedAt?: string
+			/** Format: date-time */
+			publishedAt?: string
+			createdBy?: {
+				id?: number
+				documentId?: string
+				firstname?: string
+				lastname?: string
+				username?: string
+				/** Format: email */
+				email?: string
+				resetPasswordToken?: string
+				registrationToken?: string
+				isActive?: boolean
+				roles?: {
+					id?: number
+					documentId?: string
+					name?: string
+					code?: string
+					description?: string
+					users?: {
+						id?: number
+						documentId?: string
+					}[]
+					permissions?: {
+						id?: number
+						documentId?: string
+						action?: string
+						actionParameters?: unknown
+						subject?: string
+						properties?: unknown
+						conditions?: unknown
+						role?: {
+							id?: number
+							documentId?: string
+						}
+						/** Format: date-time */
+						createdAt?: string
+						/** Format: date-time */
+						updatedAt?: string
+						/** Format: date-time */
+						publishedAt?: string
+						createdBy?: {
+							id?: number
+							documentId?: string
+						}
+						updatedBy?: {
+							id?: number
+							documentId?: string
+						}
+						locale?: string
+						localizations?: {
+							id?: number
+							documentId?: string
+						}[]
+					}[]
+					/** Format: date-time */
+					createdAt?: string
+					/** Format: date-time */
+					updatedAt?: string
+					/** Format: date-time */
+					publishedAt?: string
+					createdBy?: {
+						id?: number
+						documentId?: string
+					}
+					updatedBy?: {
+						id?: number
+						documentId?: string
+					}
+					locale?: string
+					localizations?: {
+						id?: number
+						documentId?: string
+					}[]
+				}[]
+				blocked?: boolean
+				preferedLanguage?: string
+				/** Format: date-time */
+				createdAt?: string
+				/** Format: date-time */
+				updatedAt?: string
+				/** Format: date-time */
+				publishedAt?: string
+				createdBy?: {
+					id?: number
+					documentId?: string
+				}
+				updatedBy?: {
+					id?: number
+					documentId?: string
+				}
+				locale?: string
+				localizations?: {
+					id?: number
+					documentId?: string
+				}[]
+			}
+			updatedBy?: {
+				id?: number
+				documentId?: string
+			}
+			locale?: string
+			localizations?: {
+				id?: number
+				documentId?: string
+				terminos_condiciones?: unknown
+				politicas_envio?: unknown
+				cambios_devoluciones?: unknown
+				privacidad_datos?: unknown
+				/** Format: date-time */
+				createdAt?: string
+				/** Format: date-time */
+				updatedAt?: string
+				/** Format: date-time */
+				publishedAt?: string
+				createdBy?: {
+					id?: number
+					documentId?: string
+				}
+				updatedBy?: {
+					id?: number
+					documentId?: string
+				}
+				locale?: string
+				localizations?: {
+					id?: number
+					documentId?: string
+				}[]
+			}[]
+		}
+		InformacionResponse: {
+			data?: components["schemas"]["Informacion"]
+			meta?: Record<string, never>
+		}
 		MayoristaRequest: {
 			data: {
 				description: unknown
@@ -637,320 +614,6 @@ export interface components {
 			data?: components["schemas"]["Mayorista"]
 			meta?: Record<string, never>
 		}
-		PoliticasEnvioRequest: {
-			data: {
-				description: unknown
-				locale?: string
-				localizations?: (number | string)[]
-			}
-		}
-		PoliticasEnvioListResponse: {
-			data?: components["schemas"]["PoliticasEnvio"][]
-			meta?: {
-				pagination?: {
-					page?: number
-					pageSize?: number
-					pageCount?: number
-					total?: number
-				}
-			}
-		}
-		PoliticasEnvio: {
-			id?: number
-			documentId?: string
-			description: unknown
-			/** Format: date-time */
-			createdAt?: string
-			/** Format: date-time */
-			updatedAt?: string
-			/** Format: date-time */
-			publishedAt?: string
-			createdBy?: {
-				id?: number
-				documentId?: string
-				firstname?: string
-				lastname?: string
-				username?: string
-				/** Format: email */
-				email?: string
-				resetPasswordToken?: string
-				registrationToken?: string
-				isActive?: boolean
-				roles?: {
-					id?: number
-					documentId?: string
-					name?: string
-					code?: string
-					description?: string
-					users?: {
-						id?: number
-						documentId?: string
-					}[]
-					permissions?: {
-						id?: number
-						documentId?: string
-						action?: string
-						actionParameters?: unknown
-						subject?: string
-						properties?: unknown
-						conditions?: unknown
-						role?: {
-							id?: number
-							documentId?: string
-						}
-						/** Format: date-time */
-						createdAt?: string
-						/** Format: date-time */
-						updatedAt?: string
-						/** Format: date-time */
-						publishedAt?: string
-						createdBy?: {
-							id?: number
-							documentId?: string
-						}
-						updatedBy?: {
-							id?: number
-							documentId?: string
-						}
-						locale?: string
-						localizations?: {
-							id?: number
-							documentId?: string
-						}[]
-					}[]
-					/** Format: date-time */
-					createdAt?: string
-					/** Format: date-time */
-					updatedAt?: string
-					/** Format: date-time */
-					publishedAt?: string
-					createdBy?: {
-						id?: number
-						documentId?: string
-					}
-					updatedBy?: {
-						id?: number
-						documentId?: string
-					}
-					locale?: string
-					localizations?: {
-						id?: number
-						documentId?: string
-					}[]
-				}[]
-				blocked?: boolean
-				preferedLanguage?: string
-				/** Format: date-time */
-				createdAt?: string
-				/** Format: date-time */
-				updatedAt?: string
-				/** Format: date-time */
-				publishedAt?: string
-				createdBy?: {
-					id?: number
-					documentId?: string
-				}
-				updatedBy?: {
-					id?: number
-					documentId?: string
-				}
-				locale?: string
-				localizations?: {
-					id?: number
-					documentId?: string
-				}[]
-			}
-			updatedBy?: {
-				id?: number
-				documentId?: string
-			}
-			locale?: string
-			localizations?: {
-				id?: number
-				documentId?: string
-				description?: unknown
-				/** Format: date-time */
-				createdAt?: string
-				/** Format: date-time */
-				updatedAt?: string
-				/** Format: date-time */
-				publishedAt?: string
-				createdBy?: {
-					id?: number
-					documentId?: string
-				}
-				updatedBy?: {
-					id?: number
-					documentId?: string
-				}
-				locale?: string
-				localizations?: {
-					id?: number
-					documentId?: string
-				}[]
-			}[]
-		}
-		PoliticasEnvioResponse: {
-			data?: components["schemas"]["PoliticasEnvio"]
-			meta?: Record<string, never>
-		}
-		TerminosCondicionRequest: {
-			data: {
-				description?: unknown
-				locale?: string
-				localizations?: (number | string)[]
-			}
-		}
-		TerminosCondicionListResponse: {
-			data?: components["schemas"]["TerminosCondicion"][]
-			meta?: {
-				pagination?: {
-					page?: number
-					pageSize?: number
-					pageCount?: number
-					total?: number
-				}
-			}
-		}
-		TerminosCondicion: {
-			id?: number
-			documentId?: string
-			description?: unknown
-			/** Format: date-time */
-			createdAt?: string
-			/** Format: date-time */
-			updatedAt?: string
-			/** Format: date-time */
-			publishedAt?: string
-			createdBy?: {
-				id?: number
-				documentId?: string
-				firstname?: string
-				lastname?: string
-				username?: string
-				/** Format: email */
-				email?: string
-				resetPasswordToken?: string
-				registrationToken?: string
-				isActive?: boolean
-				roles?: {
-					id?: number
-					documentId?: string
-					name?: string
-					code?: string
-					description?: string
-					users?: {
-						id?: number
-						documentId?: string
-					}[]
-					permissions?: {
-						id?: number
-						documentId?: string
-						action?: string
-						actionParameters?: unknown
-						subject?: string
-						properties?: unknown
-						conditions?: unknown
-						role?: {
-							id?: number
-							documentId?: string
-						}
-						/** Format: date-time */
-						createdAt?: string
-						/** Format: date-time */
-						updatedAt?: string
-						/** Format: date-time */
-						publishedAt?: string
-						createdBy?: {
-							id?: number
-							documentId?: string
-						}
-						updatedBy?: {
-							id?: number
-							documentId?: string
-						}
-						locale?: string
-						localizations?: {
-							id?: number
-							documentId?: string
-						}[]
-					}[]
-					/** Format: date-time */
-					createdAt?: string
-					/** Format: date-time */
-					updatedAt?: string
-					/** Format: date-time */
-					publishedAt?: string
-					createdBy?: {
-						id?: number
-						documentId?: string
-					}
-					updatedBy?: {
-						id?: number
-						documentId?: string
-					}
-					locale?: string
-					localizations?: {
-						id?: number
-						documentId?: string
-					}[]
-				}[]
-				blocked?: boolean
-				preferedLanguage?: string
-				/** Format: date-time */
-				createdAt?: string
-				/** Format: date-time */
-				updatedAt?: string
-				/** Format: date-time */
-				publishedAt?: string
-				createdBy?: {
-					id?: number
-					documentId?: string
-				}
-				updatedBy?: {
-					id?: number
-					documentId?: string
-				}
-				locale?: string
-				localizations?: {
-					id?: number
-					documentId?: string
-				}[]
-			}
-			updatedBy?: {
-				id?: number
-				documentId?: string
-			}
-			locale?: string
-			localizations?: {
-				id?: number
-				documentId?: string
-				description?: unknown
-				/** Format: date-time */
-				createdAt?: string
-				/** Format: date-time */
-				updatedAt?: string
-				/** Format: date-time */
-				publishedAt?: string
-				createdBy?: {
-					id?: number
-					documentId?: string
-				}
-				updatedBy?: {
-					id?: number
-					documentId?: string
-				}
-				locale?: string
-				localizations?: {
-					id?: number
-					documentId?: string
-				}[]
-			}[]
-		}
-		TerminosCondicionResponse: {
-			data?: components["schemas"]["TerminosCondicion"]
-			meta?: Record<string, never>
-		}
 	}
 	responses: never
 	parameters: never
@@ -960,228 +623,6 @@ export interface components {
 }
 export type $defs = Record<string, never>
 export interface operations {
-	"get/cambios-devolucion": {
-		parameters: {
-			query?: {
-				/** @description Sort by attributes ascending (asc) or descending (desc) */
-				sort?: string
-				/** @description Return page/pageSize (default: true) */
-				"pagination[withCount]"?: boolean
-				/** @description Page number (default: 0) */
-				"pagination[page]"?: number
-				/** @description Page size (default: 25) */
-				"pagination[pageSize]"?: number
-				/** @description Offset value (default: 0) */
-				"pagination[start]"?: number
-				/** @description Number of entities to return (default: 25) */
-				"pagination[limit]"?: number
-				/** @description Fields to return (ex: title,author) */
-				fields?: string
-				/** @description Relations to return */
-				populate?: string
-				/** @description Filters to apply */
-				filters?: {
-					[key: string]: unknown
-				}
-				/** @description Locale to apply */
-				locale?: string
-			}
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		requestBody?: never
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["CambiosDevolucionResponse"]
-				}
-			}
-			/** @description Bad Request */
-			400: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Unauthorized */
-			401: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Forbidden */
-			403: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Not Found */
-			404: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Internal Server Error */
-			500: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-		}
-	}
-	"put/cambios-devolucion": {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		requestBody: {
-			content: {
-				"application/json": components["schemas"]["CambiosDevolucionRequest"]
-			}
-		}
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["CambiosDevolucionResponse"]
-				}
-			}
-			/** @description Bad Request */
-			400: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Unauthorized */
-			401: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Forbidden */
-			403: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Not Found */
-			404: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Internal Server Error */
-			500: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-		}
-	}
-	"delete/cambios-devolucion": {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		requestBody?: never
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": number
-				}
-			}
-			/** @description Bad Request */
-			400: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Unauthorized */
-			401: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Forbidden */
-			403: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Not Found */
-			404: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Internal Server Error */
-			500: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-		}
-	}
 	"get/home": {
 		parameters: {
 			query?: {
@@ -1404,6 +845,228 @@ export interface operations {
 			}
 		}
 	}
+	"get/informacion": {
+		parameters: {
+			query?: {
+				/** @description Sort by attributes ascending (asc) or descending (desc) */
+				sort?: string
+				/** @description Return page/pageSize (default: true) */
+				"pagination[withCount]"?: boolean
+				/** @description Page number (default: 0) */
+				"pagination[page]"?: number
+				/** @description Page size (default: 25) */
+				"pagination[pageSize]"?: number
+				/** @description Offset value (default: 0) */
+				"pagination[start]"?: number
+				/** @description Number of entities to return (default: 25) */
+				"pagination[limit]"?: number
+				/** @description Fields to return (ex: title,author) */
+				fields?: string
+				/** @description Relations to return */
+				populate?: string
+				/** @description Filters to apply */
+				filters?: {
+					[key: string]: unknown
+				}
+				/** @description Locale to apply */
+				locale?: string
+			}
+			header?: never
+			path?: never
+			cookie?: never
+		}
+		requestBody?: never
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["InformacionResponse"]
+				}
+			}
+			/** @description Bad Request */
+			400: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Unauthorized */
+			401: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Forbidden */
+			403: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Not Found */
+			404: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Internal Server Error */
+			500: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+		}
+	}
+	"put/informacion": {
+		parameters: {
+			query?: never
+			header?: never
+			path?: never
+			cookie?: never
+		}
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["InformacionRequest"]
+			}
+		}
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["InformacionResponse"]
+				}
+			}
+			/** @description Bad Request */
+			400: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Unauthorized */
+			401: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Forbidden */
+			403: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Not Found */
+			404: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Internal Server Error */
+			500: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+		}
+	}
+	"delete/informacion": {
+		parameters: {
+			query?: never
+			header?: never
+			path?: never
+			cookie?: never
+		}
+		requestBody?: never
+		responses: {
+			/** @description OK */
+			200: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": number
+				}
+			}
+			/** @description Bad Request */
+			400: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Unauthorized */
+			401: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Forbidden */
+			403: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Not Found */
+			404: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+			/** @description Internal Server Error */
+			500: {
+				headers: {
+					[name: string]: unknown
+				}
+				content: {
+					"application/json": components["schemas"]["Error"]
+				}
+			}
+		}
+	}
 	"get/mayorista": {
 		parameters: {
 			query?: {
@@ -1562,450 +1225,6 @@ export interface operations {
 		}
 	}
 	"delete/mayorista": {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		requestBody?: never
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": number
-				}
-			}
-			/** @description Bad Request */
-			400: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Unauthorized */
-			401: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Forbidden */
-			403: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Not Found */
-			404: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Internal Server Error */
-			500: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-		}
-	}
-	"get/politicas-envio": {
-		parameters: {
-			query?: {
-				/** @description Sort by attributes ascending (asc) or descending (desc) */
-				sort?: string
-				/** @description Return page/pageSize (default: true) */
-				"pagination[withCount]"?: boolean
-				/** @description Page number (default: 0) */
-				"pagination[page]"?: number
-				/** @description Page size (default: 25) */
-				"pagination[pageSize]"?: number
-				/** @description Offset value (default: 0) */
-				"pagination[start]"?: number
-				/** @description Number of entities to return (default: 25) */
-				"pagination[limit]"?: number
-				/** @description Fields to return (ex: title,author) */
-				fields?: string
-				/** @description Relations to return */
-				populate?: string
-				/** @description Filters to apply */
-				filters?: {
-					[key: string]: unknown
-				}
-				/** @description Locale to apply */
-				locale?: string
-			}
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		requestBody?: never
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["PoliticasEnvioResponse"]
-				}
-			}
-			/** @description Bad Request */
-			400: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Unauthorized */
-			401: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Forbidden */
-			403: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Not Found */
-			404: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Internal Server Error */
-			500: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-		}
-	}
-	"put/politicas-envio": {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		requestBody: {
-			content: {
-				"application/json": components["schemas"]["PoliticasEnvioRequest"]
-			}
-		}
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["PoliticasEnvioResponse"]
-				}
-			}
-			/** @description Bad Request */
-			400: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Unauthorized */
-			401: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Forbidden */
-			403: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Not Found */
-			404: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Internal Server Error */
-			500: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-		}
-	}
-	"delete/politicas-envio": {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		requestBody?: never
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": number
-				}
-			}
-			/** @description Bad Request */
-			400: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Unauthorized */
-			401: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Forbidden */
-			403: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Not Found */
-			404: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Internal Server Error */
-			500: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-		}
-	}
-	"get/terminos-condicion": {
-		parameters: {
-			query?: {
-				/** @description Sort by attributes ascending (asc) or descending (desc) */
-				sort?: string
-				/** @description Return page/pageSize (default: true) */
-				"pagination[withCount]"?: boolean
-				/** @description Page number (default: 0) */
-				"pagination[page]"?: number
-				/** @description Page size (default: 25) */
-				"pagination[pageSize]"?: number
-				/** @description Offset value (default: 0) */
-				"pagination[start]"?: number
-				/** @description Number of entities to return (default: 25) */
-				"pagination[limit]"?: number
-				/** @description Fields to return (ex: title,author) */
-				fields?: string
-				/** @description Relations to return */
-				populate?: string
-				/** @description Filters to apply */
-				filters?: {
-					[key: string]: unknown
-				}
-				/** @description Locale to apply */
-				locale?: string
-			}
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		requestBody?: never
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["TerminosCondicionResponse"]
-				}
-			}
-			/** @description Bad Request */
-			400: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Unauthorized */
-			401: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Forbidden */
-			403: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Not Found */
-			404: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Internal Server Error */
-			500: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-		}
-	}
-	"put/terminos-condicion": {
-		parameters: {
-			query?: never
-			header?: never
-			path?: never
-			cookie?: never
-		}
-		requestBody: {
-			content: {
-				"application/json": components["schemas"]["TerminosCondicionRequest"]
-			}
-		}
-		responses: {
-			/** @description OK */
-			200: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["TerminosCondicionResponse"]
-				}
-			}
-			/** @description Bad Request */
-			400: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Unauthorized */
-			401: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Forbidden */
-			403: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Not Found */
-			404: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-			/** @description Internal Server Error */
-			500: {
-				headers: {
-					[name: string]: unknown
-				}
-				content: {
-					"application/json": components["schemas"]["Error"]
-				}
-			}
-		}
-	}
-	"delete/terminos-condicion": {
 		parameters: {
 			query?: never
 			header?: never

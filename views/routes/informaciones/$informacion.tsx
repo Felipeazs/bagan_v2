@@ -24,28 +24,31 @@ interface ITitle {
 }
 
 function Informacion() {
+	window.scrollTo(0, 0)
+
 	const route = getRouteApi("/informaciones/$informacion")
-	const { strapi_info } = route.useLoaderData()
+	const data: { [key: string]: any } = route.useLoaderData()
 	const { informacion } = useParams({ strict: false })
 
 	const title: ITitle = {
 		preguntas_frecuentes: "Preguntas Frecuentes",
 		politicas_envio: "Políticas de Envío",
 		terminos_condiciones: "Términos y Condiciones",
-		cambios_devolucion: "Políticas de Cambios y Devoluciones",
+		cambios_devoluciones: "Políticas de Cambios y Devoluciones",
 	}
+
+	if (!informacion) return {}
 
 	return (
 		<div className="min-h-dvh text-black">
 			<Await
-				promise={strapi_info}
+				promise={data.strapi_info}
 				fallback={<Fallback />}
-				children={(strapi) => (
+				children={(strapi: { [key: string]: any }) => (
 					<div className="w-[90%] md:w-[70%] m-auto my-10 border-2 border-bagan rounded-md p-5 md:p-10">
-						<p className="text-2xl pb-5">{title[informacion!]}</p>
+						<p className="text-2xl font-bold pb-5">{title[informacion!]}</p>
 						<BlocksRenderer
-							//@ts-ignore
-							content={strapi?.description as ReactNode[]}
+							content={strapi?.[informacion] as ReactNode[]}
 							blocks={{
 								paragraph: ({ children }) => <p>{children}</p>,
 								list: ({ children }) => <p>{children}</p>,

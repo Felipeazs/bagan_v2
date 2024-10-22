@@ -28,7 +28,7 @@ const Footer = () => {
 				</Link>
 				<Link
 					to="/informaciones/$informacion"
-					params={{ informacion: "cambios_devolucion" }}
+					params={{ informacion: "cambios_devoluciones" }}
 					className={hover_style}>
 					Cambios y Devoluciones
 				</Link>

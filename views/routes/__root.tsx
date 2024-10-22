@@ -1,11 +1,11 @@
 import { Toaster } from "@/views/components/ui/sonner"
 import { initMercadoPago } from "@mercadopago/sdk-react"
 import { QueryClient } from "@tanstack/react-query"
-import { createRootRouteWithContext, Outlet } from "@tanstack/react-router"
+import { createRootRouteWithContext, Outlet, ScrollRestoration } from "@tanstack/react-router"
 import ReactGA from "react-ga4"
+import { Helmet } from "react-helmet-async"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
-import { Helmet } from "react-helmet-async"
 
 interface MyRouterContext {
 	queryClient: QueryClient
@@ -35,6 +35,7 @@ const Root = () => {
 			<div className="font-primary text-white">
 				<Navbar />
 				<div>
+					<ScrollRestoration />
 					<Outlet />
 				</div>
 				<Toaster />
