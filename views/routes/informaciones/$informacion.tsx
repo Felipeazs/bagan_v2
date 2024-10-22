@@ -35,6 +35,7 @@ function Informacion() {
 		politicas_envio: "Políticas de Envío",
 		terminos_condiciones: "Términos y Condiciones",
 		cambios_devoluciones: "Políticas de Cambios y Devoluciones",
+		privacidad_datos: "Privacidad de Datos",
 	}
 
 	if (!informacion) return {}

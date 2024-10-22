@@ -32,6 +32,12 @@ const Footer = () => {
 					className={hover_style}>
 					Cambios y Devoluciones
 				</Link>
+				<Link
+					to="/informaciones/$informacion"
+					params={{ informacion: "privacidad_datos" }}
+					className={hover_style}>
+					Privacidad de Datos
+				</Link>
 			</div>
 			<p className="text-center font-bold">Bagan.cl 2024 | Todos los derechos reservados</p>
 		</div>
