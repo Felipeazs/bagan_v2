@@ -3,6 +3,11 @@ import { type Email } from "@/models/email"
 import { type PrefRespons } from "@/models/types"
 import { type ApiRoutes } from "@/server"
 import { hc } from "hono/client"
+import createClient from "openapi-fetch"
+import type { paths } from "./strapi"
+
+const URL = `${import.meta.env["VITE_STRAPI_URL"]}`
+const STRAPI_API_KEY = import.meta.env["VITE_STRAPI_API_KEY"]!
 
 const client = hc<ApiRoutes>("/", {
 	headers: {
@@ -12,21 +17,93 @@ const client = hc<ApiRoutes>("/", {
 
 export const { api } = client
 
-const URL = `${import.meta.env["VITE_STRAPI_URL"]}`
-const STRAPI_API_KEY = import.meta.env["VITE_STRAPI_API_KEY"]
+const strapiClient = createClient<paths>({
+	baseUrl: `${URL}/api`,
+	headers: {
+		"Content-Type": "application/json",
+		Authorization: `Bearer ${STRAPI_API_KEY}`,
+	},
+})
 
-export const strapiContent = async ({ page, query }: { page: string; query?: string }) => {
-	const url = `${URL}/api/${page}${query}`
+export const getStrapiHome = async () => {
+	return await strapiClient
+		.GET("/home", {
+			params: {
+				query: {
+					//@ts-ignore
+					fields: [
+						"hero_title",
+						"hero_subtitle",
+						"section_about",
+						"about_image",
+						"circula_image",
+						"mapa",
+					],
+					//@ts-ignore
+					populate: [
+						"hero_images",
+						"caracteristicas",
+						"productos.images",
+						"packs.images",
+						"contacto",
+						"instituciones",
+					],
+				},
+			},
+		})
+		.then((res) => {
+			return res.data?.data
+		})
+		.catch(console.error)
+}
 
-	return await fetch(url, {
-		method: "GET",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${STRAPI_API_KEY}`,
+const info_query = {
+	params: {
+		query: {
+			fields: ["description"],
 		},
-	})
-		.then((res) => res.json())
-		.then((res) => res.data)
+	},
+}
+
+export const getStrapiMayorista = async () => {
+	return await strapiClient
+		.GET("/mayorista", {
+			info_query,
+		})
+		.then((res) => {
+			return res.data?.data
+		})
+		.catch(console.error)
+}
+
+export const getStrapiPoliticasEnvio = async () => {
+	return await strapiClient
+		.GET("/politicas-envio", {
+			info_query,
+		})
+		.then((res) => {
+			return res.data?.data
+		})
+		.catch(console.error)
+}
+
+export const getStrapiTerminos = async () => {
+	return await strapiClient
+		.GET("/terminos-condicion", {
+			info_query,
+		})
+		.then((res) => {
+			return res.data?.data
+		})
+		.catch(console.error)
+}
+
+export const getStrapiCambios = async () => {
+	return await strapiClient
+		.GET("/cambios-devolucion", { info_query })
+		.then((res) => {
+			return res.data?.data
+		})
 		.catch(console.error)
 }
 

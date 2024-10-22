@@ -1,6 +1,5 @@
-import { sendEmailContacto, strapiContent } from "@/api/index"
+import { getStrapiHome, sendEmailContacto } from "@/api/index"
 import { emailSchema } from "@/models/email"
-import { Producto } from "@/models/productos"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 import { useForm } from "@tanstack/react-form"
 import { useMutation } from "@tanstack/react-query"
@@ -10,6 +9,7 @@ import Autoplay from "embla-carousel-autoplay"
 import ReactGA from "react-ga4"
 import { toast } from "sonner"
 
+import Logo from "../assets/loading.png"
 import Carrito from "../components/Carrito"
 import { AspectRatio } from "../components/ui/aspect-ratio"
 import { Button } from "../components/ui/button"
@@ -31,15 +31,11 @@ import {
 import { Input } from "../components/ui/input"
 import { Textarea } from "../components/ui/textarea"
 import { useCompradorStore } from "../store"
-import Logo from "../assets/loading.png"
+import Fallback from "../components/Fallback"
 
 export const Route = createFileRoute("/")({
 	loader: async () => {
-		const data = strapiContent({
-			page: "home",
-			query: "?populate=hero_images&populate=productos.images&populate=packs.images&populate=contacto&populate=instituciones.images&populate=caracteristicas",
-		})
-
+		const data = getStrapiHome()
 		return { strapi_home: defer(data) }
 	},
 	component: Index,
@@ -91,20 +87,25 @@ function Index() {
 		},
 	})
 
-	const agregarCarritoHandler = (item: Producto) => {
-		toast(`${item.title} agregado al carrito`)
-		comprador.guardarItems(item)
+	const agregarCarritoHandler = (pack: any) => {
+		const newItem = {
+			id: pack.pid!,
+			title: pack.title!,
+			picture_url: pack.images[0].url,
+			description: pack.description!,
+			quantity: 1,
+			unit_price: Number(pack.price),
+			weight: pack.weight!,
+			details: pack.title === "Tripack" ? Array(3).fill("") : Array(6).fill(""),
+		}
+		toast(`${newItem.title} agregado al carrito`)
+		comprador.guardarItems(newItem)
 	}
 
 	return (
 		<Await
 			promise={strapi_home}
-			fallback={
-				<div className="flex flex-col justify-center items-center h-dvh text-black font-subtitle">
-					<p className="text-2xl">Cargando la página...</p>
-					<img src={Logo} width={100} className="w-[300px] object-contain" />
-				</div>
-			}
+			fallback={<Fallback />}
 			children={(home) => (
 				<>
 					<section className="w-full h-[500px]">
@@ -116,7 +117,7 @@ function Index() {
 									loop: true,
 								}}>
 								<CarouselContent>
-									{home?.hero_images?.map((i: { id: string; url: string }) => (
+									{home?.hero_images?.map((i) => (
 										<CarouselItem key={i.id} className="pl-0">
 											<img
 												src={i.url}
@@ -148,7 +149,7 @@ function Index() {
 								<div className="md:px-20 pt-5 text-lg">
 									{
 										<BlocksRenderer
-											content={home?.section_about}
+											content={home?.section_about as ReactNode[]}
 											modifiers={{
 												bold: ({ children }) => (
 													<strong className="text-bagan_dark">
@@ -175,65 +176,55 @@ function Index() {
 						</p>
 						<div className="w-[90%] m-auto">
 							<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-10">
-								{home?.caracteristicas?.map(
-									(c: {
-										id: string
-										title: string
-										description: ReactNode[]
-									}) => (
-										<Card
-											key={c.id}
-											className="relative max-w-[400px] overflow-hidden bg-bagan text-white">
-											<CardHeader>
-												<CardTitle className="text-center font-subtitle font-bold">
-													{c.title}
-												</CardTitle>
-											</CardHeader>
-											<CardContent className="text-sm">
-												<BlocksRenderer content={c?.description} />
-											</CardContent>
-										</Card>
-									),
-								)}
+								{home?.caracteristicas?.map((c) => (
+									<Card
+										key={c.id}
+										className="relative max-w-[400px] overflow-hidden bg-bagan text-white">
+										<CardHeader>
+											<CardTitle className="text-center font-subtitle font-bold">
+												{c.title}
+											</CardTitle>
+										</CardHeader>
+										<CardContent className="text-sm">
+											<BlocksRenderer
+												content={c?.description as ReactNode[]}
+											/>
+										</CardContent>
+									</Card>
+								))}
 							</div>
 							<div className="grid grid-rows-3 lg:grid-rows-1 grid-flow-col justify-center align-center gap-5 mt-10">
-								{home?.productos?.map(
-									(p: {
-										id: string
-										title: string
-										images: { id: string; url: string }[]
-									}) => (
-										<Card
-											key={p.id}
-											className="relative max-w-[400px] max-h-[450px] overflow-hidden">
-											<CardTitle className="absolute w-max z-20 top-5 left-1/2 -translate-x-1/2 bg-transparent font-title text-3xl text-bagan">
-												{p.title}
-											</CardTitle>
-											<Carousel
-												className="relative"
-												opts={{
-													loop: true,
-												}}>
-												<CarouselContent>
-													{p.images.map((i) => (
-														<CarouselItem
-															onPlay={(e) => console.log(e)}
-															key={i.id}>
-															<img
-																src={i.url}
-																width={400}
-																className="h-[450px] object-cover"
-															/>
-														</CarouselItem>
-													))}
-												</CarouselContent>
-												<CarouselPrevious className="absolute left-[45%] top-[90%] -translate-x-1/2" />
-												<CarouselNext className="absolute left-[55%] top-[90%] -translate-x-1/2" />
-											</Carousel>
-											<CardFooter className="flex justify-center"></CardFooter>
-										</Card>
-									),
-								)}
+								{home?.productos?.map((p) => (
+									<Card
+										key={p.id}
+										className="relative max-w-[400px] max-h-[450px] overflow-hidden">
+										<CardTitle className="absolute w-max z-20 top-5 left-1/2 -translate-x-1/2 bg-transparent font-title text-3xl text-bagan">
+											{p.title}
+										</CardTitle>
+										<Carousel
+											className="relative"
+											opts={{
+												loop: true,
+											}}>
+											<CarouselContent>
+												{p.images?.map((i) => (
+													<CarouselItem
+														onPlay={(e) => console.log(e)}
+														key={i.id}>
+														<img
+															src={i.url}
+															width={400}
+															className="h-[450px] object-cover"
+														/>
+													</CarouselItem>
+												))}
+											</CarouselContent>
+											<CarouselPrevious className="absolute left-[45%] top-[90%] -translate-x-1/2" />
+											<CarouselNext className="absolute left-[55%] top-[90%] -translate-x-1/2" />
+										</Carousel>
+										<CardFooter className="flex justify-center"></CardFooter>
+									</Card>
+								))}
 							</div>
 						</div>
 					</section>
@@ -241,75 +232,51 @@ function Index() {
 						<p className="text-bagan font-black uppercase">Packs</p>
 						<p className="uppercase font-black">Elige las variedades</p>
 						<div className="grid grid-rows-2 lg:grid-rows-1 grid-flow-col justify-center items-center gap-5 mt-16">
-							{home?.packs?.map(
-								(pack: {
-									pid: string
-									title: string
-									price: number
-									unit_price: number
-									description: string
-									weight: number
-									images: { id: string; url: string }[]
-								}) => (
-									<Card
-										key={pack.pid}
-										className="max-w-[400px] overflow-hidden flex flex-col gap-4">
-										<Carousel className="relative" opts={{ loop: true }}>
-											<CarouselContent>
-												{pack.images.map((image) => (
-													<CarouselItem key={image.id}>
-														<img
-															src={image.url}
-															width={100}
-															className="w-[400px] h-[400px] object-cover"
-														/>
-													</CarouselItem>
-												))}
-											</CarouselContent>
-											{pack.images.length > 1 && (
-												<>
-													<CarouselPrevious className="absolute left-[45%] top-[90%] -translate-x-1/2" />
-													<CarouselNext className="absolute left-[55%] top-[90%] -translate-x-1/2" />
-												</>
-											)}
-										</Carousel>
-										<CardContent>
-											<CardDescription className="font-title text-2xl">
-												{pack.title}
-											</CardDescription>
-											<CardDescription className="font-bold">
-												precio: {formatCLP(pack.price)}
-											</CardDescription>
-											<CardDescription>
-												precio unitario: {formatCLP(pack.unit_price)}
-											</CardDescription>
-										</CardContent>
-										<CardFooter className="flex justify-center">
-											<Button
-												type="button"
-												onClick={() =>
-													agregarCarritoHandler({
-														id: pack.pid,
-														title: pack.title,
-														picture_url: pack.images[0].url,
-														description: pack.description,
-														quantity: 1,
-														unit_price: Number(pack.price),
-														weight: pack.weight,
-														details:
-															pack.title === "Tripack"
-																? Array(3).fill("")
-																: Array(6).fill(""),
-													})
-												}
-												className="bg-bagan_dark text-white font-bold"
-												variant="outline">
-												Agregar al carrito
-											</Button>
-										</CardFooter>
-									</Card>
-								),
-							)}
+							{home?.packs?.map((pack) => (
+								<Card
+									key={pack.pid}
+									className="max-w-[400px] overflow-hidden flex flex-col gap-4">
+									<Carousel className="relative" opts={{ loop: true }}>
+										<CarouselContent>
+											{pack.images?.map((image) => (
+												<CarouselItem key={image.id}>
+													<img
+														src={image.url}
+														width={100}
+														className="w-[400px] h-[400px] object-cover"
+													/>
+												</CarouselItem>
+											))}
+										</CarouselContent>
+										{pack?.images && pack.images.length > 1 && (
+											<>
+												<CarouselPrevious className="absolute left-[45%] top-[90%] -translate-x-1/2" />
+												<CarouselNext className="absolute left-[55%] top-[90%] -translate-x-1/2" />
+											</>
+										)}
+									</Carousel>
+									<CardContent>
+										<CardDescription className="font-title text-2xl">
+											{pack.title}
+										</CardDescription>
+										<CardDescription className="font-bold">
+											precio: {formatCLP(pack?.price)}
+										</CardDescription>
+										<CardDescription>
+											precio unitario: {formatCLP(pack.unit_price)}
+										</CardDescription>
+									</CardContent>
+									<CardFooter className="flex justify-center">
+										<Button
+											type="button"
+											onClick={() => agregarCarritoHandler(pack)}
+											className="bg-bagan_dark text-white font-bold"
+											variant="outline">
+											Agregar al carrito
+										</Button>
+									</CardFooter>
+								</Card>
+							))}
 						</div>
 					</section>
 					<hr />
@@ -319,16 +286,14 @@ function Index() {
 						<div className="w-[300px] md:w-[500px]">
 							<p className="text-bagan font-black uppercase">Contacto</p>
 							<div className="font-light py-3">
-								{home?.contacto?.map(
-									(c: { id: string; image: string; title: string }) => (
-										<div
-											key={c.id}
-											className="flex gap-3 align-center items-center">
-											<img src={c.image} width="24px" height="24px" />
-											<span>{c.title}</span>
-										</div>
-									),
-								)}
+								{home?.contacto?.map((c) => (
+									<div
+										key={c.id}
+										className="flex gap-3 align-center items-center">
+										<img src={c.image} width="24px" height="24px" />
+										<span>{c.title}</span>
+									</div>
+								))}
 							</div>
 							<div>
 								<iframe
@@ -453,9 +418,9 @@ function Index() {
 						<div className="text-center">
 							<p>Instituciones que nos han apoyado</p>
 							<div className="grid grid-rows-1 grid-flow-col gap-2 w-max-[400px]">
-								{home?.instituciones?.images
-									.slice(0, 4)
-									.map((institucion: { id: string; url: string }) => (
+								{home?.instituciones
+									?.slice(0, 4)
+									.map((institucion) => (
 										<img src={institucion.url} key={institucion.id} />
 									))}
 							</div>
@@ -463,9 +428,9 @@ function Index() {
 						<div className="text-center">
 							<p>Instituciones que nos han financiado</p>
 							<div className="grid grid-rows-1 grid-flow-col gap-2 w-max-[400px]">
-								{home?.instituciones?.images
-									.slice(4, 8)
-									.map((institucion: { id: string; url: string }) => (
+								{home?.instituciones
+									?.slice(4, 8)
+									.map((institucion) => (
 										<img src={institucion.url} key={institucion.id} />
 									))}
 							</div>
@@ -483,7 +448,8 @@ function Index() {
 
 export default Index
 
-export const formatCLP = (amount: number) => {
+export const formatCLP = (amount: number | undefined) => {
+	if (!amount) return "$0"
 	const integerAmount = Math.floor(amount)
 	const amountString = integerAmount.toString()
 

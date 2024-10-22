@@ -14,6 +14,7 @@ import { Route as rootRoute } from "./routes/__root"
 import { Route as MayoristaImport } from "./routes/mayorista"
 import { Route as AboutImport } from "./routes/about"
 import { Route as IndexImport } from "./routes/index"
+import { Route as InformacionesInformacionImport } from "./routes/informaciones/$informacion"
 
 // Create/Update Routes
 
@@ -29,6 +30,11 @@ const AboutRoute = AboutImport.update({
 
 const IndexRoute = IndexImport.update({
 	path: "/",
+	getParentRoute: () => rootRoute,
+} as any)
+
+const InformacionesInformacionRoute = InformacionesInformacionImport.update({
+	path: "/informaciones/$informacion",
 	getParentRoute: () => rootRoute,
 } as any)
 
@@ -57,6 +63,13 @@ declare module "@tanstack/react-router" {
 			preLoaderRoute: typeof MayoristaImport
 			parentRoute: typeof rootRoute
 		}
+		"/informaciones/$informacion": {
+			id: "/informaciones/$informacion"
+			path: "/informaciones/$informacion"
+			fullPath: "/informaciones/$informacion"
+			preLoaderRoute: typeof InformacionesInformacionImport
+			parentRoute: typeof rootRoute
+		}
 	}
 }
 
@@ -66,12 +79,14 @@ export interface FileRoutesByFullPath {
 	"/": typeof IndexRoute
 	"/about": typeof AboutRoute
 	"/mayorista": typeof MayoristaRoute
+	"/informaciones/$informacion": typeof InformacionesInformacionRoute
 }
 
 export interface FileRoutesByTo {
 	"/": typeof IndexRoute
 	"/about": typeof AboutRoute
 	"/mayorista": typeof MayoristaRoute
+	"/informaciones/$informacion": typeof InformacionesInformacionRoute
 }
 
 export interface FileRoutesById {
@@ -79,14 +94,15 @@ export interface FileRoutesById {
 	"/": typeof IndexRoute
 	"/about": typeof AboutRoute
 	"/mayorista": typeof MayoristaRoute
+	"/informaciones/$informacion": typeof InformacionesInformacionRoute
 }
 
 export interface FileRouteTypes {
 	fileRoutesByFullPath: FileRoutesByFullPath
-	fullPaths: "/" | "/about" | "/mayorista"
+	fullPaths: "/" | "/about" | "/mayorista" | "/informaciones/$informacion"
 	fileRoutesByTo: FileRoutesByTo
-	to: "/" | "/about" | "/mayorista"
-	id: "__root__" | "/" | "/about" | "/mayorista"
+	to: "/" | "/about" | "/mayorista" | "/informaciones/$informacion"
+	id: "__root__" | "/" | "/about" | "/mayorista" | "/informaciones/$informacion"
 	fileRoutesById: FileRoutesById
 }
 
@@ -94,12 +110,14 @@ export interface RootRouteChildren {
 	IndexRoute: typeof IndexRoute
 	AboutRoute: typeof AboutRoute
 	MayoristaRoute: typeof MayoristaRoute
+	InformacionesInformacionRoute: typeof InformacionesInformacionRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
 	IndexRoute: IndexRoute,
 	AboutRoute: AboutRoute,
 	MayoristaRoute: MayoristaRoute,
+	InformacionesInformacionRoute: InformacionesInformacionRoute,
 }
 
 export const routeTree = rootRoute
@@ -116,7 +134,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
-        "/mayorista"
+        "/mayorista",
+        "/informaciones/$informacion"
       ]
     },
     "/": {
@@ -127,6 +146,9 @@ export const routeTree = rootRoute
     },
     "/mayorista": {
       "filePath": "mayorista.tsx"
+    },
+    "/informaciones/$informacion": {
+      "filePath": "informaciones/$informacion.tsx"
     }
   }
 }

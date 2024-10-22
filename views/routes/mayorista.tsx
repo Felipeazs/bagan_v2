@@ -1,13 +1,12 @@
-import { strapiContent } from "@/api"
+import { getStrapiMayorista } from "@/api"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
-import { Await, createFileRoute, defer, getRouteApi } from "@tanstack/react-router"
+import { Await, createFileRoute, defer, getRouteApi, ReactNode } from "@tanstack/react-router"
+import Fallback from "../components/Fallback"
 import { Button } from "../components/ui/button"
-
-import Logo from "../assets/loading.png"
 
 export const Route = createFileRoute("/mayorista")({
 	loader: async () => {
-		const data = strapiContent({ page: "mayorista", query: "" })
+		const data = getStrapiMayorista()
 
 		return { strapi_mayorista: defer(data) }
 	},
@@ -22,16 +21,11 @@ function Mayorista() {
 		<div className="min-h-dvh text-black">
 			<Await
 				promise={strapi_mayorista}
-				fallback={
-					<div className="flex flex-col justify-center items-center h-dvh text-black font-subtitle">
-						<p className="text-2xl">Cargando la página...</p>
-						<img src={Logo} width={100} className="w-[300px] object-contain" />
-					</div>
-				}
+				fallback={<Fallback />}
 				children={(strapi) => (
 					<div className="w-[90%] md:w-[70%] m-auto my-10 border-2 border-bagan rounded-md p-5 md:p-10">
 						<BlocksRenderer
-							content={strapi.description}
+							content={strapi?.description as ReactNode[]}
 							blocks={{
 								paragraph: ({ children }) => <p>{children}</p>,
 								list: ({ children }) => <p>{children}</p>,

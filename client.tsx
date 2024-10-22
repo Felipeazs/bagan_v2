@@ -19,6 +19,7 @@ const router = createRouter({
 	routeTree,
 	context: { queryClient },
 	defaultStaleTime: Infinity,
+	defaultPreload: "intent",
 	defaultNotFoundComponent: NotFound,
 })
 
