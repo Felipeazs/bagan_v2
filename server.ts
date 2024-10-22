@@ -39,7 +39,10 @@ process.on("uncaughtException", (err) => {
 const app = new Hono()
 app.use(
 	cors({
-		origin: ["https://*.bagan.cl", "http://localhost:1337"],
+		origin: [
+			"https://*.bagan.cl",
+			isProd ? "https://*.up.railway.app" : "http://localhost:1337",
+		],
 	}),
 )
 app.use(logger())
