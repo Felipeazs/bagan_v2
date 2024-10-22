@@ -10,6 +10,7 @@ const Footer = () => {
 				<Link
 					to="/informaciones/$informacion"
 					params={{ informacion: "preguntas_frecuentes" }}
+					disabled={true}
 					className={hover_style}>
 					Preguntas Frecuentes
 				</Link>

@@ -6,6 +6,8 @@ import { hc } from "hono/client"
 import createClient from "openapi-fetch"
 import type { paths } from "./strapi"
 
+import { PathsWithMethod } from "openapi-typescript-helpers"
+
 const URL = `${import.meta.env["VITE_STRAPI_URL"]}`
 const STRAPI_API_KEY = import.meta.env["VITE_STRAPI_API_KEY"]!
 
@@ -76,34 +78,25 @@ export const getStrapiMayorista = async () => {
 		.catch(console.error)
 }
 
-export const getStrapiPoliticasEnvio = async () => {
+interface IPaths {
+	[key: string]: PathsWithMethod<paths, "get">
+}
+
+export const getStrapiInfo = async ({ info }: { info: string }) => {
+	const informaciones: IPaths = {
+		politicas_envio: "/politicas-envio",
+		terminos_condiciones: "/terminos-condicion",
+		cambios_devolucion: "/cambios-devolucion",
+	}
+
 	return await strapiClient
-		.GET("/politicas-envio", {
+		.GET(informaciones[info], {
 			info_query,
 		})
 		.then((res) => {
 			return res.data?.data
 		})
-		.catch(console.error)
-}
 
-export const getStrapiTerminos = async () => {
-	return await strapiClient
-		.GET("/terminos-condicion", {
-			info_query,
-		})
-		.then((res) => {
-			return res.data?.data
-		})
-		.catch(console.error)
-}
-
-export const getStrapiCambios = async () => {
-	return await strapiClient
-		.GET("/cambios-devolucion", { info_query })
-		.then((res) => {
-			return res.data?.data
-		})
 		.catch(console.error)
 }
 

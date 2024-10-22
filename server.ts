@@ -41,7 +41,7 @@ app.use(
 	cors({
 		origin: [
 			"https://*.bagan.cl",
-			isProd ? "https://*.up.railway.app" : "http://localhost:1337",
+			isProd ? process.env["VITE_STRAPI_URL"]! : "http://localhost:1337",
 		],
 	}),
 )
