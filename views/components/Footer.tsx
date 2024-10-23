@@ -12,13 +12,13 @@ const Footer = () => {
 					params={{ informacion: "preguntas_frecuentes" }}
 					disabled={true}
 					className={hover_style}>
-					Preguntas Frecuentes
+					Preguntas frecuentes
 				</Link>
 				<Link
 					to="/informaciones/$informacion"
 					params={{ informacion: "politicas_envio" }}
 					className={hover_style}>
-					Políticas de Envío
+					Políticas de envío
 				</Link>
 				<Link
 					to="/informaciones/$informacion"
@@ -36,7 +36,7 @@ const Footer = () => {
 					to="/informaciones/$informacion"
 					params={{ informacion: "privacidad_datos" }}
 					className={hover_style}>
-					Privacidad de Datos
+					Privacidad de datos
 				</Link>
 			</div>
 			<p className="text-center font-bold">Bagan.cl 2024 | Todos los derechos reservados</p>
