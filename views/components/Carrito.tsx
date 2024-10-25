@@ -171,7 +171,9 @@ const Carrito = () => {
 									children={(field) => (
 										<div className="flex flex-col gap-10">
 											{field.state.value?.map((p, i) => (
-												<div key={i} className="flex flex-col gap-2">
+												<div
+													key={i}
+													className="flex flex-col gap-2">
 													<div className="grid grid-rows-2 justify-center gap-5 min-h-[175px] sm:grid-rows-1 grid-flow-col">
 														<img
 															src={p.picture_url}
@@ -253,7 +255,10 @@ const Carrito = () => {
 													<SheetDescription className="text-center">
 														Elige las variedades del {p.title}*
 													</SheetDescription>
-													<VariedadesForm Field={form.Field} index={i} />
+													<VariedadesForm
+														Field={form.Field}
+														index={i}
+													/>
 													<Separator className="my-4" />
 												</div>
 											))}

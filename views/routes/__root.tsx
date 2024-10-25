@@ -29,8 +29,14 @@ const Root = () => {
 						? "Bienvenido a Bagán! by Up Foods"
 						: `${import.meta.env.MODE} - Bagán!`}
 				</title>
-				<meta name="description" content="Venta y landing page de bagán" />
-				<meta name="keywords" content="bagán, paté, bagazo, venta, vegan food, vegano" />
+				<meta
+					name="description"
+					content="Venta y landing page de bagán"
+				/>
+				<meta
+					name="keywords"
+					content="bagán, paté, bagazo, venta, vegan food, vegano"
+				/>
 			</Helmet>
 			<div className="font-primary text-white">
 				<Navbar />

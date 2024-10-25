@@ -113,7 +113,7 @@ export const sendEmailContacto = async ({ value }: { value: Email }) => {
 }
 
 export async function createMPPreferences({ value }: { value: Comprador }) {
-	return await api["mercado-pago"]["create-preference"]
+	return await client.mercadopago["create-preference"]
 		.$post({ json: value })
 		.then((res) => res.json())
 		.then((data) => data as PrefRespons)
