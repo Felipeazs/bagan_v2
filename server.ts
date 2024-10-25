@@ -6,10 +6,9 @@ import createApp from "./server/lib/create-app"
 import configureOpenAPI from "./server/lib/openapi"
 import index from "./server/routes/index.route"
 import mercadopago from "./server/routes/mercadopago/mercadopago.index"
-import env from "./server/env"
+import env from "./utils/env"
 
-const NODE_ENV = process.env["NODE_ENV"]!
-export const isProd = NODE_ENV === "production" || NODE_ENV === "testing"
+export const isProd = env.NODE_ENV === "production" || env.NODE_ENV === "testing"
 let html = await readFile(isProd ? "build/index.html" : "index.html", "utf8")
 
 if (!isProd) {
@@ -49,10 +48,10 @@ app.use("/favicon-16x16.png", serveStatic({ root: isProd ? "build/" : "./" }))
 app.use("/site.webmanifest", serveStatic({ root: isProd ? "build/" : "./" }))
 app.get("/*", (c) => c.html(html))
 
+export type ApiRoutes = (typeof routes)[number]
+export default app
+
 Bun.serve({
 	port: env.PORT || 3000,
 	fetch: app.fetch,
 })
-
-export type ApiRoutes = (typeof routes)[number]
-export default app

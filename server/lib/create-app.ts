@@ -7,7 +7,7 @@ import { notFound, onError } from "stoker/middlewares"
 import defaultHook from "stoker/openapi/default-hook"
 import { logger } from "../middlewares/pino"
 import { AppBindings } from "./types"
-import env from "../env"
+import env from "@/utils/env"
 
 export function createRouter() {
 	return new OpenAPIHono<AppBindings>({ strict: false, defaultHook })

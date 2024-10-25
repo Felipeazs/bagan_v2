@@ -18,22 +18,32 @@ const Navbar = () => {
 			<div className="flex gap-4 justify-center items-center">
 				{pathname === "/mayorista" ? (
 					<>
-						<Link to="/" className={hover_style}>
+						<Link
+							to="/"
+							className={hover_style}>
 							Inicio
 						</Link>
 					</>
 				) : (
 					<div className="flex gap-4">
-						<a className={`hidden md:inline ${hover_style}`} href="/#nosotras">
+						<a
+							className={`hidden md:inline ${hover_style}`}
+							href="/#nosotras">
 							Nosotros
 						</a>
-						<a className={`hidden md:inline ${hover_style}`} href="/#productos">
+						<a
+							className={`hidden md:inline ${hover_style}`}
+							href="/#productos">
 							Productos
 						</a>
-						<a className={`hidden md:inline ${hover_style}`} href="/#contacto">
+						<a
+							className={`hidden md:inline ${hover_style}`}
+							href="/#contacto">
 							Contacto
 						</a>
-						<Link to="/mayorista" className={hover_style}>
+						<Link
+							to="/mayorista"
+							className={hover_style}>
 							Mayorista
 						</Link>
 					</div>

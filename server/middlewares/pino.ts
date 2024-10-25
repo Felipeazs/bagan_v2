@@ -1,4 +1,4 @@
-import env from "../env"
+import env from "../../utils/env"
 import { pinoLogger } from "hono-pino"
 
 export function logger() {
