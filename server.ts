@@ -49,9 +49,9 @@ app.use("/site.webmanifest", serveStatic({ root: isProd ? "build/" : "./" }))
 app.get("/*", (c) => c.html(html))
 
 export type ApiRoutes = (typeof routes)[number]
-export default app
 
-Bun.serve({
-	port: env.PORT || 3000,
+export default {
+	port: process.env.PORT || 4000,
+	hostname: "0.0.0.0",
 	fetch: app.fetch,
-})
+}
