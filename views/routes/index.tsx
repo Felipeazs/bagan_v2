@@ -108,7 +108,9 @@ function Index() {
 			children={(home) => (
 				<>
 					<section className="w-full h-[500px]">
-						<AspectRatio className="h-[500px] bg-black" ratio={16 / 9}>
+						<AspectRatio
+							className="h-[500px] bg-black"
+							ratio={16 / 9}>
 							<Carousel
 								className="ml-0"
 								plugins={[Autoplay({ delay: 4000 })]}
@@ -117,7 +119,9 @@ function Index() {
 								}}>
 								<CarouselContent>
 									{home?.hero_images?.map((i) => (
-										<CarouselItem key={i.id} className="pl-0">
+										<CarouselItem
+											key={i.id}
+											className="pl-0">
 											<img
 												src={i.url}
 												width={100}
@@ -144,7 +148,11 @@ function Index() {
 							<div className="relative row-span-2 flex flex-col justify-center items-center gap-5 text-center h-full text-lg p-5">
 								<div className="absolute top-0 bg-repeat-x -z-20 bg-cebada w-full h-1/2"></div>
 								<div className="absolute -bottom-80 bg-repeat-x -z-10 bg-cebada w-full h-1/2"></div>
-								<img src={home?.about_image} width={300} className="object-cover" />
+								<img
+									src={home?.about_image}
+									width={300}
+									className="object-cover"
+								/>
 								<div className="md:px-20 pt-5 text-lg">
 									{
 										<BlocksRenderer
@@ -169,7 +177,9 @@ function Index() {
 							</div>
 						</div>
 					</section>
-					<section id="productos" className="text-black text-center mt-10">
+					<section
+						id="productos"
+						className="text-black text-center mt-10">
 						<p className="text-white font-black uppercase border-2 border-bagan_dark bg-bagan_dark w-full m-auto p-2 text-2xl font-title">
 							Nuestros Productos
 						</p>
@@ -227,7 +237,9 @@ function Index() {
 							</div>
 						</div>
 					</section>
-					<section id="packs" className="text-black text-center py-20 px-5">
+					<section
+						id="packs"
+						className="text-black text-center py-20 px-5">
 						<p className="text-bagan font-black uppercase">Packs</p>
 						<p className="uppercase font-black">Elige las variedades</p>
 						<div className="grid grid-rows-2 lg:grid-rows-1 grid-flow-col justify-center items-center gap-5 mt-16">
@@ -235,7 +247,9 @@ function Index() {
 								<Card
 									key={pack.pid}
 									className="max-w-[400px] overflow-hidden flex flex-col gap-4">
-									<Carousel className="relative" opts={{ loop: true }}>
+									<Carousel
+										className="relative"
+										opts={{ loop: true }}>
 										<CarouselContent>
 											{pack.images?.map((image) => (
 												<CarouselItem key={image.id}>
@@ -289,7 +303,11 @@ function Index() {
 									<div
 										key={c.id}
 										className="flex gap-3 align-center items-center">
-										<img src={c.image} width="24px" height="24px" />
+										<img
+											src={c.image}
+											width="24px"
+											height="24px"
+										/>
 										<span>{c.title}</span>
 									</div>
 								))}
@@ -417,21 +435,23 @@ function Index() {
 						<div className="text-center">
 							<p>Instituciones que nos han apoyado</p>
 							<div className="grid grid-rows-1 grid-flow-col gap-2 w-max-[400px]">
-								{home?.instituciones
-									?.slice(0, 4)
-									.map((institucion) => (
-										<img src={institucion.url} key={institucion.id} />
-									))}
+								{home?.instituciones?.slice(0, 4).map((institucion) => (
+									<img
+										src={institucion.url}
+										key={institucion.id}
+									/>
+								))}
 							</div>
 						</div>
 						<div className="text-center">
 							<p>Instituciones que nos han financiado</p>
 							<div className="grid grid-rows-1 grid-flow-col gap-2 w-max-[400px]">
-								{home?.instituciones
-									?.slice(4, 8)
-									.map((institucion) => (
-										<img src={institucion.url} key={institucion.id} />
-									))}
+								{home?.instituciones?.slice(4, 8).map((institucion) => (
+									<img
+										src={institucion.url}
+										key={institucion.id}
+									/>
+								))}
 							</div>
 						</div>
 					</section>
