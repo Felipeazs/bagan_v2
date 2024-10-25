@@ -1,7 +1,6 @@
-import { type Comprador } from "@/models/comprador"
 import { type Email } from "@/models/email"
-import { type PrefRespons } from "@/models/types"
 import { type ApiRoutes } from "@/server"
+import { TUsuario } from "@/server/models/usuario"
 import { hc } from "hono/client"
 import createClient from "openapi-fetch"
 import type { paths } from "./strapi"
@@ -9,13 +8,11 @@ import type { paths } from "./strapi"
 const URL = `${import.meta.env["VITE_STRAPI_URL"]}`
 const STRAPI_API_KEY = import.meta.env["VITE_STRAPI_API_KEY"]!
 
-const client = hc<ApiRoutes>("/", {
+const client = hc<ApiRoutes>("/api", {
 	headers: {
 		"Content-Type": "application/json",
 	},
 })
-
-export const { api } = client
 
 const strapiClient = createClient<paths>({
 	baseUrl: `${URL}/api`,
@@ -112,10 +109,13 @@ export const sendEmailContacto = async ({ value }: { value: Email }) => {
 		.catch(console.error)
 }
 
-export async function createMPPreferences({ value }: { value: Comprador }) {
+export async function createMPPreferences({ value }: { value: TUsuario }) {
 	return await client.mercadopago["create-preference"]
 		.$post({ json: value })
-		.then((res) => res.json())
-		.then((data) => data as PrefRespons)
+		.then((res) => {
+			if (res.status === 400) return
+			return res.json()
+		})
+		.then((data) => data)
 		.catch(console.error)
 }

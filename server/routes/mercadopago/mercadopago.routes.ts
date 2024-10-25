@@ -1,5 +1,5 @@
 import { compradorSchema } from "@/models/comprador"
-import { createRoute } from "@hono/zod-openapi"
+import { createRoute, z } from "@hono/zod-openapi"
 
 const tags = ["Mercado pago"]
 const base = "/mercadopago"
@@ -19,8 +19,25 @@ export const preferenceId = createRoute({
 	},
 	tags,
 	responses: {
-		200: {
-			description: "Successful response",
+		201: {
+			description: "Successfuly created Preference Id",
+			content: {
+				"application/json": {
+					schema: z.object({
+						prefId: z.string(),
+					}),
+				},
+			},
+		},
+		400: {
+			description: "Invalid parameters",
+			content: {
+				"application/json": {
+					schema: z.object({
+						message: z.string(),
+					}),
+				},
+			},
 		},
 	},
 })
