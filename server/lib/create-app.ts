@@ -15,7 +15,7 @@ export function createRouter() {
 
 export default function createApp() {
 	const app = createRouter()
-	app.use(logger())
+	app.use("*", logger())
 
 	app.use(
 		cors({
