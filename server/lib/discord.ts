@@ -1,5 +1,5 @@
-import { IWebhook } from "@/models/types"
 import { EmbedBuilder, WebhookClient } from "discord.js"
+import { IWebhook } from "../types"
 
 export const webhookClient = new WebhookClient({
 	url: process.env["WEBHOOK_URL"]!,

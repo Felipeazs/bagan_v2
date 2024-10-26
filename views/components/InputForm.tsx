@@ -1,7 +1,7 @@
-import { Actions, Comprador, compradorSchema } from "@/models/comprador"
 import { DeepKeys, DeepValue, FieldComponent, Validator } from "@tanstack/react-form"
 import { Input } from "./ui/input"
 import { FieldInfo } from "./Carrito"
+import { Actions, TUsuario, usuarioSchema } from "@/server/models/usuario"
 
 const InputForm = ({
 	Field,
@@ -10,12 +10,9 @@ const InputForm = ({
 	input_type = "text",
 	additional_fx,
 }: {
-	Field: FieldComponent<
-		{ comprador: Comprador & Actions },
-		Validator<DeepValue<Comprador, string>>
-	>
-	name_field: DeepKeys<{ comprador: Comprador }>
-	validator_field: keyof Comprador
+	Field: FieldComponent<{ usuario: TUsuario & Actions }, Validator<DeepValue<TUsuario, string>>>
+	name_field: DeepKeys<{ usuario: TUsuario }>
+	validator_field: keyof TUsuario
 	input_type?: string
 	additional_fx?: () => void
 }) => {
@@ -23,7 +20,7 @@ const InputForm = ({
 		<Field
 			name={name_field}
 			validators={{
-				onChange: compradorSchema.shape[validator_field],
+				onChange: usuarioSchema.shape[validator_field],
 			}}
 			children={(field) => (
 				<div className="flex flex-col w-full">

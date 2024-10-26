@@ -1,5 +1,5 @@
+import { telefono_regex } from "./usuario"
 import { z } from "zod"
-import { telefono_regex } from "./comprador"
 
 export const emailSchema = z.object({
 	nombre: z.string().trim().min(1, { message: "ingrese el nombre" }),
@@ -8,4 +8,4 @@ export const emailSchema = z.object({
 	mensaje: z.string({ message: "ingresa el mensaje" }),
 })
 
-export type Email = z.infer<typeof emailSchema>
+export type TEmail = z.infer<typeof emailSchema>

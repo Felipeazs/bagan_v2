@@ -1,11 +1,11 @@
-// import { app as EmailRoute } from "./controller/contacto"
-// import { mercadoPagoRoute } from "./controller/mercadopago"
 import { serveStatic } from "hono/bun"
 import { readFile } from "node:fs/promises"
 import createApp from "./server/lib/create-app"
 import configureOpenAPI from "./server/lib/openapi"
 import index from "./server/routes/index.route"
 import mercadopago from "./server/routes/mercadopago/mercadopago.index"
+import contacto from "./server/routes/contacto/contacto.index"
+
 import env from "./utils/env"
 
 export const isProd = env.NODE_ENV === "production" || env.NODE_ENV === "testing"
@@ -30,10 +30,7 @@ if (!isProd) {
 
 const app = createApp()
 
-// app.route("/contacto", emailRoute).route("/mercado-pago", mercadoPagoRoute)
-// const apiRoutes = app.route("/contacto", EmailRoute)
-
-const routes = [index, mercadopago] as const
+const routes = [index, mercadopago, contacto] as const
 
 configureOpenAPI(app)
 
@@ -51,7 +48,7 @@ app.get("/*", (c) => c.html(html))
 export type ApiRoutes = (typeof routes)[number]
 
 export default {
-	port: process.env.PORT || 4000,
+	port: env.PORT || 4000,
 	hostname: "0.0.0.0",
 	fetch: app.fetch,
 }

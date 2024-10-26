@@ -1,15 +1,5 @@
 import { Items } from "mercadopago/dist/clients/commonTypes"
 
-export type PrefRespons = {
-	success: boolean
-	prefId: string
-	error: {
-		issues: {
-			message: string
-		}[]
-	}
-}
-
 export interface IWebhook {
 	title: string
 	description: string

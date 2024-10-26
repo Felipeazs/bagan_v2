@@ -1,4 +1,4 @@
-import { Producto } from "@/models/productos"
+import { TProducto } from "@/server/models/producto"
 import { chile } from "./chile"
 
 const tarifas = {
@@ -26,7 +26,7 @@ const tarifas = {
 
 export const calcularTarifa = (
 	region: string,
-	items: Producto[],
+	items: TProducto[],
 ): { precio_envio: number; weight: number; error?: string } => {
 	if (!items.length) {
 		return {

@@ -1,5 +1,4 @@
 import { createMPPreferences } from "@/api"
-import { compradorSchema } from "@/models/comprador"
 import { calcularTarifa } from "@/utils/tarifa"
 import { Wallet } from "@mercadopago/sdk-react"
 import { FieldApi, useForm } from "@tanstack/react-form"
@@ -29,6 +28,7 @@ import {
 import VariedadesForm from "./VariedadesForm"
 
 import { chile } from "@/utils/chile"
+import { usuarioSchema } from "@/server/models/usuario"
 
 const regiones = chile.map((c) => {
 	return {
@@ -40,7 +40,7 @@ const regiones = chile.map((c) => {
 })
 
 const Carrito = () => {
-	const comprador = useCompradorStore()
+	const usuario = useCompradorStore()
 
 	const [step, setStep] = useState<{ title: string; page: number }>({
 		title: "Carrito",
@@ -54,8 +54,7 @@ const Carrito = () => {
 	const mutation = useMutation({
 		mutationFn: createMPPreferences,
 		onSuccess: (data) => {
-			if (data?.success === false) return toast(data.error.issues[0].message)
-			else if (data) {
+			if (data) {
 				setPreferenceId(data.prefId)
 				if (import.meta.env.PROD) {
 					ReactGA.event({
@@ -71,10 +70,10 @@ const Carrito = () => {
 	const form = useForm({
 		validatorAdapter: zodValidator(),
 		defaultValues: {
-			comprador,
+			usuario,
 		},
 		onSubmit: async ({ value }) => {
-			mutation.mutate({ value: value.comprador })
+			mutation.mutate({ value: value.usuario })
 		},
 		onSubmitInvalid: () => {
 			toast("Por favor rellena todos los campos")
@@ -82,23 +81,23 @@ const Carrito = () => {
 	})
 
 	useEffect(() => {
-		const carrito = form.getFieldValue("comprador.items").length
-		const items = comprador.items.length
+		const carrito = form.getFieldValue("usuario.items").length
+		const items = usuario.items.length
 
 		if (items > carrito) {
-			form.pushFieldValue("comprador.items", comprador.items[comprador.items.length - 1])
+			form.pushFieldValue("usuario.items", usuario.items[usuario.items.length - 1])
 		}
 		sumSubtotalDespacho()
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [comprador.items])
+	}, [usuario.items])
 
 	const sumSubtotalDespacho = () => {
-		const region = form.getFieldValue("comprador.direccion.region")
-		const items = form.getFieldValue("comprador.items")
+		const region = form.getFieldValue("usuario.direccion.region")
+		const items = form.getFieldValue("usuario.items")
 		const tarifa = calcularTarifa(region, items)
 
-		comprador.setEnvio(tarifa.precio_envio)
+		usuario.setEnvio(tarifa.precio_envio)
 
 		if (tarifa.error) {
 			setDisable(true)
@@ -109,10 +108,10 @@ const Carrito = () => {
 		setDisable(false)
 
 		if (tarifa.precio_envio > 0) {
-			form.setFieldValue("comprador.envio", tarifa.precio_envio)
+			form.setFieldValue("usuario.envio", tarifa.precio_envio)
 		}
 
-		const existingItems = form.getFieldValue("comprador.items")
+		const existingItems = form.getFieldValue("usuario.items")
 		const itemPrices = existingItems.map((i) => i.quantity * i.unit_price)
 		const sumPrices = itemPrices.reduce((a, b) => a + b, 0)
 
@@ -129,9 +128,9 @@ const Carrito = () => {
 			})
 		})
 
-		form.setFieldValue("comprador.direccion.comuna", "")
+		form.setFieldValue("usuario.direccion.comuna", "")
 
-		form.setFieldMeta("comprador.direccion.comuna", {
+		form.setFieldMeta("usuario.direccion.comuna", {
 			isTouched: false,
 			isPristine: true,
 			isDirty: false,
@@ -149,13 +148,13 @@ const Carrito = () => {
 				<div className="relative h-[20px] w-[50px]">
 					<img src={CarritoLogo} />
 					<span className="absolute z-10 top-1/2 left-3 flex justify-center items-center text-gray-500 text-[14px] font-bold bg-transparent border-2 border-gray-500 w-[22px] h-[22px] rounded-full">
-						{comprador.items.length}
+						{usuario.items.length}
 					</span>
 				</div>
 			</SheetTrigger>
 			<SheetContent className="overflow-y-auto flex flex-col h-full">
 				<SheetTitle>{step.title}</SheetTitle>
-				{comprador?.items?.length ? (
+				{usuario?.items?.length ? (
 					<form
 						className="flex flex-col gap-16 md:gap-0 justify-between"
 						onSubmit={async (e) => {
@@ -167,7 +166,7 @@ const Carrito = () => {
 							{step.page === 1 ? (
 								<form.Field
 									mode="array"
-									name="comprador.items"
+									name="usuario.items"
 									children={(field) => (
 										<div className="flex flex-col gap-10">
 											{field.state.value?.map((p, i) => (
@@ -197,7 +196,7 @@ const Carrito = () => {
 															</div>
 
 															<form.Field
-																name={`comprador.items[${i}].quantity`}
+																name={`usuario.items[${i}].quantity`}
 																children={(field) => (
 																	<div className="flex flex-col">
 																		<Input
@@ -233,10 +232,10 @@ const Carrito = () => {
 																	variant={"outline"}
 																	onClick={() => {
 																		form.removeFieldValue(
-																			"comprador.items",
+																			"usuario.items",
 																			i,
 																		)
-																		comprador.quitarItems(i)
+																		usuario.quitarItems(i)
 																	}}>
 																	<svg
 																		xmlns="http://www.w3.org/2000/svg"
@@ -273,7 +272,7 @@ const Carrito = () => {
 											Nombre*
 											<InputForm
 												Field={form.Field}
-												name_field="comprador.nombre"
+												name_field="usuario.nombre"
 												validator_field="nombre"
 											/>
 										</Label>
@@ -281,7 +280,7 @@ const Carrito = () => {
 											Apellido*
 											<InputForm
 												Field={form.Field}
-												name_field="comprador.apellido"
+												name_field="usuario.apellido"
 												validator_field="apellido"
 											/>
 										</Label>
@@ -292,7 +291,7 @@ const Carrito = () => {
 											</span>
 											<InputForm
 												Field={form.Field}
-												name_field="comprador.rut"
+												name_field="usuario.rut"
 												validator_field="rut"
 											/>
 										</Label>
@@ -304,7 +303,7 @@ const Carrito = () => {
 												</span>
 												<InputForm
 													Field={form.Field}
-													name_field="comprador.telefono"
+													name_field="usuario.telefono"
 													validator_field="telefono"
 												/>
 											</div>
@@ -313,7 +312,7 @@ const Carrito = () => {
 											Email*
 											<InputForm
 												Field={form.Field}
-												name_field="comprador.email"
+												name_field="usuario.email"
 												validator_field="email"
 											/>
 										</Label>
@@ -323,7 +322,7 @@ const Carrito = () => {
 										<Label>
 											Calle*
 											<form.Field
-												name="comprador.direccion.calle"
+												name="usuario.direccion.calle"
 												children={(field) => (
 													<>
 														<Input
@@ -340,14 +339,14 @@ const Carrito = () => {
 												)}
 												validators={{
 													onChange:
-														compradorSchema.shape.direccion.shape.calle,
+														usuarioSchema.shape.direccion.shape.calle,
 												}}
 											/>
 										</Label>
 										<Label>
 											Número*
 											<form.Field
-												name="comprador.direccion.numero"
+												name="usuario.direccion.numero"
 												children={(field) => (
 													<>
 														<Input
@@ -364,15 +363,14 @@ const Carrito = () => {
 												)}
 												validators={{
 													onChange:
-														compradorSchema.shape.direccion.shape
-															.numero,
+														usuarioSchema.shape.direccion.shape.numero,
 												}}
 											/>
 										</Label>
 										<Label>
 											Depto/Casa (opcional)
 											<form.Field
-												name="comprador.direccion.depto"
+												name="usuario.direccion.depto"
 												children={(field) => (
 													<>
 														<Input
@@ -389,14 +387,14 @@ const Carrito = () => {
 												)}
 												validators={{
 													onChange:
-														compradorSchema.shape.direccion.shape.depto,
+														usuarioSchema.shape.direccion.shape.depto,
 												}}
 											/>
 										</Label>
 										<Label>
 											Región*
 											<form.Field
-												name="comprador.direccion.region"
+												name="usuario.direccion.region"
 												children={(field) => (
 													<>
 														<Select
@@ -424,15 +422,14 @@ const Carrito = () => {
 												)}
 												validators={{
 													onChange:
-														compradorSchema.shape.direccion.shape
-															.region,
+														usuarioSchema.shape.direccion.shape.region,
 												}}
 											/>
 										</Label>
 										<Label>
 											Comuna*
 											<form.Field
-												name="comprador.direccion.comuna"
+												name="usuario.direccion.comuna"
 												children={(field) => (
 													<>
 														<Select
@@ -458,8 +455,7 @@ const Carrito = () => {
 												)}
 												validators={{
 													onChange:
-														compradorSchema.shape.direccion.shape
-															.comuna,
+														usuarioSchema.shape.direccion.shape.comuna,
 												}}
 											/>
 										</Label>
@@ -475,17 +471,16 @@ const Carrito = () => {
 								<>
 									<p className="font-bold">
 										Costo de envío:{" "}
-										{comprador?.envio === 0 ? (
+										{usuario?.envio === 0 ? (
 											<span className="font-light italic text-sm text-bagan">
 												ingresa los datos de despacho
 											</span>
 										) : (
-											`${comprador.envio?.toLocaleString("es-Cl") ?? "0"}`
+											`${usuario.envio?.toLocaleString("es-Cl") ?? "0"}`
 										)}
 									</p>
 									<p className="font-bold">
-										Total: $
-										{(subtotal + comprador.envio).toLocaleString("es-Cl")}
+										Total: ${(subtotal + usuario.envio).toLocaleString("es-Cl")}
 									</p>
 								</>
 							)}

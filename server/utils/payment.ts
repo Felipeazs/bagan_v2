@@ -1,67 +1,38 @@
-import { Producto } from "../models/productos"
-import { Comprador } from "../models/comprador"
-import { PaymentInfo } from "../models/types"
 import { PaymentResponse } from "mercadopago/dist/clients/payment/commonTypes"
+import { TUsuario } from "../models/usuario"
+import { PaymentInfo } from "../types"
 
-export const setPreferenceDetails = (comprador: Comprador): Comprador => {
-	comprador.items.forEach((p) => {
-		const producto = store.find((s) => s.id === p.id) as Producto
-
-		if (!producto) return
-
-		let tomate = 0
-		let pimenton = 0
-		let pesto = 0
-
-		p.details.forEach((d) => {
-			if (d === "tomate orégano") tomate++
-			else if (d === "pimentón rojo") pimenton++
-			else pesto++
-		})
-
-		p.unit_price = producto.unit_price
-		p.description = [
-			`Tomate orégano (${tomate})`,
-			`Pimentón rojo (${pimenton})`,
-			`Pesto albahaca (${pesto})`,
-		].join(", ")
-		p.category_id = "alimentos"
-	})
-
-	return comprador
-}
-
-export const createBody = (comprador: Comprador) => {
+export const createBody = (usuario: TUsuario) => {
 	const checkout_id = generateRandom16CharacterString()
 	return {
 		payer: {
-			name: comprador.nombre + " " + comprador.apellido,
-			email: comprador.email,
+			name: usuario.nombre + " " + usuario.apellido,
+			email: usuario.email,
 			phone: {
-				number: comprador.telefono,
+				number: usuario.telefono,
 			},
 			identification: {
 				type: "rut",
-				number: comprador.rut,
+				number: usuario.rut,
 			},
 			address: {
-				street_name: comprador.direccion.calle,
-				street_number: comprador.direccion.numero,
+				street_name: usuario.direccion.calle,
+				street_number: usuario.direccion.numero,
 			},
 		},
 		shipments: {
 			mode: "not_specified",
-			cost: comprador.envio,
+			cost: usuario.envio,
 			receiver_address: {
-				street_name: comprador.direccion.calle,
-				street_number: +comprador.direccion.numero,
-				city_name: comprador.direccion.comuna,
-				state_name: comprador.direccion.region,
-				apartment: comprador.direccion.depto,
+				street_name: usuario.direccion.calle,
+				street_number: +usuario.direccion.numero,
+				city_name: usuario.direccion.comuna,
+				state_name: usuario.direccion.region,
+				apartment: usuario.direccion.depto,
 				country_name: "Chile",
 			},
 		},
-		items: comprador.items,
+		items: usuario.items,
 		auto_return: "approved",
 		back_urls: {
 			success: process.env.MP_REDIRECT,
@@ -70,7 +41,7 @@ export const createBody = (comprador: Comprador) => {
 		},
 		external_reference: checkout_id,
 		statement_descriptor: "Bagán!",
-		notification_url: `${process.env.MP_REDIRECT}/api/mercado-pago/feedback`,
+		notification_url: `${process.env.MP_REDIRECT}/api/mercadopago/feedback`,
 		payment_methods: {
 			excluded_payment_methods: [
 				{

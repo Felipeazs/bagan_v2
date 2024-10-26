@@ -1,7 +1,7 @@
-import { Actions, Comprador } from "@/models/comprador"
+import { Actions, TUsuario } from "@/server/models/usuario"
 import { create } from "zustand"
 
-export const useCompradorStore = create<Comprador & Actions>((set) => ({
+export const useCompradorStore = create<TUsuario & Actions>((set) => ({
 	nombre: "",
 	apellido: "",
 	rut: "",

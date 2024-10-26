@@ -1,36 +1,32 @@
 import { createRoute, z } from "@hono/zod-openapi"
-import { createRouter } from "../../lib/create-app"
+import { emailSchema } from "@/server/models/email"
 
-import { emailSchema } from "@/models/email"
-
-const router = createRouter().openapi(
-	createRoute({
-		method: "get",
-		path: "/contacto",
-		tags: ["Contacto"],
-		request: {
-			body: {
-				description: "Send message contacto",
-				content: {
-					"application/json": {
-						schema: emailSchema,
-					},
+export const contacto = createRoute({
+	method: "post",
+	path: "/contacto",
+	tags: ["Contacto"],
+	request: {
+		body: {
+			description: "Send message contacto",
+			content: {
+				"application/json": {
+					schema: emailSchema,
 				},
 			},
 		},
-		responses: {
-			200: {
-				description: "Status",
-				content: {
-					"application/json": {
-						schema: z.object({
-							status: z.string(),
-						}),
-					},
+	},
+	responses: {
+		200: {
+			description: "Message Status",
+			content: {
+				"application/json": {
+					schema: z.object({
+						message: z.string(),
+					}),
 				},
 			},
 		},
-	}),
-)
+	},
+})
 
-export default router
+export type ContactoRoute = typeof contacto

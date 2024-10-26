@@ -1,6 +1,7 @@
 import { z } from "zod"
-import { productoSchema } from "./producto"
+
 import { verifyRut } from "../utils/rut"
+import { productoSchema, TProducto } from "./producto"
 
 export const telefono_regex = /^\d{9}$/
 
@@ -25,3 +26,9 @@ export const usuarioSchema = z.object({
 })
 
 export type TUsuario = z.infer<typeof usuarioSchema>
+
+export type Actions = {
+	guardarItems: (producto: TProducto) => void
+	quitarItems: (index: number) => void
+	setEnvio: (precio: number) => void
+}

@@ -1,5 +1,5 @@
-import { type Email } from "@/models/email"
 import { type ApiRoutes } from "@/server"
+import { type TEmail } from "@/server/models/email"
 import { TUsuario } from "@/server/models/usuario"
 import { hc } from "hono/client"
 import createClient from "openapi-fetch"
@@ -101,8 +101,8 @@ export const getStrapiInfo = async ({ info }: { info: string }) => {
 		.catch(console.error)
 }
 
-export const sendEmailContacto = async ({ value }: { value: Email }) => {
-	return await api.contacto
+export const sendEmailContacto = async ({ value }: { value: TEmail }) => {
+	return await client.contacto
 		.$post({ json: value })
 		.then((res) => res.json())
 		.then((data) => data)

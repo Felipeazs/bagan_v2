@@ -1,7 +1,7 @@
-import { Actions, Comprador } from "@/models/comprador"
-import { productoSchema } from "@/models/productos"
 import { DeepValue, FieldComponent, Validator } from "@tanstack/react-form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import { Actions, TUsuario } from "@/server/models/usuario"
+import { productoSchema } from "@/server/models/producto"
 
 enum Detail {
 	Tomate = "tomate orégano",
@@ -13,17 +13,14 @@ const VariedadesForm = ({
 	Field,
 	index,
 }: {
-	Field: FieldComponent<
-		{ comprador: Comprador & Actions },
-		Validator<DeepValue<Comprador, string>>
-	>
+	Field: FieldComponent<{ usuario: TUsuario & Actions }, Validator<DeepValue<TUsuario, string>>>
 	index: number
 }) => {
 	return (
 		<div className="grid grid-rows-3 sm:grid-cols-2 grid-flow-row gap-1 w-[80%] m-auto">
 			<Field
 				mode="array"
-				name={`comprador.items[${index}].details`}
+				name={`usuario.items[${index}].details`}
 				validators={{
 					onChange: productoSchema.shape.details,
 				}}
@@ -31,7 +28,7 @@ const VariedadesForm = ({
 					field?.state?.value?.map((_, i) => (
 						<Field
 							key={i}
-							name={`comprador.items[${index}].details[${i}]`}
+							name={`usuario.items[${index}].details[${i}]`}
 							children={(subfield) => (
 								<Select
 									value={subfield.state.value}

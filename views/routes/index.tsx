@@ -1,5 +1,4 @@
 import { getStrapiHome, sendEmailContacto } from "@/api/index"
-import { emailSchema } from "@/models/email"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 import { useForm } from "@tanstack/react-form"
 import { useMutation } from "@tanstack/react-query"
@@ -31,6 +30,7 @@ import {
 import { Input } from "../components/ui/input"
 import { Textarea } from "../components/ui/textarea"
 import { useCompradorStore } from "../store"
+import { emailSchema } from "@/server/models/email"
 
 export const Route = createFileRoute("/")({
 	loader: async () => {

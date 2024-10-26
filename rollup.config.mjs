@@ -5,18 +5,13 @@ import { builtinModules } from "node:module"
 import typescript from "@rollup/plugin-typescript"
 import resolve from "@rollup/plugin-node-resolve"
 import commonjs from "@rollup/plugin-commonjs"
+import json from "@rollup/plugin-json"
 
 export default {
 	input: Object.fromEntries(
 		glob
 			.sync(
-				[
-					"server.ts",
-					"api/**/*.ts",
-					"models/**/*.ts",
-					"controller/**/*.ts",
-					"utils/**/*.ts",
-				],
+				["server.ts", "server/**/*.ts", "api/**/*.ts", "models/**/*.ts", "utils/**/*.ts"],
 				{
 					ignore: ["**/*.d.ts", "**/*.test.ts"],
 				},
@@ -40,5 +35,6 @@ export default {
 		typescript({ moduleResolution: "bundler" }),
 		resolve({ preferBuiltins: true }),
 		commonjs({ ignoreDynamicRequires: true, ignore: builtinModules }),
+		json(),
 	],
 }

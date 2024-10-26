@@ -1,4 +1,5 @@
-import { compradorSchema } from "@/models/comprador"
+import { feedbackSchema } from "@/server/models/feedback"
+import { usuarioSchema } from "@/server/models/usuario"
 import { createRoute, z } from "@hono/zod-openapi"
 
 const tags = ["Mercado pago"]
@@ -13,7 +14,7 @@ export const preferenceId = createRoute({
 			description: "Create Mercado Pago Preference ID",
 			content: {
 				"application/json": {
-					schema: compradorSchema,
+					schema: usuarioSchema,
 				},
 			},
 		},
@@ -51,12 +52,7 @@ export const feedback = createRoute({
 			description: "Feedback content body",
 			content: {
 				"application/json": {
-					schema: z.object({
-						data: z.object({
-							id: z.string(),
-						}),
-						type: z.string(),
-					}),
+					schema: feedbackSchema,
 				},
 			},
 		},
@@ -72,8 +68,18 @@ export const feedback = createRoute({
 				},
 			},
 		},
-		422: {
-			description: "No query params found",
+		403: {
+			description: "Forbidden",
+			content: {
+				"application/json": {
+					schema: z.object({
+						message: z.string(),
+					}),
+				},
+			},
+		},
+		404: {
+			description: "Payment Not Found",
 			content: {
 				"application/json": {
 					schema: z.object({
