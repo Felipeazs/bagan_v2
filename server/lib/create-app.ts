@@ -15,15 +15,16 @@ export function createRouter() {
 
 export default function createApp() {
 	const app = createRouter()
-	app.use("*", logger())
+
+	app.use(logger())
 
 	app.use(
 		cors({
-			origin: process.env["MP_REDIRECT"]!,
+			origin: env.MP_REDIRECT,
 		}),
 	)
 	Sentry.init({
-		dsn: process.env["SENTRY_DSN"],
+		dsn: env.SENTRY_DSN,
 		tracesSampleRate: env.NODE_ENV === "production" ? 0.1 : 1.0,
 	})
 

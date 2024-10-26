@@ -4,11 +4,12 @@ import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import devServer from "@hono/vite-dev-server"
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
+import env from "./utils/env"
 
 // https://vitejs.dev/config/
 export default defineConfig({
 	server: {
-		port: 4000, // change to a custom port
+		port: env.PORT, // change to a custom port
 	},
 	build: {
 		outDir: "build", // change to 'build', explain later
