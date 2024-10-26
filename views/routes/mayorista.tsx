@@ -1,8 +1,8 @@
-import { getStrapiMayorista } from "@/api"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 import { Await, createFileRoute, defer, getRouteApi, ReactNode } from "@tanstack/react-router"
 import Fallback from "../components/Fallback"
 import { Button } from "../components/ui/button"
+import { getStrapiMayorista } from "@/api/strapi"
 
 export const Route = createFileRoute("/mayorista")({
 	loader: async () => {

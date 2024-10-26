@@ -41,18 +41,15 @@ export const getStrapiHome = async () => {
 		.catch(console.error)
 }
 
-const info_query = {
-	params: {
-		query: {
-			fields: ["description"],
-		},
-	},
-}
-
 export const getStrapiMayorista = async () => {
 	return await strapiClient
 		.GET("/mayorista", {
-			info_query,
+			params: {
+				query: {
+					//@ts-ignore
+					fields: ["description"],
+				},
+			},
 		})
 		.then((res) => {
 			return res.data?.data

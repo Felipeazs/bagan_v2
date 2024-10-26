@@ -1,4 +1,4 @@
-import { getStrapiInfo } from "@/api"
+import { getStrapiInfo } from "@/api/strapi"
 import Fallback from "@/views/components/Fallback"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 import {
