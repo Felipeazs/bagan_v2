@@ -38,10 +38,6 @@ routes.forEach((route) => {
 })
 
 app.use("/assets/*", serveStatic({ root: isProd ? "build/" : "./" }))
-app.use("/apple-touch-icon.png", serveStatic({ root: isProd ? "build/" : "./" }))
-app.use("/favicon-32x32.png", serveStatic({ root: isProd ? "build/" : "./" }))
-app.use("/favicon-16x16.png", serveStatic({ root: isProd ? "build/" : "./" }))
-app.use("/site.webmanifest", serveStatic({ root: isProd ? "build/" : "./" }))
 app.get("/*", (c) => c.html(html))
 
 export type ApiRoutes = (typeof routes)[number]
