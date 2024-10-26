@@ -8,7 +8,7 @@ export default function configureOpenAPI(app: AppOpenAPI) {
 		openapi: "3.0.0",
 		info: {
 			version: packageJSON.version,
-			title: "Openapi model API",
+			title: "Bagán! API Documentation",
 		},
 	})
 

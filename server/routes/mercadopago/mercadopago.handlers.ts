@@ -12,25 +12,27 @@ import { FeedbackRoute, PreferenceRoute } from "./mercadopago.routes"
 import { sendWebhookMessage } from "@/server/lib/discord"
 import { PaymentInfo } from "@/server/types"
 import { mailtrapClient } from "@/server/lib/mailtrap"
+import { Context } from "hono"
 
 export const preferenceId: AppRouteHandler<PreferenceRoute> = async (c) => {
 	const comprador = c.req.valid("json")
 
-	try {
-		const prefDetails = setPreferenceDetails(comprador)
+	const prefDetails = setPreferenceDetails(comprador)
 
+	try {
 		const preference = new Preference(mercadoPagoClient)
 
 		const pref_body = createBody(prefDetails)
+
 		const res = await preference.create({
 			body: pref_body,
 		})
 
-		if (res.api_response.status === 201) {
-			return c.json({ prefId: res.id! }, 201)
-		} else {
-			return c.json({ message: "invalid parameters" }, 400)
+		if (res.api_response.status !== 201) {
+			return c.json({ message: "bad request" }, 400)
 		}
+
+		return c.json({ prefId: res.id! }, 201)
 	} catch (err) {
 		console.error("Caught an error at /create-preference: ")
 		throw new HTTPException(500, {
@@ -43,57 +45,23 @@ export const preferenceId: AppRouteHandler<PreferenceRoute> = async (c) => {
 export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 	const { data, type } = c.req.valid("json")
 
-	if (type != "payment") {
-		c.status(200)
-		return c.json({ message: `no ${type} info` })
+	if (type !== "payment") {
+		return c.json({ message: `no ${type} info` }, 200)
 	}
 
-	const x_signature = c.req.header("x-signature")
-	const x_request_id = c.req.header("x-request-id")
-
-	if (!x_signature || !x_request_id) {
-		return c.json({ message: "Invalid webhook signature" }, 403)
-	}
-
-	const signatureParts = x_signature.split(",")
-
-	let ts
-	let hash
-	signatureParts.forEach((part) => {
-		const [key, value] = part.split("=")
-		if (key && value) {
-			const trimmedKey = key.trim()
-			const trimmedValue = value.trim()
-			if (trimmedKey === "ts") {
-				ts = trimmedValue
-			} else if (trimmedKey === "v1") {
-				hash = trimmedValue
-			}
-		}
-	})
-
-	const manifest = `id:${data.id};request-id:${x_request_id};ts:${ts};`
-
-	const { NODE_ENV, NM_MAILTRAP_FROM, NM_MAILTRAP_RECEIVER, MPW_SECRET } = env
-
-	const hmac = crypto.createHmac("sha256", MPW_SECRET)
-	hmac.update(manifest)
-
-	const sha = hmac.digest("hex")
-
-	if (sha !== hash) {
-		return c.json({ message: "Invalid webhook signature" }, 403)
-	}
+	const isSignatureValid = checkSignature(c, data.id)
+	if (!isSignatureValid) return c.json({ message: "Forbidden" }, 403)
 
 	try {
 		const payment = new Payment(mercadoPagoClient)
 		const payment_data = await payment.get({ id: data.id })
 
 		if (!payment_data) {
-			return c.json({ message: "No payment data created" }, 404)
+			return c.json({ message: "Bad request" }, 400)
 		}
 
 		const details: PaymentInfo = paymentDetails(payment_data)
+
 		let compras: { name: string; value: string }[] = []
 		details.additional_info?.items?.forEach((i) => {
 			compras.push({
@@ -120,14 +88,14 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 		})
 
 		const mailtrap_info = {
-			from: { name: "No responder", email: NM_MAILTRAP_FROM },
-			to: [{ email: NM_MAILTRAP_RECEIVER }],
+			from: { name: "No responder", email: env.NM_MAILTRAP_FROM },
+			to: [{ email: env.NM_MAILTRAP_RECEIVER }],
 			subject: `Nueva compra: ${details.id}`,
 			category: "venta",
 			html: getResumenCompraTemplate(details),
 		}
 
-		const isProd = NODE_ENV === "production"
+		const isProd = env.NODE_ENV === "production"
 
 		if (isProd) {
 			mailtrapClient.send(mailtrap_info)
@@ -148,4 +116,43 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 			cause: err,
 		})
 	}
+}
+
+export const checkSignature = (c: Context, id: string): boolean => {
+	const x_signature = c.req.header("x-signature")
+	const x_request_id = c.req.header("x-request-id")
+
+	if (!x_signature || !x_request_id) {
+		return false
+	}
+
+	const signatureParts = x_signature.split(",")
+
+	let ts
+	let hash
+	signatureParts.forEach((part) => {
+		const [key, value] = part.split("=")
+		if (key && value) {
+			const trimmedKey = key.trim()
+			const trimmedValue = value.trim()
+			if (trimmedKey === "ts") {
+				ts = trimmedValue
+			} else if (trimmedKey === "v1") {
+				hash = trimmedValue
+			}
+		}
+	})
+
+	const manifest = `id:${id};request-id:${x_request_id};ts:${ts};`
+
+	const hmac = crypto.createHmac("sha256", env.MPW_SECRET)
+	hmac.update(manifest)
+
+	const sha = hmac.digest("hex")
+
+	if (sha !== hash) {
+		return false
+	}
+
+	return true
 }

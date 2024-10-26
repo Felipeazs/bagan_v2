@@ -1,4 +1,6 @@
 import { PaymentResponse } from "mercadopago/dist/clients/payment/commonTypes"
+
+import env from "@/utils/env"
 import { TUsuario } from "../models/usuario"
 import { PaymentInfo } from "../types"
 
@@ -35,13 +37,13 @@ export const createBody = (usuario: TUsuario) => {
 		items: usuario.items,
 		auto_return: "approved",
 		back_urls: {
-			success: process.env.MP_REDIRECT,
-			pending: process.env.MP_REDIRECT,
-			failure: process.env.MP_REDIRECT,
+			success: env.MP_REDIRECT,
+			pending: env.MP_REDIRECT,
+			failure: env.MP_REDIRECT,
 		},
 		external_reference: checkout_id,
 		statement_descriptor: "Bagán!",
-		notification_url: `${process.env.MP_REDIRECT}/api/mercadopago/feedback`,
+		notification_url: `${env.MP_REDIRECT}/api/mercadopago/feedback`,
 		payment_methods: {
 			excluded_payment_methods: [
 				{

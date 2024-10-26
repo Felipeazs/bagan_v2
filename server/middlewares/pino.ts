@@ -12,11 +12,14 @@ export function logger() {
 		pino: {
 			transport: {
 				target: "pino-pretty",
+				options: {
+					colorize: true,
+				},
 			},
 			level: env.LOG_LEVEL || "info",
 		},
 		http: {
-			responseTime: false,
+			responseTime: true,
 			reqId: () => crypto.randomUUID(),
 			onResBindings: (c) => {
 				if (c.req.path.startsWith("/api")) {
@@ -28,7 +31,7 @@ export function logger() {
 					}
 				} else {
 					return {
-						res: undefined,
+						status: c.res.status,
 					}
 				}
 			},
@@ -38,13 +41,12 @@ export function logger() {
 						req: {
 							url: c.req.path,
 							method: c.req.method,
+							headers: c.req.header,
 						},
 					}
 				} else {
 					return {
-						req: {
-							url: c.req.path,
-						},
+						url: c.req.path,
 					}
 				}
 			},

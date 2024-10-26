@@ -31,7 +31,7 @@ export const preferenceId = createRoute({
 			},
 		},
 		400: {
-			description: "Invalid parameters",
+			description: "Bad request",
 			content: {
 				"application/json": {
 					schema: z.object({
@@ -68,8 +68,8 @@ export const feedback = createRoute({
 				},
 			},
 		},
-		403: {
-			description: "Forbidden",
+		400: {
+			description: "Bad Request",
 			content: {
 				"application/json": {
 					schema: z.object({
@@ -78,8 +78,8 @@ export const feedback = createRoute({
 				},
 			},
 		},
-		404: {
-			description: "Payment Not Found",
+		403: {
+			description: "Forbidden",
 			content: {
 				"application/json": {
 					schema: z.object({
