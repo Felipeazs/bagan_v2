@@ -26,7 +26,7 @@ export function logger() {
 					return {
 						res: {
 							status: c.res.status,
-							headers: c.res.headers,
+							["content-type"]: c.req.header("content-type"),
 						},
 					}
 				} else {
@@ -41,7 +41,13 @@ export function logger() {
 						req: {
 							url: c.req.path,
 							method: c.req.method,
-							headers: c.req.header,
+							headers: {
+								host: c.req.header("host"),
+								["content-type"]: c.req.header("content-type"),
+								["content-length"]: c.req.header("content-length"),
+							},
+							query: c.req.query,
+							params: c.req.param,
 						},
 					}
 				} else {
