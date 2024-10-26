@@ -8,7 +8,7 @@
 		"dev": "(prettier --check . || prettier --write .) && bunx --bun vite",
 		"build": "tsc && vite build && rollup -c rollup.config.mjs",
 		"lint": "eslint .",
-		"types:generate": "openapi-typescript ../strapi/src/extensions/documentation/documentation/1.0.0/full_documentation.json -o api/strapi.d.ts",
+		"types:generate": "openapi-typescript ../strapi/src/extensions/documentation/documentation/1.0.0/full_documentation.json -o api/types/strapi.d.ts",
 		"preview": "vite preview",
 		"clean": "rm -rf build dist node_modules"
 	},

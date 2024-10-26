@@ -1,14 +1,8 @@
-import dotenv from "dotenv"
-import path from "path"
 import { z, ZodError } from "zod"
-
-dotenv.config({
-	path: path.resolve(process.cwd(), process.env.NODE_ENV === "test" ? ".env.test" : ".env"),
-})
 
 const EnvSchema = z.object({
 	NODE_ENV: z.string().default("development"),
-	PORT: z.coerce.number().default(9999),
+	PORT: z.coerce.number().default(4000),
 	LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace", "silent"]),
 	NM_MAILTRAP_FROM: z.string().email(),
 	NM_MAILTRAP_RECEIVER: z.string().email(),

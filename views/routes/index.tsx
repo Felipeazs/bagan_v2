@@ -1,4 +1,3 @@
-import { getStrapiHome, sendEmailContacto } from "@/api/index"
 import { BlocksRenderer } from "@strapi/blocks-react-renderer"
 import { useForm } from "@tanstack/react-form"
 import { useMutation } from "@tanstack/react-query"
@@ -8,6 +7,9 @@ import Autoplay from "embla-carousel-autoplay"
 import ReactGA from "react-ga4"
 import { toast } from "sonner"
 
+import { sendEmailContacto } from "@/api"
+import { getStrapiHome } from "@/api/strapi"
+import { emailSchema } from "@/server/models/email"
 import Carrito from "../components/Carrito"
 import Fallback from "../components/Fallback"
 import { AspectRatio } from "../components/ui/aspect-ratio"
@@ -30,7 +32,6 @@ import {
 import { Input } from "../components/ui/input"
 import { Textarea } from "../components/ui/textarea"
 import { useCompradorStore } from "../store"
-import { emailSchema } from "@/server/models/email"
 
 export const Route = createFileRoute("/")({
 	loader: async () => {

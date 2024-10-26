@@ -2,9 +2,8 @@ import { serveStatic } from "hono/bun"
 import { readFile } from "node:fs/promises"
 import createApp from "./server/lib/create-app"
 import configureOpenAPI from "./server/lib/openapi"
-import index from "./server/routes/index.route"
-import mercadopago from "./server/routes/mercadopago/mercadopago.index"
 import contacto from "./server/routes/contacto/contacto.index"
+import mercadopago from "./server/routes/mercadopago/mercadopago.index"
 
 import env from "./utils/env"
 
@@ -30,7 +29,7 @@ if (!isProd) {
 
 const app = createApp()
 
-const routes = [index, mercadopago, contacto] as const
+const routes = [mercadopago, contacto] as const
 
 configureOpenAPI(app)
 
