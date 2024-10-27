@@ -1,7 +1,12 @@
 import { Link, useLocation } from "@tanstack/react-router"
+import { useState } from "react"
 import Carrito from "./Carrito"
+import { Sheet, SheetContent, SheetDescription, SheetTitle, SheetTrigger } from "./ui/sheet"
+import CarritoLogo2 from "../assets/carrito2.svg"
+import CarritoLogo from "../assets/carrito.svg"
 
 const Navbar = () => {
+	const [isDrawer, setIsDrawer] = useState<boolean>(false)
 	const { pathname } = useLocation()
 
 	const hover_style = "hover:underline underline-offset-2 decoration-2 decoration-bagan_dark"
@@ -15,34 +20,58 @@ const Navbar = () => {
 					className="h-[70px] w-[150px] object-cover bg-transparent transition-all ease-in-out duration-300 hover:scale-110"
 				/>
 			</Link>
-			<div className="flex gap-4 justify-center items-center">
+			<div className="sm:hidden">
+				<Sheet
+					open={isDrawer}
+					onOpenChange={setIsDrawer}>
+					<SheetTrigger>Menu</SheetTrigger>
+					<SheetContent side="left">
+						<SheetTitle className="pb-5">Menu</SheetTitle>
+						<SheetDescription></SheetDescription>
+						<div className="flex flex-col gap-2">
+							<Link
+								to="/"
+								onClick={() => setIsDrawer(false)}
+								className={hover_style}>
+								Inicio
+							</Link>
+							<Link
+								to="/mayorista"
+								onClick={() => setIsDrawer(false)}
+								className={hover_style}>
+								Mayorista
+							</Link>
+							<Carrito img={CarritoLogo2} />
+						</div>
+					</SheetContent>
+				</Sheet>
+			</div>
+			<div className="hidden sm:flex gap-4 justify-center items-center">
 				{pathname === "/mayorista" || pathname.startsWith("/informaciones") ? (
-					<>
-						<Link
-							to="/"
-							className={hover_style}>
-							Inicio
-						</Link>
-					</>
+					<Link
+						to="/"
+						className={hover_style}>
+						Inicio
+					</Link>
 				) : (
 					<div className="flex gap-4">
 						<a
-							className={`hidden md:inline ${hover_style}`}
+							className={`hidden lg:inline ${hover_style}`}
 							href="/#nosotras">
 							Nosotros
 						</a>
 						<a
-							className={`hidden md:inline ${hover_style}`}
+							className={`hidden lg:inline ${hover_style}`}
 							href="/#productos">
 							Productos
 						</a>
 						<a
-							className={`hidden md:inline ${hover_style}`}
+							className={`hidden lg:inline ${hover_style}`}
 							href="/#contacto">
 							Contacto
 						</a>
 						<a
-							className={`hidden md:inline ${hover_style}`}
+							className={`hidden lg:inline ${hover_style}`}
 							href="/#newsletter">
 							Newsletter
 						</a>
@@ -53,7 +82,7 @@ const Navbar = () => {
 						</Link>
 					</div>
 				)}
-				<Carrito />
+				<Carrito img={CarritoLogo} />
 			</div>
 		</div>
 	)

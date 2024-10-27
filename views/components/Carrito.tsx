@@ -7,7 +7,6 @@ import { zodValidator } from "@tanstack/zod-form-adapter"
 import { useEffect, useState } from "react"
 import ReactGA from "react-ga4"
 import { toast } from "sonner"
-import CarritoLogo from "../assets/carrito.svg"
 import { useCompradorStore } from "../store"
 import InputForm from "./InputForm"
 import { Button } from "./ui/button"
@@ -39,7 +38,7 @@ const regiones = chile.map((c) => {
 	}
 })
 
-const Carrito = () => {
+const Carrito = ({ img }: { img?: string }) => {
 	const usuario = useCompradorStore()
 
 	const [step, setStep] = useState<{ title: string; page: number }>({
@@ -83,6 +82,8 @@ const Carrito = () => {
 	useEffect(() => {
 		const carrito = form.getFieldValue("usuario.items").length
 		const items = usuario.items.length
+
+		if (!items) return
 
 		if (items > carrito) {
 			form.pushFieldValue("usuario.items", usuario.items[usuario.items.length - 1])
@@ -144,9 +145,9 @@ const Carrito = () => {
 
 	return (
 		<Sheet>
-			<SheetTrigger className="flex justify-center w-full h-full">
+			<SheetTrigger className="flex w-full h-full">
 				<div className="relative h-[20px] w-[50px]">
-					<img src={CarritoLogo} />
+					<img src={img} />
 					<span className="absolute z-10 top-1/2 left-3 flex justify-center items-center text-gray-500 text-[14px] font-bold bg-transparent border-2 border-gray-500 w-[22px] h-[22px] rounded-full">
 						{usuario.items.length}
 					</span>

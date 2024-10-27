@@ -7,6 +7,7 @@ import Autoplay from "embla-carousel-autoplay"
 import ReactGA from "react-ga4"
 import { toast } from "sonner"
 
+import CarritoLogo from "../assets/carrito.svg"
 import { sendEmailContacto } from "@/api"
 import { getStrapiHome } from "@/api/strapi"
 import { contactoSchema } from "@/server/models/email"
@@ -476,7 +477,7 @@ function Index() {
 					</section>
 					{comprador?.items.length > 0 && (
 						<div className="fixed bottom-24 right-14 md:bottom-32 md:right-28 bg-bagan w-[50px] h-[50px] rounded-lg hover:shadow-md flex justify-center items-center p-2">
-							<Carrito />
+							<Carrito img={CarritoLogo} />
 						</div>
 					)}
 				</>

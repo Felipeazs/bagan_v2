@@ -114,3 +114,7 @@ img {
 	-moz-text-shadow: 0 0 1px #000;
 	-webkit-text-shadow: 0 0 1px #000;
 }
+
+[data-vaul-drawer][data-vaul-drawer-direction="left"]::after {
+	width: 0% !important;
+}
