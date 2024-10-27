@@ -9,7 +9,7 @@ import { toast } from "sonner"
 
 import { sendEmailContacto } from "@/api"
 import { getStrapiHome } from "@/api/strapi"
-import { emailSchema } from "@/server/models/email"
+import { contactoSchema } from "@/server/models/email"
 import Carrito from "../components/Carrito"
 import Fallback from "../components/Fallback"
 import { AspectRatio } from "../components/ui/aspect-ratio"
@@ -74,6 +74,7 @@ function Index() {
 		validatorAdapter: zodValidator(),
 		defaultValues: {
 			nombre: "",
+			apellido: "",
 			telefono: "",
 			email: "",
 			mensaje: "",
@@ -83,7 +84,7 @@ function Index() {
 			form.reset()
 		},
 		onSubmitInvalid: () => {
-			toast("Por favor ingrese todos los datos")
+			toast("Atención!", { description: "Por favor ingrese todos los datos" })
 		},
 	})
 
@@ -330,11 +331,11 @@ function Index() {
 								void form.handleSubmit()
 							}}>
 							<div className="flex flex-col gap-1 w-[300px] md:w-[500px]">
-								<div>
+								<div className="flex gap-1">
 									<form.Field
 										name="nombre"
 										validators={{
-											onChange: emailSchema.shape.nombre,
+											onChange: contactoSchema.shape.nombre,
 										}}
 										children={(f) => (
 											<Input
@@ -348,12 +349,29 @@ function Index() {
 											/>
 										)}
 									/>
+									<form.Field
+										name="apellido"
+										validators={{
+											onChange: contactoSchema.shape.apellido,
+										}}
+										children={(f) => (
+											<Input
+												type="text"
+												id={f.name}
+												name={f.name}
+												value={f.state.value}
+												onBlur={f.handleBlur}
+												onChange={(e) => f.handleChange(e.target.value)}
+												placeholder="Apellido"
+											/>
+										)}
+									/>
 								</div>
 								<div>
 									<form.Field
 										name="telefono"
 										validators={{
-											onChange: emailSchema.shape.telefono,
+											onChange: contactoSchema.shape.telefono,
 										}}
 										children={(f) => (
 											<div className="flex items-center">
@@ -377,7 +395,7 @@ function Index() {
 									<form.Field
 										name="email"
 										validators={{
-											onChange: emailSchema.shape.email,
+											onChange: contactoSchema.shape.email,
 										}}
 										children={(f) => (
 											<>
@@ -398,7 +416,7 @@ function Index() {
 									<form.Field
 										name="mensaje"
 										validators={{
-											onChange: emailSchema.shape.mensaje,
+											onChange: contactoSchema.shape.mensaje,
 										}}
 										children={(f) => (
 											<>

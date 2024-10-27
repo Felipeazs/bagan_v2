@@ -1,5 +1,5 @@
 import { type ApiRoutes } from "@/app"
-import { type TEmail } from "@/server/models/email"
+import { TContacto, type TNewsletter } from "@/server/models/email"
 import { TUsuario } from "@/server/models/usuario"
 import { hc } from "hono/client"
 
@@ -9,8 +9,16 @@ const client = hc<ApiRoutes>("/api", {
 	},
 })
 
-export const sendEmailContacto = async ({ value }: { value: TEmail }) => {
-	return await client.contacto
+export const sendEmailContacto = async ({ value }: { value: TContacto }) => {
+	return await client.contacto.message
+		.$post({ json: value })
+		.then((res) => res.json())
+		.then((data) => data)
+		.catch(console.error)
+}
+
+export async function addToNewsletter({ value }: { value: TNewsletter }) {
+	return await client.contacto.newsletter
 		.$post({ json: value })
 		.then((res) => res.json())
 		.then((data) => data)
