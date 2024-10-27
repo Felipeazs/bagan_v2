@@ -1,16 +1,17 @@
 import { EmbedBuilder, WebhookClient } from "discord.js"
 import { IWebhook } from "../types"
+import env from "@/utils/env"
 
 export const webhookClient = new WebhookClient({
-	url: process.env["WEBHOOK_URL"]!,
+	url: env.WEBHOOK_URL,
 })
 
 export const sendWebhookMessage = async (webhook: IWebhook) => {
-	const isProd = process.env.NODE_ENV === "production"
+	const isProd = env.NODE_ENV === "production"
 	const embeds = new EmbedBuilder({
 		author: {
 			name: isProd ? "Bagan!" : "Bagan! Dev",
-			url: process.env["MP_REDIRECT"],
+			url: env.MP_REDIRECT,
 		},
 		title: webhook.title,
 		description: webhook.description,

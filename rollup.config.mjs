@@ -10,19 +10,16 @@ import json from "@rollup/plugin-json"
 export default {
 	input: Object.fromEntries(
 		glob
-			.sync(
-				["server.ts", "server/**/*.ts", "api/**/*.ts", "models/**/*.ts", "utils/**/*.ts"],
-				{
-					ignore: ["**/*.d.ts", "**/*.test.ts"],
-				},
-			)
+			.sync(["app.ts", "server/**/*.ts", "api/**/*.ts", "models/**/*.ts", "utils/**/*.ts"], {
+				ignore: ["**/*.d.ts", "**/*.test.ts"],
+			})
 			.map((file) => [
 				file.slice(0, file.length - extname(file).length),
 				fileURLToPath(new URL(file, import.meta.url)),
 			]),
 	),
 	output: {
-		dir: "dist", // set to 'dist' as mentioned earlier
+		dir: "dist",
 		format: "esm",
 		sourcemap: true,
 		preserveModules: true,

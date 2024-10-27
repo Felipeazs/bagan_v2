@@ -1,18 +1,16 @@
-// vite.config.ts
-import path from "path"
-import { defineConfig } from "vite"
-import react from "@vitejs/plugin-react"
 import devServer from "@hono/vite-dev-server"
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite"
+import react from "@vitejs/plugin-react"
+import path from "path"
+import { defineConfig } from "vite"
 import env from "./utils/env"
 
-// https://vitejs.dev/config/
 export default defineConfig({
 	server: {
-		port: env.PORT, // change to a custom port
+		port: env.PORT,
 	},
 	build: {
-		outDir: "build", // change to 'build', explain later
+		outDir: "build",
 		rollupOptions: {
 			output: {
 				manualChunks: {
@@ -32,9 +30,8 @@ export default defineConfig({
 			generatedRouteTree: "./views/routeTree.gen.ts",
 		}),
 		devServer({
-			entry: "server.ts",
+			entry: "app.ts",
 			exclude: [
-				// We need to override this option since the default setting doesn't fit
 				/.*\.tsx?($|\?)/,
 				/.*\.(s?css|less)($|\?)/,
 				/.*\.(svg|png)($|\?)/,
@@ -43,7 +40,7 @@ export default defineConfig({
 				/^\/(public|assets|static)\/.+/,
 				/^\/node_modules\/.*/,
 			],
-			injectClientScript: false, // This option is buggy, disable it and inject the code manually
+			injectClientScript: false,
 		}),
 	],
 	resolve: {

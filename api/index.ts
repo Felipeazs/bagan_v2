@@ -1,4 +1,4 @@
-import { type ApiRoutes } from "@/server"
+import { type ApiRoutes } from "@/app"
 import { type TEmail } from "@/server/models/email"
 import { TUsuario } from "@/server/models/usuario"
 import { hc } from "hono/client"

@@ -10,119 +10,123 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root"
-import { Route as MayoristaImport } from "./routes/mayorista"
-import { Route as AboutImport } from "./routes/about"
-import { Route as IndexImport } from "./routes/index"
-import { Route as InformacionesInformacionImport } from "./routes/informaciones/$informacion"
+import { Route as rootRoute } from './routes/__root'
+import { Route as MayoristaImport } from './routes/mayorista'
+import { Route as AboutImport } from './routes/about'
+import { Route as IndexImport } from './routes/index'
+import { Route as InformacionesInformacionImport } from './routes/informaciones/$informacion'
 
 // Create/Update Routes
 
 const MayoristaRoute = MayoristaImport.update({
-	path: "/mayorista",
-	getParentRoute: () => rootRoute,
+  id: '/mayorista',
+  path: '/mayorista',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const AboutRoute = AboutImport.update({
-	path: "/about",
-	getParentRoute: () => rootRoute,
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const IndexRoute = IndexImport.update({
-	path: "/",
-	getParentRoute: () => rootRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const InformacionesInformacionRoute = InformacionesInformacionImport.update({
-	path: "/informaciones/$informacion",
-	getParentRoute: () => rootRoute,
+  id: '/informaciones/$informacion',
+  path: '/informaciones/$informacion',
+  getParentRoute: () => rootRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
-	interface FileRoutesByPath {
-		"/": {
-			id: "/"
-			path: "/"
-			fullPath: "/"
-			preLoaderRoute: typeof IndexImport
-			parentRoute: typeof rootRoute
-		}
-		"/about": {
-			id: "/about"
-			path: "/about"
-			fullPath: "/about"
-			preLoaderRoute: typeof AboutImport
-			parentRoute: typeof rootRoute
-		}
-		"/mayorista": {
-			id: "/mayorista"
-			path: "/mayorista"
-			fullPath: "/mayorista"
-			preLoaderRoute: typeof MayoristaImport
-			parentRoute: typeof rootRoute
-		}
-		"/informaciones/$informacion": {
-			id: "/informaciones/$informacion"
-			path: "/informaciones/$informacion"
-			fullPath: "/informaciones/$informacion"
-			preLoaderRoute: typeof InformacionesInformacionImport
-			parentRoute: typeof rootRoute
-		}
-	}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutImport
+      parentRoute: typeof rootRoute
+    }
+    '/mayorista': {
+      id: '/mayorista'
+      path: '/mayorista'
+      fullPath: '/mayorista'
+      preLoaderRoute: typeof MayoristaImport
+      parentRoute: typeof rootRoute
+    }
+    '/informaciones/$informacion': {
+      id: '/informaciones/$informacion'
+      path: '/informaciones/$informacion'
+      fullPath: '/informaciones/$informacion'
+      preLoaderRoute: typeof InformacionesInformacionImport
+      parentRoute: typeof rootRoute
+    }
+  }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-	"/": typeof IndexRoute
-	"/about": typeof AboutRoute
-	"/mayorista": typeof MayoristaRoute
-	"/informaciones/$informacion": typeof InformacionesInformacionRoute
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/mayorista': typeof MayoristaRoute
+  '/informaciones/$informacion': typeof InformacionesInformacionRoute
 }
 
 export interface FileRoutesByTo {
-	"/": typeof IndexRoute
-	"/about": typeof AboutRoute
-	"/mayorista": typeof MayoristaRoute
-	"/informaciones/$informacion": typeof InformacionesInformacionRoute
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/mayorista': typeof MayoristaRoute
+  '/informaciones/$informacion': typeof InformacionesInformacionRoute
 }
 
 export interface FileRoutesById {
-	__root__: typeof rootRoute
-	"/": typeof IndexRoute
-	"/about": typeof AboutRoute
-	"/mayorista": typeof MayoristaRoute
-	"/informaciones/$informacion": typeof InformacionesInformacionRoute
+  __root__: typeof rootRoute
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/mayorista': typeof MayoristaRoute
+  '/informaciones/$informacion': typeof InformacionesInformacionRoute
 }
 
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath
-	fullPaths: "/" | "/about" | "/mayorista" | "/informaciones/$informacion"
-	fileRoutesByTo: FileRoutesByTo
-	to: "/" | "/about" | "/mayorista" | "/informaciones/$informacion"
-	id: "__root__" | "/" | "/about" | "/mayorista" | "/informaciones/$informacion"
-	fileRoutesById: FileRoutesById
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/about' | '/mayorista' | '/informaciones/$informacion'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/about' | '/mayorista' | '/informaciones/$informacion'
+  id: '__root__' | '/' | '/about' | '/mayorista' | '/informaciones/$informacion'
+  fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-	IndexRoute: typeof IndexRoute
-	AboutRoute: typeof AboutRoute
-	MayoristaRoute: typeof MayoristaRoute
-	InformacionesInformacionRoute: typeof InformacionesInformacionRoute
+  IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  MayoristaRoute: typeof MayoristaRoute
+  InformacionesInformacionRoute: typeof InformacionesInformacionRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
-	IndexRoute: IndexRoute,
-	AboutRoute: AboutRoute,
-	MayoristaRoute: MayoristaRoute,
-	InformacionesInformacionRoute: InformacionesInformacionRoute,
+  IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  MayoristaRoute: MayoristaRoute,
+  InformacionesInformacionRoute: InformacionesInformacionRoute,
 }
 
 export const routeTree = rootRoute
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>()
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 

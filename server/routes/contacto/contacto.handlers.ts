@@ -1,9 +1,9 @@
-import { AppRouteHandler } from "@/server/lib/types"
-import { ContactoRoute } from "./contacto.routes"
-import env from "@/utils/env"
-import { getWebMessageTemplate } from "@/server/utils/email-templates"
 import { sendWebhookMessage } from "@/server/lib/discord"
 import { mailtrapClient } from "@/server/lib/mailtrap"
+import { AppRouteHandler } from "@/server/lib/types"
+import { getWebMessageTemplate } from "@/server/utils/email-templates"
+import env from "@/utils/env"
+import { ContactoRoute } from "./contacto.routes"
 
 export const contacto: AppRouteHandler<ContactoRoute> = async (c) => {
 	const data = c.req.valid("json")
