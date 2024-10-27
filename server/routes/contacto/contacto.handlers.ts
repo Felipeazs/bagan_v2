@@ -46,7 +46,7 @@ export const contacto: AppRouteHandler<ContactoRoute> = async (c) => {
 			}
 		}
 
-		return c.json({ message: "Email sent" }, 200)
+		return c.json({ message: "Message sent" }, 200)
 	} catch (err) {
 		console.error("Caught an error at /contacto", (err as Error).message)
 		throw new Error("server error")

@@ -16,7 +16,7 @@ const Navbar = () => {
 				/>
 			</Link>
 			<div className="flex gap-4 justify-center items-center">
-				{pathname === "/mayorista" ? (
+				{pathname === "/mayorista" || pathname.startsWith("/informaciones") ? (
 					<>
 						<Link
 							to="/"
@@ -40,6 +40,11 @@ const Navbar = () => {
 							className={`hidden md:inline ${hover_style}`}
 							href="/#contacto">
 							Contacto
+						</a>
+						<a
+							className={`hidden md:inline ${hover_style}`}
+							href="/#newsletter">
+							Newsletter
 						</a>
 						<Link
 							to="/mayorista"

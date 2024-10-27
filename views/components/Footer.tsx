@@ -37,9 +37,11 @@ const Footer = () => {
 	const hover_style = "hover:text-bagan_dark"
 
 	return (
-		<div className="flex flex-col md:flex-row justify-around md:items-center gap-5 px-5 py-10 bg-bagan text-white">
-			<div className="flex flex-col">
-				<p className="uppercase font-bold py-2">Información y políticas</p>
+		<div
+			className="flex flex-col-reverse sm:flex-row justify-around items-center sm:items-start gap-5 px-5 py-10 bg-bagan text-white"
+			id="newsletter">
+			<div className="flex flex-col items-center sm:justify-start sm:items-start">
+				<p className="uppercase font-bold">Información y políticas</p>
 				<Link
 					to="/informaciones/$informacion"
 					params={{ informacion: "preguntas_frecuentes" }}
@@ -72,7 +74,7 @@ const Footer = () => {
 					Privacidad de datos
 				</Link>
 			</div>
-			<div className="flex flex-col gap-5">
+			<div className="flex flex-col gap-5 min-w-[300px] max-w-[380px]">
 				<form
 					className="flex flex-col gap-1 text-black"
 					onSubmit={async (e) => {
