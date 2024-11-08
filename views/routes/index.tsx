@@ -43,6 +43,8 @@ export const Route = createFileRoute("/")({
 	component: Index,
 })
 
+type TAddCarrito = TPack | TGiftcard
+
 function Index() {
 	const comprador = useCompradorStore()
 	const route = getRouteApi("/")
@@ -89,8 +91,6 @@ function Index() {
 			toast("Atención!", { description: "Por favor ingrese todos los datos" })
 		},
 	})
-
-	type TAddCarrito = TPack | TGiftcard
 
 	const agregarCarritoHandler = (pack: TAddCarrito) => {
 		const isPack = (p: TAddCarrito): p is TPack => {
