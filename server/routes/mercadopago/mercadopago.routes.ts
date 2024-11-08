@@ -25,7 +25,8 @@ export const preferenceId = createRoute({
 			content: {
 				"application/json": {
 					schema: z.object({
-						prefId: z.string(),
+						status: z.boolean(),
+						data: z.string(),
 					}),
 				},
 			},
@@ -35,7 +36,19 @@ export const preferenceId = createRoute({
 			content: {
 				"application/json": {
 					schema: z.object({
-						message: z.string(),
+						status: z.boolean(),
+						data: z.string(),
+					}),
+				},
+			},
+		},
+		422: {
+			description: "Unprocessable Content",
+			content: {
+				"application/json": {
+					schema: z.object({
+						status: z.boolean(),
+						data: z.string(),
 					}),
 				},
 			},
@@ -44,7 +57,7 @@ export const preferenceId = createRoute({
 })
 
 export const feedback = createRoute({
-	path: `${base}/feedback`,
+	path: `${base}/compra/feedback`,
 	method: "post",
 	tags,
 	request: {

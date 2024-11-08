@@ -2,22 +2,24 @@ import { HTTPException } from "hono/http-exception"
 import { Payment, Preference } from "mercadopago"
 import crypto from "node:crypto"
 
+import { sendWebhookMessage } from "@/server/lib/discord"
+import { mailtrapClient } from "@/server/lib/mailtrap"
 import { mercadoPagoClient } from "@/server/lib/mercadopago"
 import { AppRouteHandler } from "@/server/lib/types"
-import { getResumenCompraTemplate } from "@/server/utils/email-templates"
-import { createBody, paymentDetails } from "@/server/utils/payment"
+import { PaymentInfo, TEmailForm } from "@/server/types"
+import { getGiftcardTemplate, getResumenCompraTemplate } from "@/server/utils/email-templates"
+import { createBody, generateRandom16CharacterString, paymentDetails } from "@/server/utils/payment"
 import { setPreferenceDetails } from "@/server/utils/preference"
 import env from "@/utils/env"
-import { FeedbackRoute, PreferenceRoute } from "./mercadopago.routes"
-import { sendWebhookMessage } from "@/server/lib/discord"
-import { PaymentInfo } from "@/server/types"
-import { mailtrapClient } from "@/server/lib/mailtrap"
 import { Context } from "hono"
+import { FeedbackRoute, PreferenceRoute } from "./mercadopago.routes"
+import db from "@/server/db"
+import { codigos } from "@/server/db/schema"
 
 export const preferenceId: AppRouteHandler<PreferenceRoute> = async (c) => {
-	const comprador = c.req.valid("json")
+	const usuario = c.req.valid("json")
 
-	const prefDetails = setPreferenceDetails(comprador)
+	const prefDetails = setPreferenceDetails(usuario)
 
 	try {
 		const preference = new Preference(mercadoPagoClient)
@@ -29,10 +31,10 @@ export const preferenceId: AppRouteHandler<PreferenceRoute> = async (c) => {
 		})
 
 		if (res.api_response.status !== 201) {
-			return c.json({ message: "bad request" }, 400)
+			return c.json({ status: false, data: "bad request" }, 400)
 		}
 
-		return c.json({ prefId: res.id! }, 201)
+		return c.json({ status: true, data: res.id! }, 201)
 	} catch (err) {
 		console.error("Caught an error at /create-preference: ")
 		throw new HTTPException(500, {
@@ -59,7 +61,6 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 		if (!payment_data) {
 			return c.json({ message: "Bad request" }, 400)
 		}
-
 		const details: PaymentInfo = paymentDetails(payment_data)
 
 		let compras: { name: string; value: string }[] = []
@@ -82,12 +83,16 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 				},
 				{
 					name: "Dirección",
-					value: `${details.shipments.street_name} ${details.shipments.street_number}, ${details.shipments.apartment ? "casa/depto: " + details.shipments.apartment + ", " : ""} ${details.shipments.city_name}, ${details.shipments.state_name}`,
+					value: `${details.shipments.street_name} ${details.shipments.street_number}, ${
+						details.shipments.apartment
+							? "casa/depto: " + details.shipments.apartment + ", "
+							: ""
+					} ${details.shipments.city_name}, ${details.shipments.state_name}`,
 				},
 			],
 		})
 
-		const mailtrap_info = {
+		const compra_info = {
 			from: { name: "No responder", email: env.NM_MAILTRAP_FROM },
 			to: [{ email: env.NM_MAILTRAP_RECEIVER }],
 			subject: `Nueva compra: ${details.id}`,
@@ -95,17 +100,46 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 			html: getResumenCompraTemplate(details),
 		}
 
+		let giftcard_info: TEmailForm[] = []
+		let codigo
+
+		details.additional_info.items?.forEach(async (info) => {
+			if (info.title !== "Giftcard") return
+
+			codigo = generateRandom16CharacterString()
+
+			giftcard_info.push({
+				from: { name: "Bagan!", email: env.NM_MAILTRAP_FROM },
+				to: [{ email: "felipeazs@gmail.com" }],
+				subject: "Giftcard",
+				category: "giftcard",
+				html: getGiftcardTemplate(info, codigo),
+			})
+
+			await db.insert(codigos).values({
+				codigo,
+				descripcion: info.description!,
+				valor: Number(details.transaction_amount),
+			})
+		})
+
 		const isProd = env.NODE_ENV === "production"
 
 		if (isProd) {
-			mailtrapClient.send(mailtrap_info)
+			await mailtrapClient.send(compra_info)
+			if (giftcard_info.length) {
+				giftcard_info.forEach(async (g) => await mailtrapClient.send(g))
+			}
 		} else {
 			const test_inbox = await mailtrapClient.testing.inboxes.getList()
 
 			if (test_inbox && test_inbox[0].sent_messages_count === 100) {
 				console.log("test email inbox is full")
 			} else if (test_inbox) {
-				mailtrapClient.testing.send(mailtrap_info)
+				await mailtrapClient.testing.send(compra_info)
+				if (giftcard_info.length) {
+					giftcard_info.forEach(async (g) => await mailtrapClient.testing.send(g))
+				}
 			}
 		}
 

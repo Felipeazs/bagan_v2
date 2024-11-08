@@ -19,6 +19,7 @@ const EnvSchema = z.object({
 	VITE_STRAPI_URL: z.string().url(),
 	SENTRY_DSN: z.string().url(),
 	WEBHOOK_URL: z.string().url(),
+	DATABASE_URL: z.string(),
 })
 
 export type Env = z.infer<typeof EnvSchema>

@@ -24,10 +24,17 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "./ui/sheet"
-import VariedadesForm from "./VariedadesForm"
 
-import { chile } from "@/utils/chile"
+import { productoSchema } from "@/server/models/producto"
 import { usuarioSchema } from "@/server/models/usuario"
+import { chile } from "@/utils/chile"
+import { packs } from "@/utils/packs"
+
+enum Detail {
+	Tomate = "tomate orégano",
+	Pesto = "pesto albahaca",
+	Pimenton = "pimentón rojo",
+}
 
 const regiones = chile.map((c) => {
 	return {
@@ -52,9 +59,10 @@ const Carrito = ({ img }: { img?: string }) => {
 
 	const mutation = useMutation({
 		mutationFn: createMPPreferences,
-		onSuccess: (data) => {
-			if (data) {
-				setPreferenceId(data.prefId)
+		onSuccess: (response) => {
+			if (response && response.status) {
+				setPreferenceId(response.data)
+
 				if (import.meta.env.PROD) {
 					ReactGA.event({
 						category: "venta",
@@ -62,7 +70,11 @@ const Carrito = ({ img }: { img?: string }) => {
 						label: "mercadopago",
 					})
 				}
-			} else toast("Error del servidor, por favor inténtalo más tarde.")
+			} else if (!response) {
+				toast.error(
+					"Hubo un error procesando tus datos, ingresaste todos tus datos y las variedades de pasta vegetal?",
+				)
+			}
 		},
 	})
 
@@ -75,7 +87,7 @@ const Carrito = ({ img }: { img?: string }) => {
 			mutation.mutate({ value: value.usuario })
 		},
 		onSubmitInvalid: () => {
-			toast("Por favor rellena todos los campos")
+			toast("Por favor ingresa todos los campos")
 		},
 	})
 
@@ -114,7 +126,7 @@ const Carrito = ({ img }: { img?: string }) => {
 
 		const existingItems = form.getFieldValue("usuario.items")
 		const itemPrices = existingItems.map((i) => i.quantity * i.unit_price)
-		const sumPrices = itemPrices.reduce((a, b) => a + b, 0)
+		let sumPrices = itemPrices.reduce((a, b) => a + b, 0)
 
 		setSubtotal(isNaN(sumPrices) || sumPrices < 1 ? 0 : sumPrices)
 	}
@@ -141,6 +153,21 @@ const Carrito = ({ img }: { img?: string }) => {
 			isBlurred: false,
 		})
 		setComunas(comunas)
+	}
+
+	const packHandler = (p: string, index: number) => {
+		const pack_price = packs.find((pp) => pp.id == p)?.unit_price!
+
+		form.setFieldValue(`usuario.items[${index}].unit_price`, pack_price)
+
+		sumSubtotalDespacho()
+	}
+
+	const checkVariedades = async () => {
+		const isErrors = await form.validateAllFields("submit")
+
+		if (!isErrors.length) setStep({ title: "Despacho", page: 2 })
+		else toast.info("Por favor elige las variedades")
 	}
 
 	return (
@@ -189,13 +216,20 @@ const Carrito = ({ img }: { img?: string }) => {
 															</SheetHeader>
 															<div className="text-sm text-gray-500">
 																<p>
-																	precio: $
-																	{p.unit_price?.toLocaleString(
-																		"es-Cl",
+																	{p.title.includes(
+																		"Giftcard",
+																	) ? (
+																		<span>desde $12.000</span>
+																	) : (
+																		<span>
+																			precio: $
+																			{p.unit_price?.toLocaleString(
+																				"es-Cl",
+																			)}
+																		</span>
 																	)}
 																</p>
 															</div>
-
 															<form.Field
 																name={`usuario.items[${i}].quantity`}
 																children={(field) => (
@@ -253,13 +287,108 @@ const Carrito = ({ img }: { img?: string }) => {
 														</div>
 													</div>
 													<SheetDescription className="text-center">
-														Elige las variedades del {p.title}*
+														{p.title.includes("Giftcard") ? (
+															<span>
+																Elige el pack que quieres regalar
+															</span>
+														) : (
+															<span>
+																Elige las variedades del {p.title}*
+															</span>
+														)}
 													</SheetDescription>
-													<VariedadesForm
-														Field={form.Field}
-														index={i}
-													/>
-													<Separator className="my-4" />
+													{p.title.includes("Giftcard") ? (
+														<div className="w-[80%] m-auto">
+															<form.Field
+																name={`usuario.items[${i}].id`}
+																children={(field) => (
+																	<Select
+																		value={field.state.value}
+																		onValueChange={(e) => {
+																			packHandler(e, i)
+																			field.handleChange(e)
+																		}}>
+																		<SelectTrigger>
+																			<SelectValue placeholder="Packs" />
+																		</SelectTrigger>
+																		<SelectContent>
+																			<SelectItem value="2usiygy4ongwpaw3vnh">
+																				Tripack
+																			</SelectItem>
+																			<SelectItem value="qrctsu7lpq4okqikubm">
+																				Sixpack
+																			</SelectItem>
+																		</SelectContent>
+																	</Select>
+																)}
+															/>
+														</div>
+													) : (
+														<div className="grid grid-rows-3 sm:grid-cols-2 grid-flow-row gap-1 w-[80%] m-auto">
+															<form.Field
+																mode="array"
+																name={`usuario.items[${i}].details`}
+																validators={{
+																	onChange:
+																		productoSchema.shape
+																			.details,
+																}}
+																children={(field) =>
+																	field?.state?.value?.map(
+																		(_, ii) => (
+																			<form.Field
+																				key={ii}
+																				name={`usuario.items[${i}].details[${ii}]`}
+																				children={(
+																					subfield,
+																				) => (
+																					<Select
+																						value={
+																							subfield
+																								.state
+																								.value
+																						}
+																						onValueChange={(
+																							e,
+																						) => {
+																							subfield.handleChange(
+																								e as Detail,
+																							)
+																						}}>
+																						<SelectTrigger className="w-full">
+																							<SelectValue
+																								placeholder={`Variedad ${ii + 1}`}
+																							/>
+																						</SelectTrigger>
+																						<SelectContent>
+																							<SelectItem value="tomate orégano">
+																								Tomate
+																								Orégano
+																							</SelectItem>
+																							<SelectItem value="pesto albahaca">
+																								Pesto
+																								Albahaca
+																							</SelectItem>
+																							<SelectItem value="pimentón rojo">
+																								Pimentón
+																								Rojo
+																							</SelectItem>
+																						</SelectContent>
+																					</Select>
+																				)}
+																			/>
+																		),
+																	)
+																}
+															/>
+														</div>
+													)}
+													<div className="py-10">
+														<i className="text-sm">
+															* campos obligatorios
+														</i>
+														<Separator />
+													</div>
 												</div>
 											))}
 										</div>
@@ -273,6 +402,7 @@ const Carrito = ({ img }: { img?: string }) => {
 											Nombre*
 											<InputForm
 												Field={form.Field}
+												disabled={!!preferenceId}
 												name_field="usuario.nombre"
 												validator_field="nombre"
 											/>
@@ -281,6 +411,7 @@ const Carrito = ({ img }: { img?: string }) => {
 											Apellido*
 											<InputForm
 												Field={form.Field}
+												disabled={!!preferenceId}
 												name_field="usuario.apellido"
 												validator_field="apellido"
 											/>
@@ -292,6 +423,7 @@ const Carrito = ({ img }: { img?: string }) => {
 											</span>
 											<InputForm
 												Field={form.Field}
+												disabled={!!preferenceId}
 												name_field="usuario.rut"
 												validator_field="rut"
 											/>
@@ -304,6 +436,7 @@ const Carrito = ({ img }: { img?: string }) => {
 												</span>
 												<InputForm
 													Field={form.Field}
+													disabled={!!preferenceId}
 													name_field="usuario.telefono"
 													validator_field="telefono"
 												/>
@@ -313,6 +446,7 @@ const Carrito = ({ img }: { img?: string }) => {
 											Email*
 											<InputForm
 												Field={form.Field}
+												disabled={!!preferenceId}
 												name_field="usuario.email"
 												validator_field="email"
 											/>
@@ -329,6 +463,7 @@ const Carrito = ({ img }: { img?: string }) => {
 														<Input
 															type="text"
 															name={field.name}
+															disabled={!!preferenceId}
 															id={field.name}
 															value={field.state.value}
 															onChange={(e) => {
@@ -353,6 +488,7 @@ const Carrito = ({ img }: { img?: string }) => {
 														<Input
 															type="text"
 															name={field.name}
+															disabled={!!preferenceId}
 															id={field.name}
 															value={field.state.value}
 															onChange={(e) => {
@@ -377,6 +513,7 @@ const Carrito = ({ img }: { img?: string }) => {
 														<Input
 															type="text"
 															name={field.name}
+															disabled={!!preferenceId}
 															id={field.name}
 															value={field.state.value}
 															onChange={(e) => {
@@ -400,6 +537,7 @@ const Carrito = ({ img }: { img?: string }) => {
 													<>
 														<Select
 															value={field.state.value}
+															disabled={!!preferenceId}
 															onValueChange={(e) => {
 																field.handleChange(e)
 																handleComunas(e)
@@ -435,6 +573,7 @@ const Carrito = ({ img }: { img?: string }) => {
 													<>
 														<Select
 															defaultValue={field.state.value}
+															disabled={!!preferenceId}
 															onValueChange={(e) => {
 																field.handleChange(e)
 															}}>
@@ -461,105 +600,130 @@ const Carrito = ({ img }: { img?: string }) => {
 											/>
 										</Label>
 									</div>
+									<div className="py-10">
+										<i className="text-sm">* campos obligatorios</i>
+										<Separator />
+									</div>
+									<p className="py-2 font-bold">Código promocional</p>
+									<form.Field
+										name="usuario.codigo.serie"
+										children={(field) => (
+											<Input
+												id={field.name}
+												placeholder="Ingresa tu código"
+												disabled={!!preferenceId}
+												onChange={(e) => field.handleChange(e.target.value)}
+											/>
+										)}
+									/>
 								</div>
 							)}
 						</div>
-						<div className="pt-10 md:pt-20">
-							<p className="font-bold">
-								Subtotal: ${subtotal.toLocaleString("es-Cl")}
+						<div className="pt-10 md:pt-20 text-sm">
+							<p className="font-bold flex justify-between">
+								Subtotal:
+								<span>${subtotal.toLocaleString("es-Cl")}</span>
 							</p>
 							{step.page === 2 && (
 								<>
-									<p className="font-bold">
-										Costo de envío:{" "}
+									<p className="font-bold flex justify-between">
+										Costo de envío:
 										{usuario?.envio === 0 ? (
-											<span className="font-light italic text-sm text-bagan">
+											<span className="font-light italic text-bagan">
 												ingresa los datos de despacho
 											</span>
 										) : (
-											`${usuario.envio?.toLocaleString("es-Cl") ?? "0"}`
+											<span>
+												${usuario.envio?.toLocaleString("es-Cl") ?? "0"}
+											</span>
 										)}
 									</p>
-									<p className="font-bold">
-										Total: ${(subtotal + usuario.envio).toLocaleString("es-Cl")}
+									<p className="font-bold flex justify-between">
+										Total:
+										<span>
+											${(subtotal + usuario.envio).toLocaleString("es-Cl")}
+										</span>
 									</p>
 								</>
 							)}
 							<Separator className="my-4" />
-							{preferenceId && step.page === 2 ? (
-								<div className="flex flex-col gap-1">
-									<Wallet
-										initialization={{ preferenceId, redirectMode: "self" }}
-										onReady={() => true}
-										customization={{
-											texts: {
-												action: "buy",
-												valueProp: "payment_methods_logos",
-											},
-										}}
-									/>
-									<Button
-										onClick={() => {
-											setPreferenceId("")
-											setStep({ title: "Carrito", page: 1 })
-										}}
-										type="button">
-										MODIFICAR CARRITO
-									</Button>
-								</div>
-							) : !preferenceId && step.page === 2 ? (
-								<div className="flex flex-col gap-1">
-									<form.Subscribe
-										selector={(state) => [state.canSubmit, state.isSubmitting]}
-										children={([canSubmit, isSubmitting]) => (
+							<div className="w-[80%] m-auto">
+								{preferenceId && step.page === 2 ? (
+									<div className="flex flex-col gap-1">
+										<Wallet
+											initialization={{ preferenceId, redirectMode: "self" }}
+											onReady={() => true}
+											customization={{
+												texts: {
+													action: "buy",
+													valueProp: "payment_methods_logos",
+												},
+											}}
+										/>
+										<Button
+											onClick={() => {
+												setPreferenceId("")
+												setStep({ title: "Carrito", page: 1 })
+											}}
+											type="button">
+											MODIFICAR CARRITO
+										</Button>
+									</div>
+								) : !preferenceId && step.page === 2 ? (
+									<div className="flex flex-col gap-1">
+										<form.Subscribe
+											selector={(state) => [
+												state.canSubmit,
+												state.isSubmitting,
+											]}
+											children={([canSubmit, isSubmitting]) => (
+												<Button
+													type="submit"
+													disabled={!canSubmit}
+													className="mt-[16px] bg-bagan font-black">
+													{isSubmitting ? "PROCESANDO..." : "CONTINUAR"}
+												</Button>
+											)}
+										/>
+										<Button
+											className="bg-bagan_dark font-bold"
+											onClick={() => {
+												setStep({ title: "Carrito", page: 1 })
+											}}>
+											VOLVER
+										</Button>
+										<SheetClose asChild>
 											<Button
-												type="submit"
-												disabled={!canSubmit}
-												className="mt-[16px] bg-bagan font-black">
-												{isSubmitting ? "PROCESANDO..." : "CONTINUAR"}
+												type="button"
+												onClick={() => {
+													setStep({ title: "Carrito", page: 1 })
+												}}>
+												SEGUIR COMPRANDO
 											</Button>
-										)}
-									/>
-									<Button
-										className="bg-bagan_dark font-bold"
-										onClick={() => {
-											setStep({ title: "Carrito", page: 1 })
-										}}>
-										VOLVER
-									</Button>
-									<SheetClose asChild>
+										</SheetClose>
+									</div>
+								) : (
+									<div className="flex flex-col gap-1">
 										<Button
 											type="button"
-											onClick={() => {
-												setStep({ title: "Carrito", page: 1 })
-											}}>
-											SEGUIR COMPRANDO
+											className="bg-bagan font-bold"
+											disabled={disable}
+											onClick={checkVariedades}>
+											CONTINUAR
 										</Button>
-									</SheetClose>
-								</div>
-							) : (
-								<div className="flex flex-col gap-1">
-									<Button
-										type="button"
-										className="bg-bagan font-bold"
-										disabled={disable}
-										onClick={() => {
-											setStep({ title: "Despacho", page: 2 })
-										}}>
-										CONTINUAR
-									</Button>
 
-									<SheetClose asChild>
-										<Button
-											type="button"
-											onClick={() => {
-												setStep({ title: "Carrito", page: 1 })
-											}}>
-											SEGUIR COMPRANDO
-										</Button>
-									</SheetClose>
-								</div>
-							)}
+										<SheetClose asChild>
+											<Button
+												type="button"
+												onClick={() => {
+													setStep({ title: "Carrito", page: 1 })
+												}}>
+												SEGUIR COMPRANDO
+											</Button>
+										</SheetClose>
+									</div>
+								)}
+							</div>
 							<div className="flex justify-end">
 								<img
 									src="https://res.cloudinary.com/dzgcvfgha/image/upload/f_webp,q_auto,e_bgremoval:ffffff/v1/Bagan/naomdbo6nhkvhhv85tal"

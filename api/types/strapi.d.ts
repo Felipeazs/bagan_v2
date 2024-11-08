@@ -79,6 +79,7 @@ export interface components {
 				contacto?: components["schemas"]["ContactoContactoComponent"][]
 				mapa: string
 				instituciones: components["schemas"]["ImagesImagesComponent"][]
+				giftcard?: components["schemas"]["GiftcardGiftcardComponent"]
 				locale?: string
 				localizations?: (number | string)[]
 			}
@@ -109,6 +110,7 @@ export interface components {
 			contacto?: components["schemas"]["ContactoContactoComponent"][]
 			mapa: string
 			instituciones: components["schemas"]["ImagesImagesComponent"][]
+			giftcard?: components["schemas"]["GiftcardGiftcardComponent"]
 			/** Format: date-time */
 			createdAt?: string
 			/** Format: date-time */
@@ -230,6 +232,7 @@ export interface components {
 				contacto?: components["schemas"]["ContactoContactoComponent"][]
 				mapa?: string
 				instituciones?: components["schemas"]["ImagesImagesComponent"][]
+				giftcard?: components["schemas"]["GiftcardGiftcardComponent"]
 				/** Format: date-time */
 				createdAt?: string
 				/** Format: date-time */
@@ -290,6 +293,14 @@ export interface components {
 			title?: string
 			description?: string
 			image?: string
+		}
+		GiftcardGiftcardComponent: {
+			id?: number
+			title?: string
+			description?: string
+			image?: string
+			pid?: string
+			subtitle?: string
 		}
 		InformacionRequest: {
 			data: {

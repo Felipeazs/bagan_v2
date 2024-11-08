@@ -7,10 +7,11 @@ import Autoplay from "embla-carousel-autoplay"
 import ReactGA from "react-ga4"
 import { toast } from "sonner"
 
-import CarritoLogo from "../assets/carrito.svg"
 import { sendEmailContacto } from "@/api"
 import { getStrapiHome } from "@/api/strapi"
 import { contactoSchema } from "@/server/models/email"
+import { TGiftcard, TPack } from "@/server/types"
+import CarritoLogo from "../assets/carrito.svg"
 import Carrito from "../components/Carrito"
 import Fallback from "../components/Fallback"
 import { AspectRatio } from "../components/ui/aspect-ratio"
@@ -89,19 +90,34 @@ function Index() {
 		},
 	})
 
-	const agregarCarritoHandler = (pack: any) => {
-		const newItem = {
-			id: pack.pid!,
-			title: pack.title!,
-			picture_url: pack.images[0].url,
-			description: pack.description!,
-			quantity: 1,
-			unit_price: Number(pack.price),
-			weight: pack.weight!,
-			details: pack.title === "Tripack" ? Array(3).fill("") : Array(6).fill(""),
+	type TAddCarrito = TPack | TGiftcard
+
+	const agregarCarritoHandler = (pack: TAddCarrito) => {
+		const isPack = (p: TAddCarrito): p is TPack => {
+			return (p as TPack).weight !== undefined
 		}
-		toast(`${newItem.title} agregado al carrito`)
-		comprador.guardarItems(newItem)
+
+		if (isPack(pack)) {
+			let newItem
+			const itemDetails: { [key: string]: any[] } = {
+				Tripack: Array(3).fill(""),
+				Sixpack: Array(6).fill(""),
+			}
+
+			newItem = {
+				id: pack.pid!,
+				title: pack.title!,
+				picture_url: pack.images ? pack.images[0].url : "",
+				description: pack.description!,
+				quantity: 1,
+				unit_price: Number(pack.price),
+				weight: pack.weight!,
+				details: itemDetails[pack.title!],
+			}
+
+			toast(`${newItem.title} agregado al carrito`)
+			comprador.guardarItems(newItem)
+		}
 	}
 
 	return (

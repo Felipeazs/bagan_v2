@@ -42,3 +42,39 @@ export type PaymentInfo = {
 		apartment: string | undefined
 	}
 }
+
+export type TPack = {
+	id?: number
+	title?: string
+	price?: number
+	unit_price?: number
+	images?: {
+		id?: number
+		title?: string
+		url?: string
+	}[]
+	description?: string
+	weight?: number
+	pid?: string
+}
+
+export type TGiftcard = {
+	id?: number
+	title?: string
+	description?: string
+	image?: string
+	pid?: string
+}
+
+export type TEmailForm = {
+	from: {
+		name: string
+		email: string
+	}
+	to: {
+		email: string
+	}[]
+	subject: string
+	category: string
+	html: string
+}

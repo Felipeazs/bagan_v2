@@ -31,6 +31,7 @@ export const getStrapiHome = async () => {
 						"packs.images",
 						"contacto",
 						"instituciones",
+						"giftcard",
 					],
 				},
 			},

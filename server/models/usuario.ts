@@ -23,6 +23,13 @@ export const usuarioSchema = z.object({
 	}),
 	items: z.array(productoSchema),
 	envio: z.number().min(500),
+	codigo: z
+		.object({
+			serie: z.string(),
+			valor: z.number(),
+			pack: z.enum(["tripack", "sixpack"]),
+		})
+		.optional(),
 })
 
 export type TUsuario = z.infer<typeof usuarioSchema>

@@ -3,7 +3,7 @@ import { z } from "zod"
 export const productoSchema = z.object({
 	id: z.string(),
 	title: z.string(),
-	picture_url: z.string(),
+	picture_url: z.string().optional(),
 	description: z.string(),
 	quantity: z.number().int().min(1, { message: "ingrese al menos 1 producto" }),
 	unit_price: z.number().int().min(12000, { message: "error precio unitario" }),
@@ -11,11 +11,11 @@ export const productoSchema = z.object({
 	external_reference: z.string().optional(),
 	details: z
 		.array(
-			z.enum(["pimentón rojo", "pesto albahaca", "tomate orégano"], {
-				message: "elige la variedad del paté",
+			z.enum(["pimentón rojo", "pesto albahaca", "tomate orégano", "giftcard"], {
+				message: "Sólo puedes elegir entre las variedades disponibles",
 			}),
 		)
-		.min(3, { message: "te falta elegir variedades de paté" }),
+		.min(3, { message: "elige las variedades de pasta vegetal" }),
 	weight: z.number().min(750, { message: "El item no puede pesar menos de 750 gr" }).max(6000, {
 		message: "Si deseas comprar al por mayor, contáctate con nosotros!",
 	}),

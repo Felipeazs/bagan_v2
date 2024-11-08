@@ -293,16 +293,6 @@ export const chile = [
 				],
 			},
 			{
-				id: 52,
-				name: "Isla de Pascua",
-				comunas: [
-					{
-						id: 5201,
-						name: "Isla de Pascua",
-					},
-				],
-			},
-			{
 				id: 53,
 				name: "Los Andes",
 				comunas: [

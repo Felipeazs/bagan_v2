@@ -8,6 +8,7 @@ export const webhookClient = new WebhookClient({
 
 export const sendWebhookMessage = async (webhook: IWebhook) => {
 	const isProd = env.NODE_ENV === "production"
+
 	const embeds = new EmbedBuilder({
 		author: {
 			name: isProd ? "Bagan!" : "Bagan! Dev",

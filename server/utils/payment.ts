@@ -43,7 +43,7 @@ export const createBody = (usuario: TUsuario) => {
 		},
 		external_reference: checkout_id,
 		statement_descriptor: "Bagán!",
-		notification_url: `${env.MP_REDIRECT}/api/mercadopago/feedback`,
+		notification_url: `${env.MP_REDIRECT}/api/mercadopago/compra/feedback`,
 		payment_methods: {
 			excluded_payment_methods: [
 				{
@@ -100,7 +100,7 @@ export const paymentDetails = (data: PaymentResponse): PaymentInfo => {
 }
 
 export function generateRandom16CharacterString() {
-	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+	const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	let result = ""
 	for (let i = 0; i < 16; i++) {
 		result += characters.charAt(Math.floor(Math.random() * characters.length))
@@ -126,18 +126,6 @@ export const store = [
 		title: "Paté Vegetal",
 		description: "Pimentón Rojo",
 		unit_price: 4000,
-	},
-	{
-		id: "2usiygy4ongwpaw3vnh",
-		title: "Tripack",
-		description: "precio unitario: $4.100",
-		unit_price: 11000,
-	},
-	{
-		id: "qrctsu7lpq4okqikubm",
-		title: "Sixpack",
-		description: "precio unitario: $4.100",
-		unit_price: 20000,
 	},
 	{
 		id: "2usiygy4ongwpaw3vnh",

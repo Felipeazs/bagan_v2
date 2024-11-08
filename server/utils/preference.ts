@@ -8,6 +8,14 @@ export const setPreferenceDetails = (usuario: TUsuario): TUsuario => {
 
 		if (!producto) return
 
+		p.unit_price = producto.unit_price
+		p.category_id = "alimentos"
+
+		if (p.title === "Giftcard") {
+			p.description = producto.title
+			return
+		}
+
 		let tomate = 0
 		let pimenton = 0
 		let pesto = 0
@@ -18,13 +26,11 @@ export const setPreferenceDetails = (usuario: TUsuario): TUsuario => {
 			else pesto++
 		})
 
-		p.unit_price = producto.unit_price
 		p.description = [
 			`Tomate orégano (${tomate})`,
 			`Pimentón rojo (${pimenton})`,
 			`Pesto albahaca (${pesto})`,
 		].join(", ")
-		p.category_id = "alimentos"
 	})
 
 	return usuario

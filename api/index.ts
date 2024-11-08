@@ -28,10 +28,7 @@ export async function addToNewsletter({ value }: { value: TNewsletter }) {
 export async function createMPPreferences({ value }: { value: TUsuario }) {
 	return await client.mercadopago["create-preference"]
 		.$post({ json: value })
-		.then((res) => {
-			if (res.status === 400) return
-			return res.json()
-		})
+		.then((res) => res.json())
 		.then((data) => data)
 		.catch(console.error)
 }
