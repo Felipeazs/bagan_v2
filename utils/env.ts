@@ -30,7 +30,7 @@ try {
 	env = EnvSchema.parse(process.env)
 } catch (e) {
 	const error = e as ZodError
-	console.error("❌ Invalid env:")
+	console.error("❌ Invalid environmental variable(s):")
 	console.error(error.flatten().fieldErrors)
 	process.exit(1)
 }
