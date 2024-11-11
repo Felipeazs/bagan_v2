@@ -2,8 +2,10 @@ import { HTTPException } from "hono/http-exception"
 import { Payment, Preference } from "mercadopago"
 import crypto from "node:crypto"
 
+import db from "@/server/db"
+import { codigos } from "@/server/db/schema"
 import { sendWebhookMessage } from "@/server/lib/discord"
-import { mailtrapClient } from "@/server/lib/mailtrap"
+import { mailtrapClient, ventas_details, giftcard_details } from "@/server/lib/mailtrap"
 import { mercadoPagoClient } from "@/server/lib/mercadopago"
 import { AppRouteHandler } from "@/server/lib/types"
 import { PaymentInfo, TEmailForm } from "@/server/types"
@@ -13,8 +15,6 @@ import { setPreferenceDetails } from "@/server/utils/preference"
 import env from "@/utils/env"
 import { Context } from "hono"
 import { FeedbackRoute, PreferenceRoute } from "./mercadopago.routes"
-import db from "@/server/db"
-import { codigos } from "@/server/db/schema"
 
 export const preferenceId: AppRouteHandler<PreferenceRoute> = async (c) => {
 	const usuario = c.req.valid("json")
@@ -92,19 +92,8 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 			],
 		})
 
-		const email_details = {
-			from: {
-				name: "No responder",
-				email: env.NM_MAILTRAP_FROM,
-			},
-			subject: "Nueva compra",
-		}
-
 		const mailtrap_compra_info = {
-			from: email_details.from,
-			to: [{ email: env.NM_MAILTRAP_RECEIVER_VENTAS }],
-			subject: email_details.subject + ` ${details.id}`,
-			category: "venta",
+			...ventas_details,
 			html: getResumenCompraTemplate(details),
 		}
 
@@ -117,10 +106,7 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 			codigo = generateRandom16CharacterString()
 
 			mailtrap_giftcard_info.push({
-				from: email_details.from,
-				to: [{ email: env.NM_MAILTRAP_RECEIVER_VENTAS }],
-				subject: email_details.subject + " Giftcard",
-				category: "giftcard",
+				...giftcard_details,
 				html: getGiftcardTemplate(info, codigo),
 			})
 
@@ -146,7 +132,9 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 			} else if (test_inbox) {
 				await mailtrapClient.testing.send(mailtrap_compra_info)
 				if (mailtrap_giftcard_info.length) {
-					mailtrap_giftcard_info.forEach(async (g) => await mailtrapClient.testing.send(g))
+					mailtrap_giftcard_info.forEach(
+						async (g) => await mailtrapClient.testing.send(g),
+					)
 				}
 			}
 		}

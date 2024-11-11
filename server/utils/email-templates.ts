@@ -234,7 +234,7 @@ export const getResumenCompraTemplate = (details: PaymentInfo) => {
 					</div>
 					<div class="footer" style="color: #c2c2c2; font-size: 13px; text-align: end;">
 						<span>&#169; Up Foods</span> |
-						<span>Pen&#771;a 459, local 8, Curico&#769;, Chile | 3341861</span>
+						<span>Pen&#771;a 459 local 8, Curico&#769;, Chile | 3341861</span>
 					</div>
 				</div>
 			</body>
@@ -298,7 +298,7 @@ export const getWebMessageTemplate = (data: TContacto) => {
 					</div>
 					<div class="footer" style="color: #c2c2c2; font-size: 13px; text-align: end;">
 						<span>&#169; Up Foods</span> |
-						<span>Pen&#771;a 459, local 8, Curico&#769;, Chile | 3341861</span>
+						<span>Pen&#771;a 459 local 8, Curico&#769;, Chile | 3341861</span>
 					</div>
 				</div>
 			</body>
@@ -356,7 +356,7 @@ export const getNewsletterTemplate = (data: TNewsletter) => {
 					</div>
 					<div class="footer" style="color: #c2c2c2; font-size: 13px; text-align: end;">
 						<span>&#169; Up Foods</span> |
-						<span>Pen&#771;a 459, local 8, Curico&#769;, Chile | 3341861</span>
+						<span>Pen&#771;a 459 local 8, Curico&#769;, Chile | 3341861</span>
 					</div>
 				</div>
 			</body>
@@ -467,7 +467,7 @@ export const getGiftcardTemplate = (item: Items, codigo: string) => {
 				class="footer"
 				style="color: #c2c2c2; font-size: 13px; text-align: end">
 				<span>&#169; Up Foods</span> |
-				<span>Pen&#771;a 459, local 8, Curico&#769;, Chile | 3341861</span>
+				<span>Pen&#771;a 459 local 8, Curico&#769;, Chile | 3341861</span>
 			</div>
 		</div>
 	</body>

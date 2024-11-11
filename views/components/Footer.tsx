@@ -14,7 +14,7 @@ const Footer = () => {
 		mutationKey: ["newsletter"],
 		mutationFn: addToNewsletter,
 		onSuccess: () => {
-			toast("Felicidades!", { description: "Haz sido agregado a nuestro Newsletter" })
+			toast("Felicidades!", { description: "Has sido agregado a nuestro Newsletter" })
 		},
 	})
 

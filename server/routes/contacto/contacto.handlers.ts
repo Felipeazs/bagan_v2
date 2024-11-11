@@ -1,19 +1,17 @@
 import { sendWebhookMessage } from "@/server/lib/discord"
-import { mailtrapClient } from "@/server/lib/mailtrap"
+import { contacto_details, mailtrapClient, newsletter_details } from "@/server/lib/mailtrap"
 import { AppRouteHandler } from "@/server/lib/types"
 import { getNewsletterTemplate, getWebMessageTemplate } from "@/server/utils/email-templates"
 import env from "@/utils/env"
 import { ContactoRoute, NewsletterRoute } from "./contacto.routes"
 
 const isProd = env.NODE_ENV === "production"
+
 export const contacto: AppRouteHandler<ContactoRoute> = async (c) => {
 	const data = c.req.valid("json")
 
 	const mailtrap_info = {
-		from: { name: "No responder", email: env.NM_MAILTRAP_FROM },
-		to: [{ email: env.NM_MAILTRAP_RECEIVER_CONTACTO }],
-		subject: "no responder",
-		category: "contacto",
+		...contacto_details,
 		html: getWebMessageTemplate(data),
 	}
 
@@ -54,10 +52,7 @@ export const newsletter: AppRouteHandler<NewsletterRoute> = async (c) => {
 	const usuario = c.req.valid("json")
 
 	const mailtrap_info = {
-		from: { name: "No responder", email: env.NM_MAILTRAP_FROM },
-		to: [{ email: env.NM_MAILTRAP_RECEIVER_CONTACTO }],
-		subject: "no responder",
-		category: "newsletter",
+		...newsletter_details,
 		html: getNewsletterTemplate(usuario),
 	}
 
