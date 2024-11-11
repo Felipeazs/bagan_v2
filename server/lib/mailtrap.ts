@@ -14,28 +14,28 @@ const from_details = {
 	email: env.NM_MAILTRAP_FROM,
 }
 
-export const ventas_details = {
+const ventas_details = {
 	from: from_details,
 	to: [{ email: env.NM_MAILTRAP_RECEIVER_VENTAS }],
 	subject: "Nueva compra",
 	category: "venta",
 }
 
-export const contacto_details = {
+const contacto_details = {
 	from: from_details,
 	to: [{ email: env.NM_MAILTRAP_RECEIVER_CONTACTO }],
 	subject: "Nuevo mensaje",
 	category: "contacto",
 }
 
-export const newsletter_details = {
+const newsletter_details = {
 	from: from_details,
 	to: [{ email: env.NM_MAILTRAP_RECEIVER_CONTACTO }],
 	subject: "Newsletter",
 	category: "newsletter",
 }
 
-export const giftcard_details = {
+const giftcard_details = {
 	from: from_details,
 	to: [{ email: env.NM_MAILTRAP_RECEIVER_VENTAS }],
 	subject: "Giftcard",
