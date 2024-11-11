@@ -92,15 +92,23 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 			],
 		})
 
-		const compra_info = {
-			from: { name: "No responder", email: env.NM_MAILTRAP_FROM },
+		const email_details = {
+			from: {
+				name: "No responder",
+				email: env.NM_MAILTRAP_FROM,
+			},
+			subject: "Nueva compra",
+		}
+
+		const mailtrap_compra_info = {
+			from: email_details.from,
 			to: [{ email: env.NM_MAILTRAP_RECEIVER_VENTAS }],
-			subject: `Nueva compra: ${details.id}`,
+			subject: email_details.subject + ` ${details.id}`,
 			category: "venta",
 			html: getResumenCompraTemplate(details),
 		}
 
-		let giftcard_info: TEmailForm[] = []
+		let mailtrap_giftcard_info: TEmailForm[] = []
 		let codigo
 
 		details.additional_info.items?.forEach(async (info) => {
@@ -108,10 +116,10 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 
 			codigo = generateRandom16CharacterString()
 
-			giftcard_info.push({
-				from: { name: "No responder", email: env.NM_MAILTRAP_FROM },
+			mailtrap_giftcard_info.push({
+				from: email_details.from,
 				to: [{ email: env.NM_MAILTRAP_RECEIVER_VENTAS }],
-				subject: "Giftcard",
+				subject: email_details.subject + " Giftcard",
 				category: "giftcard",
 				html: getGiftcardTemplate(info, codigo),
 			})
@@ -126,9 +134,9 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 		const isProd = env.NODE_ENV === "production"
 
 		if (isProd) {
-			await mailtrapClient.send(compra_info)
-			if (giftcard_info.length) {
-				giftcard_info.forEach(async (g) => await mailtrapClient.send(g))
+			await mailtrapClient.send(mailtrap_compra_info)
+			if (mailtrap_giftcard_info.length) {
+				mailtrap_giftcard_info.forEach(async (g) => await mailtrapClient.send(g))
 			}
 		} else {
 			const test_inbox = await mailtrapClient.testing.inboxes.getList()
@@ -136,9 +144,9 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 			if (test_inbox && test_inbox[0].sent_messages_count === 100) {
 				console.log("test email inbox is full")
 			} else if (test_inbox) {
-				await mailtrapClient.testing.send(compra_info)
-				if (giftcard_info.length) {
-					giftcard_info.forEach(async (g) => await mailtrapClient.testing.send(g))
+				await mailtrapClient.testing.send(mailtrap_compra_info)
+				if (mailtrap_giftcard_info.length) {
+					mailtrap_giftcard_info.forEach(async (g) => await mailtrapClient.testing.send(g))
 				}
 			}
 		}
