@@ -5,16 +5,10 @@ import crypto from "node:crypto"
 import db from "@/server/db"
 import { codigos } from "@/server/db/schema"
 import { sendWebhookMessage } from "@/server/lib/discord"
-import {
-	mailtrapClient,
-	ventas_details,
-	giftcard_details,
-	sendEmail,
-	TEmailType,
-} from "@/server/lib/mailtrap"
+import { sendEmail, TEmailType } from "@/server/lib/mailtrap"
 import { mercadoPagoClient } from "@/server/lib/mercadopago"
 import { AppRouteHandler } from "@/server/lib/types"
-import { PaymentInfo, TEmailForm } from "@/server/types"
+import { PaymentInfo } from "@/server/types"
 import { getGiftcardTemplate, getResumenCompraTemplate } from "@/server/utils/email-templates"
 import { createBody, generateRandom16CharacterString, paymentDetails } from "@/server/utils/payment"
 import { setPreferenceDetails } from "@/server/utils/preference"
