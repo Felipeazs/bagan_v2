@@ -5,14 +5,13 @@ import { getNewsletterTemplate, getWebMessageTemplate } from "@/server/utils/ema
 import env from "@/utils/env"
 import { ContactoRoute, NewsletterRoute } from "./contacto.routes"
 
+const isProd = env.NODE_ENV === "production"
 export const contacto: AppRouteHandler<ContactoRoute> = async (c) => {
 	const data = c.req.valid("json")
 
-	const { NODE_ENV, NM_MAILTRAP_FROM, NM_MAILTRAP_RECEIVER } = env
-
 	const mailtrap_info = {
-		from: { name: "No responder", email: NM_MAILTRAP_FROM },
-		to: [{ email: NM_MAILTRAP_RECEIVER }],
+		from: { name: "No responder", email: env.NM_MAILTRAP_FROM },
+		to: [{ email: env.NM_MAILTRAP_RECEIVER_CONTACTO }],
 		subject: "no responder",
 		category: "contacto",
 		html: getWebMessageTemplate(data),
@@ -31,8 +30,6 @@ export const contacto: AppRouteHandler<ContactoRoute> = async (c) => {
 				},
 			],
 		})
-
-		const isProd = NODE_ENV === "production"
 
 		if (isProd) {
 			mailtrapClient.send(mailtrap_info)
@@ -56,17 +53,13 @@ export const contacto: AppRouteHandler<ContactoRoute> = async (c) => {
 export const newsletter: AppRouteHandler<NewsletterRoute> = async (c) => {
 	const usuario = c.req.valid("json")
 
-	const { NODE_ENV, NM_MAILTRAP_FROM, NM_MAILTRAP_RECEIVER } = env
-
 	const mailtrap_info = {
-		from: { name: "No responder", email: NM_MAILTRAP_FROM },
-		to: [{ email: NM_MAILTRAP_RECEIVER }],
+		from: { name: "No responder", email: env.NM_MAILTRAP_FROM },
+		to: [{ email: env.NM_MAILTRAP_RECEIVER_CONTACTO }],
 		subject: "no responder",
 		category: "newsletter",
 		html: getNewsletterTemplate(usuario),
 	}
-
-	const isProd = NODE_ENV === "production"
 
 	if (isProd) {
 		mailtrapClient.send(mailtrap_info)

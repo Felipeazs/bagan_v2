@@ -94,7 +94,7 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 
 		const compra_info = {
 			from: { name: "No responder", email: env.NM_MAILTRAP_FROM },
-			to: [{ email: env.NM_MAILTRAP_RECEIVER }],
+			to: [{ email: env.NM_MAILTRAP_RECEIVER_VENTAS }],
 			subject: `Nueva compra: ${details.id}`,
 			category: "venta",
 			html: getResumenCompraTemplate(details),
@@ -109,8 +109,8 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 			codigo = generateRandom16CharacterString()
 
 			giftcard_info.push({
-				from: { name: "Bagan!", email: env.NM_MAILTRAP_FROM },
-				to: [{ email: "felipeazs@gmail.com" }],
+				from: { name: "No responder", email: env.NM_MAILTRAP_FROM },
+				to: [{ email: env.NM_MAILTRAP_RECEIVER_VENTAS }],
 				subject: "Giftcard",
 				category: "giftcard",
 				html: getGiftcardTemplate(info, codigo),
