@@ -23,7 +23,7 @@ export const contacto = createRoute({
 			content: {
 				"application/json": {
 					schema: z.object({
-						message: z.string(),
+						status: z.string(),
 					}),
 				},
 			},
@@ -51,7 +51,7 @@ export const newsletter = createRoute({
 			content: {
 				"application/json": {
 					schema: z.object({
-						message: z.string(),
+						status: z.string(),
 					}),
 				},
 			},

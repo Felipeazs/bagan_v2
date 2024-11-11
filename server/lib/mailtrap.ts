@@ -70,14 +70,14 @@ export const sendEmail = async ({ type, html }: { type: TEmailType; html: string
 	}
 
 	if (isProd) {
-		mailtrapClient.send(mailtrap_info[type])
+		await mailtrapClient.send(mailtrap_info[type])
 	} else {
 		const test_inbox = await mailtrapClient.testing.inboxes.getList()
 
 		if (test_inbox && test_inbox[0].sent_messages_count === 100) {
 			console.log("test email inbox is full")
 		} else if (test_inbox) {
-			mailtrapClient.testing.send(mailtrap_info[type])
+			await mailtrapClient.testing.send(mailtrap_info[type])
 		}
 	}
 }

@@ -8,7 +8,7 @@ import env from "@/utils/env"
 import { notFound, onError } from "stoker/middlewares"
 import defaultHook from "stoker/openapi/default-hook"
 import { logger } from "../middlewares/pino"
-import { AppBindings } from "./types"
+import { AppBindings, AppOpenAPI } from "./types"
 
 export function createRouter() {
 	return new OpenAPIHono<AppBindings>({ strict: false, defaultHook })
@@ -53,4 +53,11 @@ export default function createApp() {
 	app.notFound(notFound)
 
 	return app
+}
+
+export function createTestApp(router: AppOpenAPI) {
+	const testApp = createApp()
+	testApp.route("/api", router)
+
+	return testApp
 }

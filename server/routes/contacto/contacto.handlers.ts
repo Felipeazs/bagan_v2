@@ -12,9 +12,9 @@ export const contacto: AppRouteHandler<ContactoRoute> = async (c) => {
 
 		await sendWebhookMessage(webhook_data)
 
-		sendEmail({ type: TEmailType.contacto, html: getWebMessageTemplate(data) })
+		await sendEmail({ type: TEmailType.contacto, html: getWebMessageTemplate(data) })
 
-		return c.json({ message: "Message sent" }, 200)
+		return c.json({ status: "ok" }, 200)
 	} catch (err) {
 		console.error("Caught an error at /contacto", (err as Error).message)
 		throw new Error("server error")
@@ -26,5 +26,5 @@ export const newsletter: AppRouteHandler<NewsletterRoute> = async (c) => {
 
 	await sendEmail({ type: TEmailType.newsletter, html: getNewsletterTemplate(usuario) })
 
-	return c.json({ message: "Email added to newsletter" }, 200)
+	return c.json({ status: "ok" }, 200)
 }

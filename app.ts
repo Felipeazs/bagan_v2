@@ -27,7 +27,7 @@ if (!isProd) {
 	)
 }
 
-const app = createApp()
+export const app = createApp()
 
 const routes = [mercadopago, contacto] as const
 
