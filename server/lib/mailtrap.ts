@@ -1,7 +1,5 @@
-import env from "@/utils/env"
+import env, { isProd } from "@/utils/env"
 import { Mail, MailtrapClient } from "mailtrap"
-
-const isProd = env.NODE_ENV === "production"
 
 export const mailtrapClient = new MailtrapClient({
 	token: env.MT_API_KEY,

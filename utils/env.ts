@@ -36,4 +36,6 @@ try {
 	process.exit(1)
 }
 
+export const isProd = env.NODE_ENV === "production"
+
 export default env

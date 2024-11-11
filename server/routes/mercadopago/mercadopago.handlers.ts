@@ -4,7 +4,7 @@ import crypto from "node:crypto"
 
 import db from "@/server/db"
 import { codigos } from "@/server/db/schema"
-import { sendWebhookMessage } from "@/server/lib/discord"
+import { prepareVentaWebhook, sendWebhookMessage } from "@/server/lib/discord"
 import { sendEmail, TEmailType } from "@/server/lib/mailtrap"
 import { mercadoPagoClient } from "@/server/lib/mercadopago"
 import { AppRouteHandler } from "@/server/lib/types"
@@ -63,34 +63,8 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 		}
 		const details: PaymentInfo = paymentDetails(payment_data)
 
-		let compras: { name: string; value: string }[] = []
-		details.additional_info?.items?.forEach((i) => {
-			compras.push({
-				name: i.title,
-				value: `$${i.unit_price.toLocaleString("es-Cl")} x ${i.quantity}\n${i.description}`,
-			})
-		})
-
-		await sendWebhookMessage({
-			title: details.id?.toString() ?? "",
-			description: "Revisa ventas@bagan.cl para ver los detalles",
-			content: "Nueva compra",
-			fields: [
-				...compras,
-				{
-					name: "Contacto",
-					value: `${details.payer.name}\n${details.payer.email}\n+56 ${details.payer.phone.number}`,
-				},
-				{
-					name: "Dirección",
-					value: `${details.shipments.street_name} ${details.shipments.street_number}, ${
-						details.shipments.apartment
-							? "casa/depto: " + details.shipments.apartment + ", "
-							: ""
-					} ${details.shipments.city_name}, ${details.shipments.state_name}`,
-				},
-			],
-		})
+		const webhook_data = prepareVentaWebhook(details)
+		await sendWebhookMessage(webhook_data)
 
 		sendEmail({ type: TEmailType.contacto, html: getResumenCompraTemplate(details) })
 
