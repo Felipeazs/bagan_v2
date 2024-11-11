@@ -5,7 +5,13 @@ import crypto from "node:crypto"
 import db from "@/server/db"
 import { codigos } from "@/server/db/schema"
 import { sendWebhookMessage } from "@/server/lib/discord"
-import { mailtrapClient, ventas_details, giftcard_details } from "@/server/lib/mailtrap"
+import {
+	mailtrapClient,
+	ventas_details,
+	giftcard_details,
+	sendEmail,
+	TEmailType,
+} from "@/server/lib/mailtrap"
 import { mercadoPagoClient } from "@/server/lib/mercadopago"
 import { AppRouteHandler } from "@/server/lib/types"
 import { PaymentInfo, TEmailForm } from "@/server/types"
@@ -92,23 +98,14 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 			],
 		})
 
-		const mailtrap_compra_info = {
-			...ventas_details,
-			html: getResumenCompraTemplate(details),
-		}
-
-		let mailtrap_giftcard_info: TEmailForm[] = []
-		let codigo
+		sendEmail({ type: TEmailType.contacto, html: getResumenCompraTemplate(details) })
 
 		details.additional_info.items?.forEach(async (info) => {
 			if (info.title !== "Giftcard") return
 
-			codigo = generateRandom16CharacterString()
+			const codigo = generateRandom16CharacterString()
 
-			mailtrap_giftcard_info.push({
-				...giftcard_details,
-				html: getGiftcardTemplate(info, codigo),
-			})
+			sendEmail({ type: TEmailType.giftcard, html: getGiftcardTemplate(info, codigo) })
 
 			await db.insert(codigos).values({
 				codigo,
@@ -116,28 +113,6 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 				valor: Number(details.transaction_amount),
 			})
 		})
-
-		const isProd = env.NODE_ENV === "production"
-
-		if (isProd) {
-			await mailtrapClient.send(mailtrap_compra_info)
-			if (mailtrap_giftcard_info.length) {
-				mailtrap_giftcard_info.forEach(async (g) => await mailtrapClient.send(g))
-			}
-		} else {
-			const test_inbox = await mailtrapClient.testing.inboxes.getList()
-
-			if (test_inbox && test_inbox[0].sent_messages_count === 100) {
-				console.log("test email inbox is full")
-			} else if (test_inbox) {
-				await mailtrapClient.testing.send(mailtrap_compra_info)
-				if (mailtrap_giftcard_info.length) {
-					mailtrap_giftcard_info.forEach(
-						async (g) => await mailtrapClient.testing.send(g),
-					)
-				}
-			}
-		}
 
 		return c.json({ message: "feedback email sended to Bagan!" }, 200)
 	} catch (err) {

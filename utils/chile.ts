@@ -275,10 +275,6 @@ export const chile = [
 						name: "Concón",
 					},
 					{
-						id: 5104,
-						name: "Juan Fernández",
-					},
-					{
 						id: 5105,
 						name: "Puchuncaví",
 					},
