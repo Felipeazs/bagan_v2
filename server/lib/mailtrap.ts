@@ -12,32 +12,46 @@ const from_details = {
 	email: env.NM_MAILTRAP_FROM,
 }
 
+enum Subjects {
+	VENTA = "Nueva compra",
+	CONTACTO = "Nuevo mensaje",
+	NEWSLETTER = "Nuevo usuario newsletter",
+	GIFTCARD = "Nueva giftcard",
+}
+
+enum Categories {
+	VENTA = "venta",
+	CONTACTO = "contacto",
+	NEWSLETTER = "newsletter",
+	GIFTCARD = "giftcard",
+}
+
 const ventas_details = {
 	from: from_details,
 	to: [{ email: env.NM_MAILTRAP_RECEIVER_VENTAS }],
-	subject: "Nueva compra",
-	category: "venta",
+	subject: Subjects.VENTA,
+	category: Categories.VENTA,
 }
 
 const contacto_details = {
 	from: from_details,
 	to: [{ email: env.NM_MAILTRAP_RECEIVER_CONTACTO }],
-	subject: "Nuevo mensaje",
-	category: "contacto",
+	subject: Subjects.CONTACTO,
+	category: Categories.CONTACTO,
 }
 
 const newsletter_details = {
 	from: from_details,
 	to: [{ email: env.NM_MAILTRAP_RECEIVER_CONTACTO }],
-	subject: "Newsletter",
-	category: "newsletter",
+	subject: Subjects.NEWSLETTER,
+	category: Categories.NEWSLETTER,
 }
 
 const giftcard_details = {
 	from: from_details,
 	to: [{ email: env.NM_MAILTRAP_RECEIVER_VENTAS }],
-	subject: "Giftcard",
-	category: "giftcard",
+	subject: Subjects.GIFTCARD,
+	category: Categories.GIFTCARD,
 }
 
 export enum TEmailType {

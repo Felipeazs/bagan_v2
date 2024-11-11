@@ -24,9 +24,11 @@ export default function createApp() {
 			origin: env.MP_REDIRECT,
 		}),
 	)
+
 	Sentry.init({
 		dsn: env.SENTRY_DSN,
 		tracesSampleRate: env.NODE_ENV === "production" ? 0.1 : 1.0,
+		tracePropagationTargets: [`${env.MP_REDIRECT}/api`],
 	})
 
 	app.use(
