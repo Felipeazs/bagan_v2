@@ -23,7 +23,17 @@ export const contacto = createRoute({
 			content: {
 				"application/json": {
 					schema: z.object({
-						status: z.string(),
+						status: z.boolean(),
+					}),
+				},
+			},
+		},
+		500: {
+			description: "Server Error",
+			content: {
+				"application/json": {
+					schema: z.object({
+						status: z.boolean(),
 					}),
 				},
 			},
@@ -51,7 +61,17 @@ export const newsletter = createRoute({
 			content: {
 				"application/json": {
 					schema: z.object({
-						status: z.string(),
+						status: z.boolean(),
+					}),
+				},
+			},
+		},
+		500: {
+			description: "Server Error",
+			content: {
+				"application/json": {
+					schema: z.object({
+						status: z.boolean(),
 					}),
 				},
 			},

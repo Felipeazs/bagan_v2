@@ -61,7 +61,7 @@ const Carrito = ({ img }: { img?: string }) => {
 		mutationFn: createMPPreferences,
 		onSuccess: (response) => {
 			if (response && response.status) {
-				setPreferenceId(response.data)
+				setPreferenceId(response.data!)
 
 				if (import.meta.env.PROD) {
 					ReactGA.event({
@@ -70,10 +70,10 @@ const Carrito = ({ img }: { img?: string }) => {
 						label: "mercadopago",
 					})
 				}
-			} else if (!response) {
-				toast.error(
-					"Hubo un error procesando tus datos, ingresaste todos tus datos y las variedades de pasta vegetal?",
-				)
+			} else {
+				toast.error("Error del servidor", {
+					description: "Por favor inténtalo más tarde",
+				})
 			}
 		},
 	})

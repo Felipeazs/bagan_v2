@@ -1,5 +1,5 @@
 import env, { isProd } from "@/utils/env"
-import { Mail, MailtrapClient } from "mailtrap"
+import { Mail, MailtrapClient, SendResponse } from "mailtrap"
 
 export const mailtrapClient = new MailtrapClient({
 	token: env.MT_API_KEY,
@@ -61,7 +61,13 @@ export enum TEmailType {
 	newsletter = "newsletter",
 }
 
-export const sendEmail = async ({ type, html }: { type: TEmailType; html: string }) => {
+export const sendEmail = async ({
+	type,
+	html,
+}: {
+	type: TEmailType
+	html: string
+}): Promise<SendResponse | undefined> => {
 	const mailtrap_info: { [key: string]: Mail } = {
 		ventas: { ...ventas_details, html },
 		contacto: { ...contacto_details, html },
@@ -69,15 +75,23 @@ export const sendEmail = async ({ type, html }: { type: TEmailType; html: string
 		giftcard: { ...giftcard_details, html },
 	}
 
-	if (isProd) {
-		await mailtrapClient.send(mailtrap_info[type])
-	} else {
-		const test_inbox = await mailtrapClient.testing.inboxes.getList()
+	try {
+		let response
+		if (isProd) {
+			response = await mailtrapClient.send(mailtrap_info[type])
+		} else {
+			const test_inbox = await mailtrapClient.testing.inboxes.getList()
 
-		if (test_inbox && test_inbox[0].sent_messages_count === 100) {
-			console.log("test email inbox is full")
-		} else if (test_inbox) {
-			await mailtrapClient.testing.send(mailtrap_info[type])
+			if (test_inbox && test_inbox[0].sent_messages_count === 100) {
+				console.log("test email inbox is full")
+			} else if (test_inbox) {
+				response = await mailtrapClient.testing.send(mailtrap_info[type])
+			}
 		}
+
+		return response
+	} catch (err) {
+		console.error((err as Error).message)
+		return
 	}
 }

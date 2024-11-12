@@ -1,105 +1,77 @@
-import { HTTPException } from "hono/http-exception"
-import { Payment, Preference } from "mercadopago"
 import crypto from "node:crypto"
 
-import db from "@/server/db"
-import { codigos } from "@/server/db/schema"
-import { prepareVentaWebhook, sendWebhookMessage } from "@/server/lib/discord"
+import { sendWebhook } from "@/server/lib/discord"
 import { sendEmail, TEmailType } from "@/server/lib/mailtrap"
-import { mercadoPagoClient } from "@/server/lib/mercadopago"
+import { createPreference, getFeedbackPayment } from "@/server/lib/mercadopago"
 import { AppRouteHandler } from "@/server/lib/types"
+import { TUsuario } from "@/server/models/usuario"
 import { PaymentInfo } from "@/server/types"
-import { getGiftcardTemplate, getResumenCompraTemplate } from "@/server/utils/email-templates"
-import { createBody, generateRandom16CharacterString, paymentDetails } from "@/server/utils/payment"
+import { getResumenCompraTemplate } from "@/server/utils/email-templates"
+import { createBody, paymentDetails } from "@/server/utils/payment"
 import { setPreferenceDetails } from "@/server/utils/preference"
 import env from "@/utils/env"
-import { Context } from "hono"
 import { FeedbackRoute, PreferenceRoute } from "./mercadopago.routes"
 
 export const preferenceId: AppRouteHandler<PreferenceRoute> = async (c) => {
-	const usuario = c.req.valid("json")
+	const usuario = c.req.valid("json") as TUsuario
+
+	if (!usuario) return c.json({ status: false }, 422)
 
 	const prefDetails = setPreferenceDetails(usuario)
+	const pref_body = createBody(prefDetails)
 
-	try {
-		const preference = new Preference(mercadoPagoClient)
+	const preference = await createPreference(pref_body)
+	if (!preference) return c.json({ status: false, data: undefined }, 500)
 
-		const pref_body = createBody(prefDetails)
-
-		const res = await preference.create({
-			body: pref_body,
-		})
-
-		if (res.api_response.status !== 201) {
-			return c.json({ status: false, data: "bad request" }, 400)
-		}
-
-		return c.json({ status: true, data: res.id! }, 201)
-	} catch (err) {
-		console.error("Caught an error at /create-preference: ")
-		throw new HTTPException(500, {
-			message: "Server error creating MercadoPago preference",
-			cause: err,
-		})
-	}
+	return c.json({ status: true, data: preference.id! }, 200)
 }
 
 export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 	const { data, type } = c.req.valid("json")
 
 	if (type !== "payment") {
-		return c.json({ message: `no ${type} info` }, 200)
+		return c.json({ status: false }, 200)
 	}
 
-	const isSignatureValid = checkSignature(c, data.id)
-	if (!isSignatureValid) return c.json({ message: "Forbidden" }, 403)
-
-	try {
-		const payment = new Payment(mercadoPagoClient)
-		const payment_data = await payment.get({ id: data.id })
-
-		if (!payment_data) {
-			return c.json({ message: "Bad request" }, 400)
-		}
-		const details: PaymentInfo = paymentDetails(payment_data)
-
-		const webhook_data = prepareVentaWebhook(details)
-		await sendWebhookMessage(webhook_data)
-
-		sendEmail({ type: TEmailType.contacto, html: getResumenCompraTemplate(details) })
-
-		details.additional_info.items?.forEach(async (info) => {
-			if (info.title !== "Giftcard") return
-
-			const codigo = generateRandom16CharacterString()
-
-			sendEmail({ type: TEmailType.giftcard, html: getGiftcardTemplate(info, codigo) })
-
-			await db.insert(codigos).values({
-				codigo,
-				descripcion: info.description!,
-				valor: Number(details.transaction_amount),
-			})
-		})
-
-		return c.json({ message: "feedback email sended to Bagan!" }, 200)
-	} catch (err) {
-		throw new HTTPException(500, {
-			message: "Server error Sending MercadoPago Feedback",
-			cause: err,
-		})
-	}
-}
-
-export const checkSignature = (c: Context, id: string): boolean => {
 	const x_signature = c.req.header("x-signature")
 	const x_request_id = c.req.header("x-request-id")
 
 	if (!x_signature || !x_request_id) {
-		return false
+		return c.json({ status: false }, 403)
 	}
 
-	const signatureParts = x_signature.split(",")
+	const isSignatureValid = checkSignature({
+		headers: { xsignature: x_signature, xrequestid: x_request_id },
+		id: data.id,
+	})
+	if (!isSignatureValid) return c.json({ status: false }, 403)
+
+	const payment_data = await getFeedbackPayment(data.id)
+	if (!payment_data) {
+		return c.json({ status: false }, 500)
+	}
+	const details: PaymentInfo = paymentDetails(payment_data)
+
+	await sendWebhook(details)
+
+	const email_res = await sendEmail({
+		type: TEmailType.contacto,
+		html: getResumenCompraTemplate(details),
+	})
+	if (!email_res) return c.json({ status: false }, 500)
+
+	return c.json({ status: true }, 200)
+}
+
+export const checkSignature = ({
+	headers,
+	id,
+}: {
+	headers: { xsignature: string; xrequestid: string }
+	id: string
+}): boolean => {
+	const { xsignature, xrequestid } = headers
+	const signatureParts = xsignature.split(",")
 
 	let ts
 	let hash
@@ -116,7 +88,7 @@ export const checkSignature = (c: Context, id: string): boolean => {
 		}
 	})
 
-	const manifest = `id:${id};request-id:${x_request_id};ts:${ts};`
+	const manifest = `id:${id};request-id:${xrequestid};ts:${ts};`
 
 	const hmac = crypto.createHmac("sha256", env.MPW_SECRET)
 	hmac.update(manifest)

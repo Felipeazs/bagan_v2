@@ -54,7 +54,7 @@ function Index() {
 	const mutation = useMutation({
 		mutationFn: sendEmailContacto,
 		onSuccess: (data) => {
-			if (data) {
+			if (data && data.status) {
 				toast("Mensaje enviado", {
 					description:
 						"Gracias por contactarte con nostros, te responderemos a la brevedad.",
@@ -68,7 +68,7 @@ function Index() {
 					})
 				}
 			} else
-				toast("Error Servidor", {
+				toast("Error de servidor", {
 					description: "Por favor inténtelo más tarde",
 				})
 		},

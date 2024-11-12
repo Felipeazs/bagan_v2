@@ -3,10 +3,12 @@ import { PaymentResponse } from "mercadopago/dist/clients/payment/commonTypes"
 import env from "@/utils/env"
 import { TUsuario } from "../models/usuario"
 import { PaymentInfo } from "../types"
+import { PreferenceRequest } from "mercadopago/dist/clients/preference/commonTypes"
 
-export const createBody = (usuario: TUsuario) => {
+export const createBody = (usuario: TUsuario): PreferenceRequest => {
 	const checkout_id = generateRandom16CharacterString()
-	return {
+
+	const payer_data = {
 		payer: {
 			name: usuario.nombre + " " + usuario.apellido,
 			email: usuario.email,
@@ -62,6 +64,8 @@ export const createBody = (usuario: TUsuario) => {
 		},
 		binary_mode: true,
 	}
+
+	return payer_data
 }
 
 export const paymentDetails = (data: PaymentResponse): PaymentInfo => {

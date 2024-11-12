@@ -20,7 +20,7 @@ export const preferenceId = createRoute({
 		},
 	},
 	responses: {
-		201: {
+		200: {
 			description: "Successfuly created Preference Id",
 			content: {
 				"application/json": {
@@ -37,18 +37,29 @@ export const preferenceId = createRoute({
 				"application/json": {
 					schema: z.object({
 						status: z.boolean(),
-						data: z.string(),
+						data: z.string().optional(),
 					}),
 				},
 			},
 		},
 		422: {
-			description: "Unprocessable Content",
+			description: "Unprocessable content",
 			content: {
 				"application/json": {
 					schema: z.object({
 						status: z.boolean(),
-						data: z.string(),
+						data: z.string().optional(),
+					}),
+				},
+			},
+		},
+		500: {
+			description: "Server Error",
+			content: {
+				"application/json": {
+					schema: z.object({
+						status: z.boolean(),
+						data: z.string().optional(),
 					}),
 				},
 			},
@@ -76,7 +87,7 @@ export const feedback = createRoute({
 			content: {
 				"application/json": {
 					schema: z.object({
-						message: z.string(),
+						status: z.boolean(),
 					}),
 				},
 			},
@@ -86,7 +97,7 @@ export const feedback = createRoute({
 			content: {
 				"application/json": {
 					schema: z.object({
-						message: z.string(),
+						status: z.boolean(),
 					}),
 				},
 			},
@@ -96,7 +107,28 @@ export const feedback = createRoute({
 			content: {
 				"application/json": {
 					schema: z.object({
-						message: z.string(),
+						status: z.boolean(),
+					}),
+				},
+			},
+		},
+		404: {
+			description: "Not Found",
+			content: {
+				"application/json": {
+					schema: z.object({
+						status: z.boolean(),
+					}),
+				},
+			},
+		},
+		500: {
+			description: "Server Error",
+			content: {
+				"application/json": {
+					schema: z.object({
+						status: z.boolean(),
+						data: z.string().optional(),
 					}),
 				},
 			},

@@ -13,8 +13,12 @@ const Footer = () => {
 	const mutation = useMutation({
 		mutationKey: ["newsletter"],
 		mutationFn: addToNewsletter,
-		onSuccess: () => {
-			toast("Felicidades!", { description: "Has sido agregado a nuestro Newsletter" })
+		onSuccess: (data) => {
+			if (data && data.status) {
+				toast("Felicidades!", { description: "Has sido agregado a nuestro Newsletter" })
+			} else {
+				toast("Error de servidor", { description: "Por favor inténtalo más tarde" })
+			}
 		},
 	})
 
