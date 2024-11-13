@@ -53,6 +53,9 @@ jobs:
       - name: Install Railway
         run: npm i -g @railway/cli
 
+      - name: Initialize Railway
+        run: railway environment testing
+
       - name: Deploy
         run: railway up --service ${{ secrets.RAILWAY_PROJECT_ID }}
         env:
