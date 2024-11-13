@@ -25,7 +25,7 @@ import {
 	SheetTrigger,
 } from "./ui/sheet"
 
-import { productoSchema } from "@/server/models/producto"
+import { EID, productoSchema } from "@/server/models/producto"
 import { usuarioSchema } from "@/server/models/usuario"
 import { chile } from "@/utils/chile"
 import { packs } from "@/utils/packs"
@@ -306,7 +306,9 @@ const Carrito = ({ img }: { img?: string }) => {
 																		value={field.state.value}
 																		onValueChange={(e) => {
 																			packHandler(e, i)
-																			field.handleChange(e)
+																			field.handleChange(
+																				e as EID,
+																			)
 																		}}>
 																		<SelectTrigger>
 																			<SelectValue placeholder="Packs" />

@@ -26,7 +26,5 @@ export const insertCodigoDB = async ({
 		valor,
 	})
 
-    res
-
-    return res
+	return res
 }

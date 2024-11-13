@@ -1,10 +1,9 @@
 import { TUsuario } from "../models/usuario"
-import { TProducto } from "../models/producto"
 import { store } from "./payment"
 
 export const setPreferenceDetails = (usuario: TUsuario): TUsuario => {
 	usuario.items.forEach((p) => {
-		const producto = store.find((s) => s.id === p.id) as TProducto
+		const producto = store.find((s) => s.id === p.id)
 
 		if (!producto) return
 

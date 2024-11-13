@@ -1,6 +1,7 @@
 import { feedbackSchema } from "@/server/models/feedback"
 import { usuarioSchema } from "@/server/models/usuario"
 import { createRoute, z } from "@hono/zod-openapi"
+import * as HttpStatusCode from "stoker/http-status-codes"
 
 const tags = ["Mercado pago"]
 const base = "/mercadopago"
@@ -20,7 +21,7 @@ export const preferenceId = createRoute({
 		},
 	},
 	responses: {
-		200: {
+		[HttpStatusCode.CREATED]: {
 			description: "Successfuly created Preference Id",
 			content: {
 				"application/json": {
@@ -31,7 +32,7 @@ export const preferenceId = createRoute({
 				},
 			},
 		},
-		400: {
+		[HttpStatusCode.BAD_REQUEST]: {
 			description: "Bad request",
 			content: {
 				"application/json": {
@@ -42,7 +43,7 @@ export const preferenceId = createRoute({
 				},
 			},
 		},
-		422: {
+		[HttpStatusCode.UNPROCESSABLE_ENTITY]: {
 			description: "Unprocessable content",
 			content: {
 				"application/json": {
@@ -53,7 +54,7 @@ export const preferenceId = createRoute({
 				},
 			},
 		},
-		500: {
+		[HttpStatusCode.INTERNAL_SERVER_ERROR]: {
 			description: "Server Error",
 			content: {
 				"application/json": {
@@ -82,7 +83,7 @@ export const feedback = createRoute({
 		},
 	},
 	responses: {
-		200: {
+		[HttpStatusCode.OK]: {
 			description: "Feedback response after payment",
 			content: {
 				"application/json": {
@@ -92,7 +93,7 @@ export const feedback = createRoute({
 				},
 			},
 		},
-		400: {
+		[HttpStatusCode.BAD_REQUEST]: {
 			description: "Bad Request",
 			content: {
 				"application/json": {
@@ -102,7 +103,7 @@ export const feedback = createRoute({
 				},
 			},
 		},
-		403: {
+		[HttpStatusCode.FORBIDDEN]: {
 			description: "Forbidden",
 			content: {
 				"application/json": {
@@ -112,8 +113,8 @@ export const feedback = createRoute({
 				},
 			},
 		},
-		404: {
-			description: "Not Found",
+		[HttpStatusCode.UNPROCESSABLE_ENTITY]: {
+			description: "Unprocessable entity",
 			content: {
 				"application/json": {
 					schema: z.object({
@@ -122,7 +123,7 @@ export const feedback = createRoute({
 				},
 			},
 		},
-		500: {
+		[HttpStatusCode.INTERNAL_SERVER_ERROR]: {
 			description: "Server Error",
 			content: {
 				"application/json": {

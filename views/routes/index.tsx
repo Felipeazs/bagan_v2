@@ -34,6 +34,7 @@ import {
 import { Input } from "../components/ui/input"
 import { Textarea } from "../components/ui/textarea"
 import { useCompradorStore } from "../store"
+import { EID, ETitle } from "@/server/models/producto"
 
 export const Route = createFileRoute("/")({
 	loader: async () => {
@@ -105,8 +106,8 @@ function Index() {
 			}
 
 			newItem = {
-				id: pack.pid!,
-				title: pack.title!,
+				id: pack.pid! as EID,
+				title: pack.title! as ETitle,
 				picture_url: pack.images ? pack.images[0].url : "",
 				description: pack.description!,
 				quantity: 1,

@@ -1,4 +1,5 @@
 import { Items } from "mercadopago/dist/clients/commonTypes"
+import { EID, ETitle } from "./models/producto"
 
 export interface IWebhook {
 	title: string
@@ -44,8 +45,8 @@ export type PaymentInfo = {
 }
 
 export type TPack = {
-	id?: number
-	title?: string
+	id?: EID
+	title?: ETitle
 	price?: number
 	unit_price?: number
 	images?: {

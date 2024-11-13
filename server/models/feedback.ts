@@ -6,3 +6,5 @@ export const feedbackSchema = z.object({
 		id: z.string(),
 	}),
 })
+
+export type TFeedback = z.infer<typeof feedbackSchema>

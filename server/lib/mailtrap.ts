@@ -1,5 +1,9 @@
-import env, { isProd } from "@/utils/env"
+import { HTTPException } from "hono/http-exception"
 import { Mail, MailtrapClient, SendResponse } from "mailtrap"
+import * as HttpStatusCodes from "stoker/http-status-codes"
+import * as HttpStatusPhrases from "stoker/http-status-phrases"
+
+import env, { isProd } from "@/utils/env"
 
 export const mailtrapClient = new MailtrapClient({
 	token: env.MT_API_KEY,
@@ -83,15 +87,29 @@ export const sendEmail = async ({
 			const test_inbox = await mailtrapClient.testing.inboxes.getList()
 
 			if (test_inbox && test_inbox[0].sent_messages_count === 100) {
-				console.log("test email inbox is full")
+				console.error("test email inbox is full")
+				return {
+					success: true,
+					message_ids: ["test imail inbox is full"],
+				}
 			} else if (test_inbox) {
 				response = await mailtrapClient.testing.send(mailtrap_info[type])
 			}
 		}
 
+		if (!response?.success) {
+			console.error({
+				success: response?.success,
+				message: response?.message_ids,
+			})
+			return
+		}
+
 		return response
 	} catch (err) {
-		console.error((err as Error).message)
-		return
+		throw new HTTPException(HttpStatusCodes.INTERNAL_SERVER_ERROR, {
+			message: HttpStatusPhrases.INTERNAL_SERVER_ERROR,
+			cause: err,
+		})
 	}
 }

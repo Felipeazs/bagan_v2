@@ -1,4 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi"
+import * as HttpStatusCode from "stoker/http-status-codes"
+
 import { contactoSchema, newsletterSchema } from "@/server/models/email"
 
 const base = "/contacto"
@@ -18,8 +20,8 @@ export const contacto = createRoute({
 		},
 	},
 	responses: {
-		200: {
-			description: "Message Status",
+		[HttpStatusCode.OK]: {
+			description: "OK Message Status",
 			content: {
 				"application/json": {
 					schema: z.object({
@@ -28,8 +30,8 @@ export const contacto = createRoute({
 				},
 			},
 		},
-		500: {
-			description: "Server Error",
+		[HttpStatusCode.INTERNAL_SERVER_ERROR]: {
+			description: "Internal Server Error",
 			content: {
 				"application/json": {
 					schema: z.object({

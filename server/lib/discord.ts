@@ -1,7 +1,11 @@
 import { APIMessage, EmbedBuilder, WebhookClient } from "discord.js"
-import { IWebhook, PaymentInfo } from "../types"
+import { HTTPException } from "hono/http-exception"
+import * as HttpStatusPhrases from "stoker/http-status-phrases"
+import * as HttpStatusCodes from "stoker/http-status-codes"
+
 import env, { isProd } from "@/utils/env"
 import { TContacto } from "../models/email"
+import { IWebhook, PaymentInfo } from "../types"
 
 export const webhookClient = new WebhookClient({
 	url: env.WEBHOOK_URL,
@@ -30,8 +34,10 @@ export const sendWebhookMessage = async (webhook: IWebhook) => {
 
 		return res
 	} catch (err) {
-		console.error((err as Error).message)
-		return
+		throw new HTTPException(HttpStatusCodes.INTERNAL_SERVER_ERROR, {
+			message: HttpStatusPhrases.INTERNAL_SERVER_ERROR,
+			cause: err,
+		})
 	}
 }
 

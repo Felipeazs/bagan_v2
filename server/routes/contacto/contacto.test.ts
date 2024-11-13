@@ -3,15 +3,16 @@ import { describe, expect, it } from "vitest"
 
 import { app } from "@/app"
 import env from "@/utils/env"
-import router from "./contacto.index"
+import contactoRouter from "./contacto.index"
+import mercadopagoRouter from "../mercadopago/mercadopago.index"
 
 if (env.NODE_ENV !== "test") {
 	throw new Error("NODE_ENV must be 'test'")
 }
 
-describe("contacto", () => {
-	const client = testClient(app.route("/", router))
+export const client = testClient(app.route("/", contactoRouter).route("/", mercadopagoRouter))
 
+describe("contacto", () => {
 	const user_data = {
 		nombre: "Felipe",
 		apellido: "Zapata",
@@ -48,6 +49,7 @@ describe("contacto", () => {
 
 	it("Should not send a contact email/discord message", async () => {
 		const res = await client.contacto.message.$post({ json: failed_user_data })
+
 		expect(res.status).toBe(422)
 	})
 

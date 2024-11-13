@@ -1,4 +1,5 @@
 import crypto from "node:crypto"
+import * as HttpStatusCodes from "stoker/http-status-codes"
 
 import { sendWebhook } from "@/server/lib/discord"
 import { sendEmail, TEmailType } from "@/server/lib/mailtrap"
@@ -7,49 +8,49 @@ import { AppRouteHandler } from "@/server/lib/types"
 import { TUsuario } from "@/server/models/usuario"
 import { PaymentInfo } from "@/server/types"
 import { getResumenCompraTemplate } from "@/server/utils/email-templates"
-import { createBody, paymentDetails } from "@/server/utils/payment"
+import { createPreferenceBody, paymentDetails } from "@/server/utils/payment"
 import { setPreferenceDetails } from "@/server/utils/preference"
 import env from "@/utils/env"
 import { FeedbackRoute, PreferenceRoute } from "./mercadopago.routes"
 
 export const preferenceId: AppRouteHandler<PreferenceRoute> = async (c) => {
 	const usuario = c.req.valid("json") as TUsuario
-
-	if (!usuario) return c.json({ status: false }, 422)
+	if (!usuario) return c.json({ status: false }, HttpStatusCodes.UNPROCESSABLE_ENTITY)
 
 	const prefDetails = setPreferenceDetails(usuario)
-	const pref_body = createBody(prefDetails)
+	const preference_body = createPreferenceBody(prefDetails)
 
-	const preference = await createPreference(pref_body)
-	if (!preference) return c.json({ status: false, data: undefined }, 500)
+	const preference = await createPreference(preference_body)
+	if (!preference)
+		return c.json({ status: false, data: undefined }, HttpStatusCodes.INTERNAL_SERVER_ERROR)
 
-	return c.json({ status: true, data: preference.id! }, 200)
+	return c.json({ status: true, data: preference.id! }, HttpStatusCodes.CREATED)
 }
 
 export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 	const { data, type } = c.req.valid("json")
 
 	if (type !== "payment") {
-		return c.json({ status: false }, 200)
+		return c.json({ status: false }, HttpStatusCodes.OK)
 	}
 
 	const x_signature = c.req.header("x-signature")
 	const x_request_id = c.req.header("x-request-id")
 
 	if (!x_signature || !x_request_id) {
-		return c.json({ status: false }, 403)
+		return c.json({ status: false }, HttpStatusCodes.FORBIDDEN)
 	}
 
 	const isSignatureValid = checkSignature({
 		headers: { xsignature: x_signature, xrequestid: x_request_id },
 		id: data.id,
 	})
-	if (!isSignatureValid) return c.json({ status: false }, 403)
+
+	if (!isSignatureValid) return c.json({ status: false }, HttpStatusCodes.FORBIDDEN)
 
 	const payment_data = await getFeedbackPayment(data.id)
-	if (!payment_data) {
-		return c.json({ status: false }, 500)
-	}
+	if (!payment_data) return c.json({ status: false }, HttpStatusCodes.INTERNAL_SERVER_ERROR)
+
 	const details: PaymentInfo = paymentDetails(payment_data)
 
 	await sendWebhook(details)
@@ -58,9 +59,9 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 		type: TEmailType.contacto,
 		html: getResumenCompraTemplate(details),
 	})
-	if (!email_res) return c.json({ status: false }, 500)
+	if (!email_res) return c.json({ status: false }, HttpStatusCodes.INTERNAL_SERVER_ERROR)
 
-	return c.json({ status: true }, 200)
+	return c.json({ status: true }, HttpStatusCodes.OK)
 }
 
 export const checkSignature = ({

@@ -5,7 +5,7 @@ import { TUsuario } from "../models/usuario"
 import { PaymentInfo } from "../types"
 import { PreferenceRequest } from "mercadopago/dist/clients/preference/commonTypes"
 
-export const createBody = (usuario: TUsuario): PreferenceRequest => {
+export const createPreferenceBody = (usuario: TUsuario): PreferenceRequest => {
 	const checkout_id = generateRandom16CharacterString()
 
 	const payer_data = {
@@ -113,24 +113,6 @@ export function generateRandom16CharacterString() {
 }
 
 export const store = [
-	{
-		id: "85euxvvlqfmj7ekgw5g",
-		title: "Paté Vegetal",
-		description: "Tomate Orégano",
-		unit_price: 4000,
-	},
-	{
-		id: "zjfa63ox2qgwkuxemn9",
-		title: "Paté Vegetal",
-		description: "Pesto Albahaca",
-		unit_price: 4000,
-	},
-	{
-		id: "xha2bkwjr5od7hzb84c",
-		title: "Paté Vegetal",
-		description: "Pimentón Rojo",
-		unit_price: 4000,
-	},
 	{
 		id: "2usiygy4ongwpaw3vnh",
 		title: "Tripack",

@@ -1,8 +1,19 @@
 import { z } from "zod"
 
+export enum EID {
+	tripack = "2usiygy4ongwpaw3vnh",
+	sixpack = "qrctsu7lpq4okqikubm",
+}
+
+export enum ETitle {
+	tripack = "Tripack",
+	sixpack = "Sixpack",
+	giftcard = "Giftcard",
+}
+
 export const productoSchema = z.object({
-	id: z.string(),
-	title: z.string(),
+	id: z.enum([EID.tripack, EID.sixpack]),
+	title: z.enum([ETitle.tripack, ETitle.sixpack, ETitle.giftcard]),
 	picture_url: z.string().optional(),
 	description: z.string(),
 	quantity: z.number().int().min(1, { message: "ingrese al menos 1 producto" }),
