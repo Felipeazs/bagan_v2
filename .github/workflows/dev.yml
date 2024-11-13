@@ -30,9 +30,9 @@ jobs:
           NM_MAILTRAP_FROM: test@test.cl
           NM_MAILTRAP_RECEIVER_CONTACTO: test@test.cl
           NM_MAILTRAP_RECEIVER_VENTAS: test@test.cl 
-          MT_API_KEY: test
+          MT_API_KEY: ${{secrests.MT_API_KEY}}
           MT_ACCOUNT_ID: 1
-          MT_TEST_ID: 1
+          MT_TEST_ID: ${{secrests.MT_TEST_ID}}
           VITE_MP_PUBLIC_KEY: test
           MP_ACCESS_TOKEN: test
           MP_REDIRECT: https://test.cl
