@@ -31,16 +31,16 @@ jobs:
           NM_MAILTRAP_RECEIVER_CONTACTO: test@test.cl
           NM_MAILTRAP_RECEIVER_VENTAS: test@test.cl 
           MT_API_KEY: ${{secrets.MT_API_KEY}}
-          MT_ACCOUNT_ID: ${{secrets.MT_ACCOUNT_ID}}
-          MT_TEST_ID: ${{secrets.MT_TEST_ID}}
+          MT_ACCOUNT_ID: ${{ secrets.MT_ACCOUNT _ID }}
+          MT_TEST_ID: ${{ secrets.MT_TEST_ID }}  
           VITE_MP_PUBLIC_KEY: test
-          MP_ACCESS_TOKEN: ${{secrets.MP_ACCESS_TOKEN}}
+          MP_ACCESS_TOKEN: ${{ secrets.MP_ACCESS_TOKEN }}
           MP_REDIRECT: https://test.cl
           MPW_SECRET: test
           VITE_STRAPI_API_KEY: test
           VITE_STRAPI_URL: https://test.cl
           SENTRY_DSN: https://test.io
-          WEBHOOK_URL: ${{secrets.WEBHOOK_URL}}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
           DATABASE_URL: test
         run: bun test
 
@@ -48,6 +48,6 @@ jobs:
         run: npm i -g @railway/cli
 
       - name: Deploy
-        run: railway up --service ${{RAILWAY_SERVICE_ID}}
+        run: railway up --service ${{ secrets.RAILWAY_SERVICE_ID }}
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_DEV }}
