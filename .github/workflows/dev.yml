@@ -47,7 +47,10 @@ jobs:
       - name: Install Railway
         run: npm i -g @railway/cli
 
+      - name: Link project
+        run: railway link --service ${{ secrets.RAILWAY_SERVICE_ID }}
+
       - name: Deploy
-        run: railway up --service ${{ secrets.RAILWAY_SERVICE_ID }}
+        run: railway up
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_DEV }}
