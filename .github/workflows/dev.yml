@@ -24,9 +24,6 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Build code
-        run: bun run build
-
-      - name: Run tests
         env:
           NODE_ENV: "test"
           LOG_LEVEL: "debug"
@@ -46,4 +43,14 @@ jobs:
           SENTRY_DSN: https://test.io
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
           DATABASE_URL: test
+        run: bun run build
+
+      - name: Run tests
+        env:
+          MT_API_KEY: ${{secrets.MT_API_KEY}}
+          MT_ACCOUNT_ID: ${{ secrets.MT_ACCOUNT_ID }}
+          MT_TEST_ID: ${{ secrets.MT_TEST_ID }}  
+          MP_ACCESS_TOKEN: ${{ secrets.MP_ACCESS_TOKEN }}
+          SENTRY_DSN: https://test.io
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: bun test
