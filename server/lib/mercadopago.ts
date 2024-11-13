@@ -8,9 +8,10 @@ import {
 
 import * as HttpStatusPhrases from "stoker/http-status-phrases"
 import * as HttpStatusCodes from "stoker/http-status-codes"
+import env from "@/utils/env"
 
 export const mercadoPagoClient = new MercadoPagoConfig({
-	accessToken: process.env["MP_ACCESS_TOKEN"]!,
+	accessToken: env.MP_ACCESS_TOKEN,
 })
 
 export const createPreference = async (

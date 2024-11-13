@@ -34,7 +34,7 @@ jobs:
           MT_ACCOUNT_ID: 1
           MT_TEST_ID: ${{secrets.MT_TEST_ID}}
           VITE_MP_PUBLIC_KEY: test
-          MP_ACCESS_TOKEN: test
+          MP_ACCESS_TOKEN: ${{secrets.MP_ACCESS_TOKEN}}
           MP_REDIRECT: https://test.cl
           MPW_SECRET: test
           VITE_STRAPI_API_KEY: test
