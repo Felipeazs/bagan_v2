@@ -23,6 +23,25 @@ jobs:
         run: bun install --frozen-lockfile
 
       - name: Run tests
+        env:
+          NODE_ENV: "test"
+          LOG_LEVEL: "debug"
+          PORT: 4000
+          NM_MAILTRAP_FROM: test@test.cl
+          NM_MAILTRAP_RECEIVER_CONTACTO: test@test.cl
+          NM_MAILTRAP_RECEIVER_VENTAS: test@test.cl 
+          MT_API_KEY: test
+          MT_ACCOUNT_ID: 1
+          MT_TEST_ID: 1
+          VITE_MP_PUBLIC_KEY: test
+          MP_ACCESS_TOKEN: test
+          MP_REDIRECT: https://test.cl
+          MPW_SECRET: test
+          VITE_STRAPI_API_KEY: test
+          VITE_STRAPI_URL: https://test.cl
+          SENTRY_DSN: https://test.io
+          WEBHOOK_URL: https://test.com
+          DATABASE_URL: test
         run: bun test
 
       - name: Install Railway
