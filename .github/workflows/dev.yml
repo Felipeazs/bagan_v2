@@ -44,17 +44,3 @@ jobs:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
           DATABASE_URL: test
         run: bun test
-
-      - name: Install Railway
-        run: npm i -g @railway/cli
-
-      - name: Login Railway
-        run: railway login
-
-      - name: Service
-        run: railway service ${{ secrets.RAILWAY_SERVICE_ID }}
-
-      - name: Deploy
-        run: railway up
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_DEV }}
