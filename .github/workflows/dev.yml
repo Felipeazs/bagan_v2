@@ -40,7 +40,7 @@ jobs:
           VITE_STRAPI_API_KEY: test
           VITE_STRAPI_URL: https://test.cl
           SENTRY_DSN: https://test.io
-          WEBHOOK_URL: https://test.com
+          WEBHOOK_URL: ${{secrets.WEBHOOK_URL}}
           DATABASE_URL: test
         run: bun test
 
