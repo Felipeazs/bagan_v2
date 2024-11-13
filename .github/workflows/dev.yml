@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: dev actions
+    name: dev CI
     runs-on: ubuntu-latest
 
     steps:
@@ -53,11 +53,12 @@ jobs:
       - name: Install Railway
         run: npm i -g @railway/cli
 
-      - name: Login Railway
-        run: railway login
+      - name: Link project
+        run: railway link --environment testing ${{ secrets.RAILWAY_SERVICE_ID }} 
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_DEV }}
 
       - name: Deploy
         run: railway up
         env:
-          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_API_TOKEN }}
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN_DEV }}
