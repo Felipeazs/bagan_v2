@@ -42,7 +42,7 @@ jobs:
       - name: Install packages
         run: bun install --frozen-lockfile
 
-      - name: Build code
+      - name: Run Build
         run: bun run build
 
       - name: Run tests
