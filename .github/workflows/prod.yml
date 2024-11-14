@@ -16,7 +16,7 @@ jobs:
       NM_MAILTRAP_FROM: test@test.cl
       NM_MAILTRAP_RECEIVER_CONTACTO: test@test.cl
       NM_MAILTRAP_RECEIVER_VENTAS: test@test.cl 
-      MT_API_KEY: ${{secrets.MT_API_KEY}}
+      MT_API_KEY: ${{ secrets.MT_API_KEY }}
       MT_ACCOUNT_ID: ${{ secrets.MT_ACCOUNT_ID }}
       MT_TEST_ID: ${{ secrets.MT_TEST_ID }}  
       VITE_MP_PUBLIC_KEY: test
