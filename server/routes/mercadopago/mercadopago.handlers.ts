@@ -2,11 +2,11 @@ import crypto from "node:crypto"
 import * as HttpStatusCodes from "stoker/http-status-codes"
 
 import { sendWebhook } from "@/server/lib/discord"
-import { sendEmail, TEmailType } from "@/server/lib/mailtrap"
+import { sendEmail } from "@/server/lib/mailtrap"
 import { createPreference, getFeedbackPayment } from "@/server/lib/mercadopago"
 import { AppRouteHandler } from "@/server/lib/types"
 import { TUsuario } from "@/server/models/usuario"
-import { PaymentInfo } from "@/server/types"
+import { PaymentInfo, TEmailType } from "@/server/types"
 import { getResumenCompraTemplate } from "@/server/utils/email-templates"
 import { createPreferenceBody, paymentDetails } from "@/server/utils/payment"
 import { setPreferenceDetails } from "@/server/utils/preference"
@@ -55,10 +55,12 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 
 	await sendWebhook(details)
 
-	const email_res = await sendEmail({
+	const email_content = {
 		type: TEmailType.contacto,
 		html: getResumenCompraTemplate(details),
-	})
+	}
+
+	const email_res = await sendEmail(email_content)
 	if (!email_res) return c.json({ status: false }, HttpStatusCodes.INTERNAL_SERVER_ERROR)
 
 	return c.json({ status: true }, HttpStatusCodes.OK)

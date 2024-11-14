@@ -21,7 +21,7 @@ describe("contacto", () => {
 		mensaje: "test",
 	}
 
-	it("Should send a contact email/discord message", async () => {
+	it("Should send a contact email/webhook message", async () => {
 		const res = await client.contacto.message.$post({ json: user_data })
 		const json = await res.json()
 
@@ -47,7 +47,7 @@ describe("contacto", () => {
 		mensaje: "test",
 	}
 
-	it("Should not send a contact email/discord message", async () => {
+	it("Should not send a contact email/webhook message", async () => {
 		const res = await client.contacto.message.$post({ json: failed_user_data })
 
 		expect(res.status).toBe(422)

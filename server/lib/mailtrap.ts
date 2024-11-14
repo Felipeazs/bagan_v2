@@ -4,6 +4,7 @@ import * as HttpStatusCodes from "stoker/http-status-codes"
 import * as HttpStatusPhrases from "stoker/http-status-phrases"
 
 import env, { isProd } from "@/utils/env"
+import { IEmailContent } from "../types"
 
 export const mailtrapClient = new MailtrapClient({
 	token: env.MT_API_KEY,
@@ -58,20 +59,9 @@ const giftcard_details = {
 	category: Categories.GIFTCARD,
 }
 
-export enum TEmailType {
-	venta = "venta",
-	contacto = "contacto",
-	giftcard = "giftcard",
-	newsletter = "newsletter",
-}
+export const sendEmail = async (content: IEmailContent): Promise<SendResponse | undefined> => {
+	const { type, html } = content
 
-export const sendEmail = async ({
-	type,
-	html,
-}: {
-	type: TEmailType
-	html: string
-}): Promise<SendResponse | undefined> => {
 	const mailtrap_info: { [key: string]: Mail } = {
 		ventas: { ...ventas_details, html },
 		contacto: { ...contacto_details, html },
@@ -90,7 +80,7 @@ export const sendEmail = async ({
 				console.error("test email inbox is full")
 				return {
 					success: true,
-					message_ids: ["test imail inbox is full"],
+					message_ids: ["test email inbox is full"],
 				}
 			} else if (test_inbox) {
 				response = await mailtrapClient.testing.send(mailtrap_info[type])

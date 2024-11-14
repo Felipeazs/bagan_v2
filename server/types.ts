@@ -79,3 +79,15 @@ export type TEmailForm = {
 	category: string
 	html: string
 }
+
+export interface IEmailContent {
+	type: TEmailType
+	html: string
+}
+
+export enum TEmailType {
+	venta = "venta",
+	contacto = "contacto",
+	giftcard = "giftcard",
+	newsletter = "newsletter",
+}
