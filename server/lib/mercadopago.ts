@@ -15,13 +15,13 @@ export const mercadoPagoClient = new MercadoPagoConfig({
 })
 
 export const createPreference = async (
-	pref_body: PreferenceRequest,
+	preference_body: PreferenceRequest,
 ): Promise<PreferenceResponse | undefined> => {
 	try {
 		const preference = new Preference(mercadoPagoClient)
 
 		const res = await preference.create({
-			body: pref_body,
+			body: preference_body,
 		})
 
 		if (res.api_response.status !== 201) {
