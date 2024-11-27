@@ -1,31 +1,30 @@
 import { feedbackSchema } from "@/server/models/feedback"
+import { pagoSchema } from "@/server/models/pago"
 import { createRoute, z } from "@hono/zod-openapi"
 import * as HttpStatusCode from "stoker/http-status-codes"
 
-const tags = ["Mercado pago"]
-const base = "/mercadopago"
-
-export const feedback = createRoute({
-	path: `${base}/compra/feedback`,
+export const pago = createRoute({
+	path: "/pago",
 	method: "post",
-	tags,
+	tags: ["Pago"],
 	request: {
 		body: {
-			description: "Feedback content body",
+			description: "Pago content body",
 			content: {
 				"application/json": {
-					schema: feedbackSchema,
+					schema: pagoSchema,
 				},
 			},
 		},
 	},
 	responses: {
 		[HttpStatusCode.OK]: {
-			description: "Feedback response after payment",
+			description: "Pago ok response",
 			content: {
 				"application/json": {
 					schema: z.object({
 						status: z.boolean(),
+						url: z.string(),
 					}),
 				},
 			},
@@ -36,26 +35,7 @@ export const feedback = createRoute({
 				"application/json": {
 					schema: z.object({
 						status: z.boolean(),
-					}),
-				},
-			},
-		},
-		[HttpStatusCode.FORBIDDEN]: {
-			description: "Forbidden",
-			content: {
-				"application/json": {
-					schema: z.object({
-						status: z.boolean(),
-					}),
-				},
-			},
-		},
-		[HttpStatusCode.UNPROCESSABLE_ENTITY]: {
-			description: "Unprocessable entity",
-			content: {
-				"application/json": {
-					schema: z.object({
-						status: z.boolean(),
+						url: z.string().optional(),
 					}),
 				},
 			},
@@ -66,7 +46,7 @@ export const feedback = createRoute({
 				"application/json": {
 					schema: z.object({
 						status: z.boolean(),
-						data: z.string().optional(),
+						url: z.string().optional(),
 					}),
 				},
 			},
@@ -74,5 +54,35 @@ export const feedback = createRoute({
 	},
 })
 
-export type PreferenceRoute = typeof preferenceId
+export const feedback = createRoute({
+	path: "/pago/feedback/{tipo}",
+	method: "post",
+	tags: ["Pago"],
+	request: {
+		params: z.object({
+			tipo: z.string(),
+		}),
+		body: {
+			description: "Pago feedback",
+			content: {
+				"application/json": {
+					schema: feedbackSchema,
+				},
+			},
+		},
+	},
+	responses: {
+		[HttpStatusCode.OK]: {
+			description: "Pago ok response",
+		},
+		[HttpStatusCode.BAD_REQUEST]: {
+			description: "Bad Request",
+		},
+		[HttpStatusCode.INTERNAL_SERVER_ERROR]: {
+			description: "Server Error",
+		},
+	},
+})
+
+export type PagoRoute = typeof pago
 export type FeedbackRoute = typeof feedback

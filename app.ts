@@ -4,6 +4,7 @@ import createApp from "./server/lib/create-app"
 import configureOpenAPI from "./server/lib/openapi"
 import contacto from "./server/routes/contacto/contacto.index"
 import mercadopago from "./server/routes/mercadopago/mercadopago.index"
+import pago from "./server/routes/pago/pago.index"
 
 import env from "./utils/env"
 
@@ -29,7 +30,7 @@ if (!isProd) {
 
 export const app = createApp()
 
-const routes = [mercadopago, contacto] as const
+const routes = [mercadopago, contacto, pago] as const
 
 configureOpenAPI(app)
 

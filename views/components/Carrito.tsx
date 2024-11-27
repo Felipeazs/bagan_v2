@@ -1,4 +1,4 @@
-import { createMPPreferences } from "@/api"
+import { createPago } from "@/api"
 import { calcularTarifa } from "@/utils/tarifa"
 import { Wallet } from "@mercadopago/sdk-react"
 import { FieldApi, useForm } from "@tanstack/react-form"
@@ -29,6 +29,7 @@ import { EID, productoSchema } from "@/server/models/producto"
 import { usuarioSchema } from "@/server/models/usuario"
 import { chile } from "@/utils/chile"
 import { packs } from "@/utils/packs"
+import MediosPago from "./MediosPago"
 
 enum Detail {
 	Tomate = "tomate orégano",
@@ -58,11 +59,10 @@ const Carrito = ({ img }: { img?: string }) => {
 	const [disable, setDisable] = useState<boolean>(false)
 
 	const mutation = useMutation({
-		mutationFn: createMPPreferences,
+		mutationFn: createPago,
 		onSuccess: (response) => {
+			console.log(response)
 			if (response && response.status) {
-				setPreferenceId(response.data!)
-
 				if (import.meta.env.PROD) {
 					ReactGA.event({
 						category: "venta",
@@ -70,6 +70,8 @@ const Carrito = ({ img }: { img?: string }) => {
 						label: "mercadopago",
 					})
 				}
+
+				window.location.href = response.url!
 			} else {
 				toast.error("Error del servidor", {
 					description: "Por favor inténtalo más tarde",
@@ -84,6 +86,7 @@ const Carrito = ({ img }: { img?: string }) => {
 			usuario,
 		},
 		onSubmit: async ({ value }) => {
+			console.log(value)
 			mutation.mutate({ value: value.usuario })
 		},
 		onSubmitInvalid: () => {
@@ -359,7 +362,10 @@ const Carrito = ({ img }: { img?: string }) => {
 																						}}>
 																						<SelectTrigger className="w-full">
 																							<SelectValue
-																								placeholder={`Variedad ${ii + 1}`}
+																								placeholder={`Variedad ${
+																									ii +
+																									1
+																								}`}
 																							/>
 																						</SelectTrigger>
 																						<SelectContent>
@@ -602,6 +608,19 @@ const Carrito = ({ img }: { img?: string }) => {
 											/>
 										</Label>
 									</div>
+									<p className="py-2 font-bold">Medios de pago*</p>
+									<form.Field
+										name="usuario.mediospago"
+										children={(subfield) => (
+											<>
+												<MediosPago
+													defaultValue={subfield.state.value}
+													onchange={subfield.handleChange}
+												/>
+												<FieldInfo field={subfield} />
+											</>
+										)}
+									/>
 									<div className="py-10">
 										<i className="text-sm">* campos obligatorios</i>
 										<Separator />

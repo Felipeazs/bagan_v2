@@ -1,42 +1,42 @@
 import { PaymentResponse } from "mercadopago/dist/clients/payment/commonTypes"
 
 import env from "@/utils/env"
-import { TUsuario } from "../models/usuario"
-import { PaymentInfo } from "../types"
 import { PreferenceRequest } from "mercadopago/dist/clients/preference/commonTypes"
+import { TPago } from "../models/pago"
+import { PaymentInfo } from "../types"
 
-export const createPreferenceBody = (usuario: TUsuario): PreferenceRequest => {
+export const createPreferenceBody = (data: TPago): PreferenceRequest => {
 	const checkout_id = generateRandom16CharacterString()
 
 	const payer_data = {
 		payer: {
-			name: usuario.nombre + " " + usuario.apellido,
-			email: usuario.email,
+			name: data.nombre + " " + data.apellido,
+			email: data.email,
 			phone: {
-				number: usuario.telefono,
+				number: data.telefono,
 			},
 			identification: {
 				type: "rut",
-				number: usuario.rut,
+				number: data.rut,
 			},
 			address: {
-				street_name: usuario.direccion.calle,
-				street_number: usuario.direccion.numero,
+				street_name: data.direccion.calle,
+				street_number: data.direccion.numero,
 			},
 		},
 		shipments: {
 			mode: "not_specified",
-			cost: usuario.envio,
+			cost: data.envio,
 			receiver_address: {
-				street_name: usuario.direccion.calle,
-				street_number: +usuario.direccion.numero,
-				city_name: usuario.direccion.comuna,
-				state_name: usuario.direccion.region,
-				apartment: usuario.direccion.depto,
+				street_name: data.direccion.calle,
+				street_number: +data.direccion.numero,
+				city_name: data.direccion.comuna,
+				state_name: data.direccion.region,
+				apartment: data.direccion.depto,
 				country_name: "Chile",
 			},
 		},
-		items: usuario.items,
+		items: data.items,
 		auto_return: "approved",
 		back_urls: {
 			success: env.MP_REDIRECT,

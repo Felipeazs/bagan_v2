@@ -22,6 +22,11 @@ export default function createApp() {
 	app.use(
 		cors({
 			origin: env.MP_REDIRECT,
+			allowHeaders: ["X-Custom-Header", "Upgrade-Insecure-Requests"],
+			allowMethods: ["POST", "GET", "OPTIONS"],
+			exposeHeaders: ["Content-Length", "X-Kuma-Revision"],
+			maxAge: 600,
+			credentials: true,
 		}),
 	)
 
@@ -36,7 +41,7 @@ export default function createApp() {
 			xFrameOptions: false,
 			xXssProtection: false,
 			removePoweredBy: true,
-			contentSecurityPolicy: env.NODE_ENV === "production" ? CSP : {},
+			contentSecurityPolicy: CSP,
 		}),
 	)
 	app.use("*", async (c, next) => {

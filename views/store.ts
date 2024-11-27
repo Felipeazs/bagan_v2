@@ -15,6 +15,7 @@ export const useCompradorStore = create<TUsuario & Actions>((set) => ({
 	},
 	items: [],
 	envio: 0,
+	mediospago: "mercadopago",
 	guardarItems: (producto) =>
 		set((state) => ({
 			items: [...state.items, producto],

@@ -5,12 +5,15 @@ import { app } from "@/app"
 import env from "@/utils/env"
 import contactoRouter from "./contacto.index"
 import mercadopagoRouter from "../mercadopago/mercadopago.index"
+import pagoRouter from "../pago/pago.index"
 
 if (env.NODE_ENV !== "test") {
 	throw new Error("NODE_ENV must be 'test'")
 }
 
-export const client = testClient(app.route("/", contactoRouter).route("/", mercadopagoRouter))
+export const client = testClient(
+	app.route("/", contactoRouter).route("/", mercadopagoRouter).route("/", pagoRouter),
+)
 
 describe("contacto", () => {
 	const user_data = {

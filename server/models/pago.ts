@@ -5,7 +5,7 @@ import { productoSchema, TProducto } from "./producto"
 
 export const telefono_regex = /^\d{9}$/
 
-export const usuarioSchema = z.object({
+export const pagoSchema = z.object({
 	nombre: z.string().trim().min(1, { message: "ingrese el nombre" }),
 	apellido: z.string().trim().min(1, { message: "ingrese el apellido" }),
 	rut: z
@@ -33,10 +33,4 @@ export const usuarioSchema = z.object({
 		.optional(),
 })
 
-export type TUsuario = z.infer<typeof usuarioSchema>
-
-export type Actions = {
-	guardarItems: (producto: TProducto) => void
-	quitarItems: (index: number) => void
-	setEnvio: (precio: number) => void
-}
+export type TPago = z.infer<typeof pagoSchema>

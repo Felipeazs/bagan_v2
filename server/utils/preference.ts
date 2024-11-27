@@ -1,8 +1,8 @@
-import { TUsuario } from "../models/usuario"
+import { TPago } from "../models/pago"
 import { store } from "./payment"
 
-export const setPreferenceDetails = (usuario: TUsuario): TUsuario => {
-	usuario.items.forEach((p) => {
+export const setPreferenceDetails = (data: TPago): TPago => {
+	data.items.forEach((p) => {
 		const producto = store.find((s) => s.id === p.id)
 
 		if (!producto) return
@@ -32,5 +32,5 @@ export const setPreferenceDetails = (usuario: TUsuario): TUsuario => {
 		].join(", ")
 	})
 
-	return usuario
+	return data
 }

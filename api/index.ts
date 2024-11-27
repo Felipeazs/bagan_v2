@@ -1,5 +1,6 @@
 import { type ApiRoutes } from "@/app"
 import { TContacto, type TNewsletter } from "@/server/models/email"
+import { TPago } from "@/server/models/pago"
 import { TUsuario } from "@/server/models/usuario"
 import { hc } from "hono/client"
 
@@ -25,8 +26,8 @@ export async function addToNewsletter({ value }: { value: TNewsletter }) {
 		.catch(console.error)
 }
 
-export async function createMPPreferences({ value }: { value: TUsuario }) {
-	return await client.mercadopago["create-preference"]
+export async function createPago({ value }: { value: TPago }) {
+	return await client.pago
 		.$post({ json: value })
 		.then((res) => res.json())
 		.then((data) => data)

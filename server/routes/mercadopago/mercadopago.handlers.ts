@@ -3,29 +3,13 @@ import * as HttpStatusCodes from "stoker/http-status-codes"
 
 import { sendWebhook } from "@/server/lib/discord"
 import { sendEmail } from "@/server/lib/mailtrap"
-import { createPreference, getFeedbackPayment } from "@/server/lib/mercadopago"
+import { getFeedbackPayment } from "@/server/lib/mercadopago"
 import { AppRouteHandler } from "@/server/lib/types"
-import { TUsuario } from "@/server/models/usuario"
 import { PaymentInfo, TEmailType } from "@/server/types"
 import { getResumenCompraTemplate } from "@/server/utils/email-templates"
-import { createPreferenceBody, paymentDetails } from "@/server/utils/payment"
-import { setPreferenceDetails } from "@/server/utils/preference"
+import { paymentDetails } from "@/server/utils/payment"
 import env from "@/utils/env"
-import { FeedbackRoute, PreferenceRoute } from "./mercadopago.routes"
-
-export const preferenceId: AppRouteHandler<PreferenceRoute> = async (c) => {
-	const usuario = c.req.valid("json") as TUsuario
-	if (!usuario) return c.json({ status: false }, HttpStatusCodes.UNPROCESSABLE_ENTITY)
-
-	const prefDetails = setPreferenceDetails(usuario)
-	const preference_body = createPreferenceBody(prefDetails)
-
-	const preference = await createPreference(preference_body)
-	if (!preference)
-		return c.json({ status: false, data: undefined }, HttpStatusCodes.INTERNAL_SERVER_ERROR)
-
-	return c.json({ status: true, data: preference.id! }, HttpStatusCodes.CREATED)
-}
+import { FeedbackRoute } from "./mercadopago.routes"
 
 export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 	const { data, type } = c.req.valid("json")
@@ -43,12 +27,12 @@ export const feedback: AppRouteHandler<FeedbackRoute> = async (c) => {
 
 	const isSignatureValid = checkSignature({
 		headers: { xsignature: x_signature, xrequestid: x_request_id },
-		id: data.id,
+		id: data.id!,
 	})
 
 	if (!isSignatureValid) return c.json({ status: false }, HttpStatusCodes.FORBIDDEN)
 
-	const payment_data = await getFeedbackPayment(data.id)
+	const payment_data = await getFeedbackPayment(data.id!)
 	if (!payment_data) return c.json({ status: false }, HttpStatusCodes.INTERNAL_SERVER_ERROR)
 
 	const details: PaymentInfo = paymentDetails(payment_data)
