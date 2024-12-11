@@ -5,7 +5,7 @@
 	"type": "module",
 	"main": "dist/app.js",
 	"scripts": {
-		"start": "bun dist/app.js",
+		"start": "NODE_ENV=production bun dist/app.js",
 		"dev": "(prettier --check . || prettier --write .) && bunx --bun vite",
 		"build": "tsc && vite build && rollup -c rollup.config.mjs",
 		"lint": "eslint .",
