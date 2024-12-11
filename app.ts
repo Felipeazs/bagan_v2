@@ -38,6 +38,7 @@ routes.forEach((route) => {
 })
 
 app.use("/assets/*", serveStatic({ root: isProd ? "build/" : "./" }))
+app.use("/fonts/*", serveStatic({ root: isProd ? "build/" : "./public/" }))
 app.get("/*", (c) => c.html(html))
 
 export type ApiRoutes = (typeof routes)[number]
